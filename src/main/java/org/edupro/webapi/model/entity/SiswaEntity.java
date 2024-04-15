@@ -5,13 +5,7 @@ package org.edupro.webapi.model.entity;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.TableGenerator;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,9 +24,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "T_SISWA")
-public class Siswa extends BaseEntity {
+@AttributeOverrides({
+		@AttributeOverride(name = "createdAt", column = @Column(name="SWCRD")),
+		@AttributeOverride(name = "createdBy", column = @Column(name="SWCRUID")),
+		@AttributeOverride(name = "updatedAt", column = @Column(name="SWUPD")),
+		@AttributeOverride(name = "updatedBy", column = @Column(name="SWUPUID")),
+		@AttributeOverride(name = "status", column = @Column(name="SWSTAT"))
+})
+public class SiswaEntity extends BaseEntity {
 
 	@Id
+	@Column(name = "SWID", length = 36, nullable = false)
 	private String id;
 	
 	@Column(name = "SWNM", length = 100, nullable = false)
