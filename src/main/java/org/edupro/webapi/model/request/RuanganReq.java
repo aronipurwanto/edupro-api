@@ -25,6 +25,6 @@ public class RuanganReq {
     private Integer kapasitas;
 
     @NotEmpty
-    @Size(min = 4, max = 20, message = "Kode minimal 4 dan maximal 20")
-    private String kodeGedung;
+    @Size(min = 36, max = 36, message = "Kode minimal 4 dan maximal 20")
+    private String gedungId;
 }

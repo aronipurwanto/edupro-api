@@ -131,8 +131,8 @@ public class RuanganServiceImpl implements RuanganService {
         result.setCreatedAt(LocalDateTime.now());
         result.setUpdatedAt(LocalDateTime.now());
 
-        GedungEntity gedungEntity =  this.getGedungById(request.getKodeGedung());
-        result.setKodeGedung(gedungEntity.getKode());
+        GedungEntity gedungEntity =  this.getGedungById(request.getGedungId());
+        result.setGedungId(gedungEntity.getId());
         return result;
     }
 
@@ -140,7 +140,7 @@ public class RuanganServiceImpl implements RuanganService {
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
 
-        GedungEntity gedungEntity =  this.getGedungById(request.getKodeGedung());
-        result.setKodeGedung(gedungEntity.getKode());
+        GedungEntity gedungEntity =  this.getGedungById(request.getGedungId());
+        result.setGedungId(gedungEntity.getId());
     }
 }
