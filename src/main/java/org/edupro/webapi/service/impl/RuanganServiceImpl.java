@@ -78,7 +78,7 @@ public class RuanganServiceImpl implements RuanganService {
 
     private Optional<RuanganRes> saveOrUpdate(RuanganEntity result) {
         try{
-            this.repo.save(result);
+            this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
         }catch (DataIntegrityViolationException e){
             log.error("Save Ruangan, SQL error : {}", e.getMessage());

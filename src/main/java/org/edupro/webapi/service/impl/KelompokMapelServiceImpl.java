@@ -75,7 +75,7 @@ public class KelompokMapelServiceImpl implements KelompokMapelService {
 
     private Optional<CommonLembagaRes> saveOrUpdate(KelompokMapelEntity result) {
         try{
-            this.repo.save(result);
+            this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
         }catch (DataIntegrityViolationException e){
             log.error("Save Kelompok Mapel, SQL error : {}", e.getMessage());

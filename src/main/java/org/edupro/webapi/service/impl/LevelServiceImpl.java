@@ -69,7 +69,7 @@ public class LevelServiceImpl implements LevelService {
 
     private Optional<CommonLembagaRes> saveOrUpdate(LevelEntity result) {
         try{
-            this.repo.save(result);
+            this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
         }catch (DataIntegrityViolationException e){
             log.error("Save Level, SQL error : {}", e.getMessage());

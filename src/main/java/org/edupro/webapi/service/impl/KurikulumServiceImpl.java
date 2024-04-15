@@ -77,7 +77,7 @@ public class KurikulumServiceImpl implements KurikulumService {
 
     private Optional<CommonRes> saveOrUpdate(KurikulumEntity result) {
         try{
-            this.repo.save(result);
+            this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
         }catch (DataIntegrityViolationException e){
             log.error("Save Lembaga, SQL error : {}", e.getMessage());

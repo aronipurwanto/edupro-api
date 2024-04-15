@@ -27,8 +27,9 @@ import org.edupro.webapi.constant.DataStatus;
 @Table(name = "T_SESI_AKADEMIK")
 public class SesiAkademikEntity extends BlankBaseEntity {
 	private static final long serialVersionUID = -9042433341420102754L;
-	@EmbeddedId
-	private SesiAkademikId id;
+	@Id
+	@Column(name = "KURID", length = 36, nullable = false)
+	private String id;
 	
 	@Column(name = "KURKD", length = 20)
 	private String kodeKurikulum;

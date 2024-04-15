@@ -80,7 +80,7 @@ public class LembagaServiceImpl implements LembagaService {
 
     private Optional<LembagaRes> saveOrUpdate(LembagaEntity result) {
         try{
-            this.repo.save(result);
+            this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
         }catch (DataIntegrityViolationException e){
             log.error("Save Lembaga, SQL error : {}", e.getMessage());

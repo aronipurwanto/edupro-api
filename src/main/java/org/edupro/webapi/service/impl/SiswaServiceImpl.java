@@ -72,7 +72,7 @@ public class SiswaServiceImpl implements SiswaService {
 
     public Optional<SiswaRes> saveOrUpdate(SiswaEntity entity) {
         try{
-            this.repo.save(entity);
+            this.repo.saveAndFlush(entity);
             return Optional.of(this.convertEntityToRes(entity));
         }catch (DataIntegrityViolationException e){
             log.error("Save Siswa gagal, SQL error : {}", e.getMessage());

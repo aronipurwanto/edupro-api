@@ -72,7 +72,7 @@ public class TahunAjaranServiceImpl implements TahunAjaranService {
 
     public Optional<TahunAjaranRes> saveOrUpdate(TahunAjaranEntity entity) {
         try{
-            this.repo.save(entity);
+            this.repo.saveAndFlush(entity);
             return Optional.of(this.convertEntityToRes(entity));
         }catch (DataIntegrityViolationException e){
             log.error("Save TahunAjaran gagal, SQL error : {}", e.getMessage());

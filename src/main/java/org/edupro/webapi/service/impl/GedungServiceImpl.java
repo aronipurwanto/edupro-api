@@ -74,7 +74,7 @@ public class GedungServiceImpl implements GedungService {
 
     private Optional<CommonRes> saveOrUpdate(GedungEntity result) {
         try{
-            this.repo.save(result);
+            this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
         }catch (DataIntegrityViolationException e){
             log.error("Save Gedung, SQL error : {}", e.getMessage());
