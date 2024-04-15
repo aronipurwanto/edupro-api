@@ -50,7 +50,7 @@ public class TahunAjaranServiceImpl implements TahunAjaranService {
         }
 
         TahunAjaranEntity result = this.convertReqToEntity(request);
-        result.setId(UUID.randomUUID().toString());
+        result.setId(UUID.randomUUID().toString().toUpperCase());
         return saveOrUpdate(result);
     }
 

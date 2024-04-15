@@ -11,7 +11,14 @@ import org.edupro.webapi.constant.DataStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommonRes {
+    private String id;
     private String kode;
     private String nama;
     private DataStatus status;
+
+    public CommonRes(String kode, String nama, DataStatus status) {
+        this.kode = kode;
+        this.nama = nama;
+        this.status = status;
+    }
 }

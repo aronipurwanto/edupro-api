@@ -17,10 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,6 +51,7 @@ public class GedungServiceImpl implements GedungService {
         }
 
         GedungEntity result = this.convertReqToEntity(request);
+        result.setId(UUID.randomUUID().toString().toUpperCase());
         return saveOrUpdate(result);
     }
 

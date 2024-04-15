@@ -12,6 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommonReq {
+    private String id;
+
     @NotEmpty
     @Size(min = 2, max = 10, message = "Kode minimal 2 dan maximal 10")
     private String kode;
