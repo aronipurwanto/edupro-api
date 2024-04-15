@@ -51,7 +51,7 @@ public class RuanganEntity extends BaseEntity {
 	@Column(name = "RUANGKAP")
 	private Integer kapasitas;
 
-	@Column(name = "GDID", length = 20, nullable = false)
+	@Column(name = "GDID", length = 36, nullable = false)
 	private String gedungId;
 
 	@ManyToOne

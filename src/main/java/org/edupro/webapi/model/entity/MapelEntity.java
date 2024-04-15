@@ -35,7 +35,6 @@ import lombok.NoArgsConstructor;
 		@AttributeOverride(name = "status", column = @Column(name="MAPELSTAT"))
 })
 public class MapelEntity extends BaseEntity {
-
 	@Id
 	@Column(name = "MAPELID", length = 36, nullable = false)
 	private String id;

@@ -32,7 +32,6 @@ import lombok.NoArgsConstructor;
 })
 public class MapelLevel extends BaseEntity {
 	private static final long serialVersionUID = -4046075931995216469L;
-
 	@Id
 	@Column(name = "MAPLVID", length = 36, nullable = false)
 	private String id;
