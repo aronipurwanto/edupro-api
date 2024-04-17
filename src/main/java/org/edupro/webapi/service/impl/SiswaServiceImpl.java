@@ -66,7 +66,6 @@ public class SiswaServiceImpl implements SiswaService {
     public Optional<SiswaRes> delete(String id) {
         SiswaEntity result = this.getEntityById(id);
         result.setStatus(DataStatus.DIHAPUS);
-        result.setId(UUID.randomUUID().toString().toUpperCase());
 
         return saveOrUpdate(result);
     }
