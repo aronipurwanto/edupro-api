@@ -99,15 +99,15 @@ public class SesiServiceImpl implements SesiService {
     private SesiAkademikRes convertEntityToRes(SesiAkademikEntity entity){
         SesiAkademikRes result = new SesiAkademikRes();
         BeanUtils.copyProperties(entity, result);
-        result.setTahunPelajaran(entity.getId().getTahunPelajaran());
-        result.setUrut(entity.getId().getUrut());
+        //result.setTahunPelajaran(entity.getId().getTahunPelajaran());
+        //result.setUrut(entity.getId().getUrut());
         result.setStatus(entity.getStatus());
         return result;
     }
 
     private SesiAkademikEntity convertReqToEntity(SesiAkademikReq request){
         SesiAkademikId id = new SesiAkademikId(request.getTahunPelajaran(), request.getUrut());
-        return new SesiAkademikEntity(id,request.getKodeKurikulum(), DataStatus.AKTIF);
+        return new SesiAkademikEntity("",request.getKodeKurikulum(), DataStatus.AKTIF);
     }
 
     private void convertReqToEntity(SesiAkademikReq request, SesiAkademikEntity result){

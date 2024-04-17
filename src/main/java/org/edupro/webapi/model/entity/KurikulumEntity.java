@@ -41,6 +41,9 @@ import lombok.NoArgsConstructor;
 public class KurikulumEntity extends BaseEntity {
 	
 	@Id
+	@Column(name = "KURID", length = 36, nullable = false)
+	private String id;
+
 	@Column(name = "KURKD", length = 20)
 	private String kode;
 	
