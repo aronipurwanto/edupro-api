@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.edupro.webapi.constant.DataStatus;
 
 import java.time.LocalDate;
 
@@ -20,4 +21,5 @@ public class SiswaRes {
     private String nama;
     private String kotaTempatLahir;
     private LocalDate tanggalLahir;
+    private DataStatus status;
 }
