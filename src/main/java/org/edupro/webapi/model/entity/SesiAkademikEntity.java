@@ -28,14 +28,31 @@ import org.edupro.webapi.constant.DataStatus;
 public class SesiAkademikEntity extends BlankBaseEntity {
 	private static final long serialVersionUID = -9042433341420102754L;
 	@Id
-	@Column(name = "KURID", length = 36, nullable = false)
+	@Column(name = "SAID", length = 36, nullable = false)
 	private String id;
+
+	@Column(name = "TAID", nullable = false)
+	private String tahunAjaranId;
+
+	@ManyToOne
+	@JoinColumn(name = "TAID",insertable = false, updatable = false)
+	private TahunAjaranEntity tahunAjaran;
+
+	@Column(name = "KURID", length = 35, nullable = false)
+	private String kurikulumId;
 	
 	@Column(name = "KURKD", length = 20)
 	private String kodeKurikulum;
 
+	@ManyToOne
+	@JoinColumn(name = "KURID", insertable = false, updatable = false)
+	private KurikulumEntity kurikulum;
+
+	@Column(name = "SAURUT", nullable = false)
+	private Integer urut; // 1 = ganjil, 2 = genap
+
 	@Builder.Default
-	@Column(name = "KURSTAT", length = 20, nullable = false)
+	@Column(name = "SASTAT", length = 20, nullable = false)
 	@Enumerated(EnumType.STRING)
 	private DataStatus status = DataStatus.AKTIF;
 }

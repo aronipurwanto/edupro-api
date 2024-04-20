@@ -42,10 +42,8 @@ import lombok.NoArgsConstructor;
 public class LembagaEntity extends BaseEntity {
 	
 	@Id
-	@Column(name = "LBGID")
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "LEMBAGA")
-	@TableGenerator(name = "LEMBAGA", table = "T_SEQUENCE", pkColumnName = "SEQ_NAME", pkColumnValue = "LEMBAGA", valueColumnName = "SEQ_VAL", allocationSize = 1, initialValue = 1)
-	private Integer id;
+	@Column(name = "LBGID", length = 36, nullable = false)
+	private String id;
 	
 	@Column(name = "LBGNM", length = 100, nullable = false)
 	private String nama;

@@ -10,6 +10,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Awiyanto Ajisasongko
  *
@@ -41,4 +44,8 @@ public class TahunAjaranEntity extends BaseEntity {
 	
 	@Column(name = "KURKD", length = 20, nullable = false)
 	private String kodeKurikulum;
+
+	@OneToMany(mappedBy = "tahunAjaran")
+	private List<SesiAkademikEntity> sesiAkademikList = new ArrayList<>();
+
 }

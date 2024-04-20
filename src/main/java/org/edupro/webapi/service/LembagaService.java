@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface LembagaService {
     List<LembagaRes> get();
-    Optional<LembagaRes> getById(Integer id);
+    Optional<LembagaRes> getById(String id);
     Optional<LembagaRes> save(LembagaReq request);
-    Optional<LembagaRes> update(LembagaReq request, Integer id);
-    Optional<LembagaRes> delete(Integer id);
+    Optional<LembagaRes> update(LembagaReq request, String id);
+    Optional<LembagaRes> delete(String id);
 }

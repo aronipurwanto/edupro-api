@@ -5,12 +5,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.CommonApiException;
+import org.edupro.webapi.model.entity.KurikulumEntity;
 import org.edupro.webapi.model.entity.SesiAkademikEntity;
 import org.edupro.webapi.model.entity.SesiAkademikId;
+import org.edupro.webapi.model.entity.TahunAjaranEntity;
 import org.edupro.webapi.model.request.SesiAkademikReq;
 import org.edupro.webapi.model.response.SesiAkademikRes;
+import org.edupro.webapi.repository.KurikulumRepo;
 import org.edupro.webapi.repository.SesiAkademikRepo;
-import org.edupro.webapi.service.SesiService;
+import org.edupro.webapi.repository.TahunAjaranRepo;
+import org.edupro.webapi.service.SesiAkademikService;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -23,8 +27,10 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class SesiServiceImpl implements SesiService {
+public class SesiAkademikServiceImpl implements SesiAkademikService {
     private final SesiAkademikRepo repo;
+    private final KurikulumRepo kurikulumRepo;
+    private final TahunAjaranRepo tahunAjaranRepo;
 
     @Override
     public List<SesiAkademikRes> get() {
@@ -36,30 +42,32 @@ public class SesiServiceImpl implements SesiService {
     }
 
     @Override
-    public Optional<SesiAkademikRes> getById(Integer id, Integer urut) {
-        SesiAkademikEntity result = this.getEntityById(new SesiAkademikId(id, urut));
+    public Optional<SesiAkademikRes> getById(String id) {
+        SesiAkademikEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
     }
 
     @Override
     public Optional<SesiAkademikRes> save(SesiAkademikReq request) {
-        var id = new SesiAkademikId(request.getTahunPelajaran(),request.getUrut());
-        if(repo.existsById(id)){
-            Map<String, String> errors = Map.of("kode", "Id Lembaga "+ request.getTahunPelajaran()+" dan Kode "+ request.getUrut() +" sudah digunakan");
+        if(repo.existsByKurikulumIdAndTahunAjaranIdAndUrut(request.getKurikulumId(), request.getTahunAjaranId(), request.getUrut())){
+            Map<String, String> errors = Map.of("tahunAjaranId", "kurikulumId "+ request.getKurikulumId()+" dan tahunAjaranId "+ request.getTahunAjaranId() +" sudah digunakan");
             throw new CommonApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
         SesiAkademikEntity result = this.convertReqToEntity(request);
         result.setId(UUID.randomUUID().toString().toUpperCase());
+
         return saveOrUpdate(result);
     }
 
     @Override
-    public Optional<SesiAkademikRes> update(SesiAkademikReq request, Integer id, Integer urut) {
-        SesiAkademikEntity result = this.getEntityById(new SesiAkademikId(id, urut));
+    public Optional<SesiAkademikRes> update(SesiAkademikReq request, String id) {
+        SesiAkademikEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
+        result.setId(id);
+
         return saveOrUpdate(result);
     }
 
@@ -80,16 +88,16 @@ public class SesiServiceImpl implements SesiService {
     }
 
     @Override
-    public Optional<SesiAkademikRes> delete(Integer id, Integer urut) {
-        SesiAkademikEntity result = this.getEntityById(new SesiAkademikId(id, urut));
+    public Optional<SesiAkademikRes> delete(String id) {
+        SesiAkademikEntity result = this.getEntityById(id);
         result.setStatus(DataStatus.DIHAPUS);
         return saveOrUpdate(result);
     }
 
-    private SesiAkademikEntity getEntityById(SesiAkademikId SesiAkademikId) {
-        SesiAkademikEntity result = this.repo.findById(SesiAkademikId).orElse(null);
+    private SesiAkademikEntity getEntityById(String id) {
+        SesiAkademikEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
-            Map<String, String> errors = Map.of("kode", "Id Lembaga "+ SesiAkademikId.getTahunPelajaran()+" dan Kode "+ SesiAkademikId.getUrut() +" tidak ditemukan");
+            Map<String, String> errors = Map.of("id", "Id "+ id +" tidak ditemukan");
             throw new CommonApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
@@ -106,8 +114,21 @@ public class SesiServiceImpl implements SesiService {
     }
 
     private SesiAkademikEntity convertReqToEntity(SesiAkademikReq request){
-        SesiAkademikId id = new SesiAkademikId(request.getTahunPelajaran(), request.getUrut());
-        return new SesiAkademikEntity("",request.getKodeKurikulum(), DataStatus.AKTIF);
+        KurikulumEntity kurikulumEntity = kurikulumRepo.findById(request.getKurikulumId()).orElse(null);
+        if(kurikulumEntity == null) {
+            return null;
+        }
+
+        TahunAjaranEntity tahunAjaran = tahunAjaranRepo.findById(request.getTahunAjaranId()).orElse(null);
+        if(tahunAjaran == null) {
+            return null;
+        }
+
+        SesiAkademikEntity result = new SesiAkademikEntity();
+        BeanUtils.copyProperties(request, result);
+        result.setStatus(DataStatus.AKTIF);
+
+        return result;
     }
 
     private void convertReqToEntity(SesiAkademikReq request, SesiAkademikEntity result){

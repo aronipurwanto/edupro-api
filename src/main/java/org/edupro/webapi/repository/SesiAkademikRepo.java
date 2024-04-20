@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SesiAkademikRepo extends JpaRepository<SesiAkademikEntity, SesiAkademikId> {
+public interface SesiAkademikRepo extends JpaRepository<SesiAkademikEntity, String> {
     List<SesiAkademikEntity> findAllByStatus(DataStatus status);
-    boolean existsById(SesiAkademikId id);
+    boolean existsByKurikulumIdAndTahunAjaranIdAndUrut(String kurikulumId, String tahunAjaranId, Integer urut);
 }

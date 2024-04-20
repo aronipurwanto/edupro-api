@@ -3,22 +3,18 @@
  */
 package org.edupro.webapi.model.entity;
 
+import jakarta.persistence.*;
 import org.edupro.webapi.constant.DataStatus;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Awiyanto Ajisasongko
@@ -49,6 +45,9 @@ public class KurikulumEntity extends BaseEntity {
 	
 	@Column(name = "KURNM", length = 100)
 	private String nama;
+
+	@OneToMany(mappedBy = "kurikulum")
+	private List<SesiAkademikEntity> sesiAkademikList = new ArrayList<>();
 	
 	@Default
 	@Column(name = "KURSTAT", length = 20)

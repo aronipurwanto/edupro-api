@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.edupro.webapi.model.request.SesiAkademikReq;
 import org.edupro.webapi.model.response.SesiAkademikRes;
 import org.edupro.webapi.model.response.Response;
-import org.edupro.webapi.service.SesiService;
+import org.edupro.webapi.service.SesiAkademikService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/sesi")
 @RequiredArgsConstructor
 public class SesiController extends BaseController<SesiAkademikRes> {
-    private final SesiService service;
+    private final SesiAkademikService service;
 
     @GetMapping
     private ResponseEntity<Response> get(){
@@ -23,9 +23,8 @@ public class SesiController extends BaseController<SesiAkademikRes> {
     }
 
     @GetMapping("/{id}/{urut}")
-    private ResponseEntity<Response> get(@PathVariable("id") Integer id,
-                                         @PathVariable("urut") Integer urut){
-        var result = service.getById(id, urut);
+    private ResponseEntity<Response> get(@PathVariable("id") String id){
+        var result = service.getById(id);
         return getResponse(result);
     }
 
@@ -37,16 +36,14 @@ public class SesiController extends BaseController<SesiAkademikRes> {
 
     @PutMapping("/{id}/{urut}")
     private ResponseEntity<Response> update(@RequestBody @Valid SesiAkademikReq request,
-                                            @PathVariable("id") Integer id,
-                                            @PathVariable("urut") Integer urut){
-        var result = service.update(request, id, urut);
+                                            @PathVariable("id") String id){
+        var result = service.update(request, id);
         return getResponse(result);
     }
 
     @DeleteMapping("/{id}/{urut}")
-    private ResponseEntity<Response> delete(@PathVariable("id") Integer id,
-                                            @PathVariable("urut") Integer urut){
-        var result = service.delete(id, urut);
+    private ResponseEntity<Response> delete(@PathVariable("id") String id){
+        var result = service.delete(id);
         return getResponse(result);
     }
 }
