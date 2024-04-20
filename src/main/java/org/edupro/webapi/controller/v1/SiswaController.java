@@ -5,8 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.edupro.webapi.model.request.SiswaReq;
 import org.edupro.webapi.model.response.Response;
 import org.edupro.webapi.model.response.SiswaRes;
-import org.edupro.webapi.model.response.SiswaRes;
-import org.edupro.webapi.service.SiswaService;
 import org.edupro.webapi.service.SiswaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +18,7 @@ public class SiswaController extends BaseController<SiswaRes> {
     @GetMapping
     private ResponseEntity<Response> get(){
         var result = service.get();
-        return this.get(result);
+        return this.getResponse(result);
     }
 
     @GetMapping("/{id}")

@@ -11,8 +11,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.UUID;
 
-import static org.edupro.webapi.constant.Constant.RESOURCE_TYPE;
-
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -22,20 +20,101 @@ public class DbInit implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         initResourceType();
+        initAgama();
+        initWargaNegara();
+        initLevelKelas();
     }
 
     private void initResourceType(){
-        int count = lookupRepo.countAllByGroup(RESOURCE_TYPE);
+        int count = lookupRepo.countAllByGroup(Constant.ResourceType.TYPE);
         if(count > 0){
             return;
         }
+
         List<LookupEntity> lookupEntities = List.of(
                 new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.ResourceType.TYPE, Constant.ResourceType.MATERIAL,Constant.ResourceType.MATERIAL,1),
                 new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.ResourceType.TYPE, Constant.ResourceType.QUESTION,Constant.ResourceType.QUESTION,2),
                 new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.ResourceType.TYPE, Constant.ResourceType.QUIZ,Constant.ResourceType.QUIZ,3)
         );
+
         try {
             lookupRepo.saveAll(lookupEntities);
+            log.info("Save ResourceType is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
+
+    private void initAgama(){
+        int count = lookupRepo.countAllByGroup(Constant.GROUP_AGAMA);
+        if(count > 0){
+            return;
+        }
+
+        List<LookupEntity> lookupEntities = List.of(
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_AGAMA, "ISLAM","Islam",1),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_AGAMA, "KRISTEN","Kristen",2),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_AGAMA, "KATHOLIK","Katholik",3),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_AGAMA, "HINDU","Hindu",4),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_AGAMA, "BUDHA","Budha",5),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_AGAMA, "KONG_HU_CHU","Kong Hu Chu",6),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_AGAMA, "KEPERCAYAAN","Kepercayaan",7),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_AGAMA, "LAINNYA","Lainnya",8)
+        );
+
+        try {
+            lookupRepo.saveAll(lookupEntities);
+            log.info("Save Agama is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
+
+    private void initWargaNegara(){
+        int count = lookupRepo.countAllByGroup(Constant.GROUP_WN);
+        if(count > 0){
+            return;
+        }
+
+        List<LookupEntity> lookupEntities = List.of(
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_WN, "WNI","Warga Negara Indonesia",1),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_WN, "WNA","Warga Negara Asing",2)
+        );
+
+        try {
+            lookupRepo.saveAll(lookupEntities);
+            log.info("Save Warga Negara is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
+
+    private void initLevelKelas(){
+        int count = lookupRepo.countAllByGroup(Constant.GROUP_LEVEL_KELAS);
+        if(count > 0){
+            return;
+        }
+
+        List<LookupEntity> lookupEntities = List.of(
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "TK_01","TK Tahun 1",1),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "TK_02","TK Tahun 2",2),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SD_01","SD Kelas 1",3),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SD_02","SD Kelas 2",4),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SD_03","SD Kelas 3",5),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SD_04","SD Kelas 4",6),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SD_05","SD Kelas 5",7),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SD_06","SD Kelas 6",8),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SMP_07","SMP Kelas 7",9),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SMP_08","SMP Kelas 8",10),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SMP_09","SMP Kelas 9",11),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SMA_10","SMA Kelas 10",12),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SMA_11","SMA Kelas 11",13),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SMA_12","SMA Kelas 12",14)
+        );
+
+        try {
+            lookupRepo.saveAll(lookupEntities);
+            log.info("Save Level Kelas is successful");
         }catch (Exception e){
             log.error(e.getMessage());
         }

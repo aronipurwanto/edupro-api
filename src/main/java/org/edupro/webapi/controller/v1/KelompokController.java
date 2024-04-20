@@ -19,7 +19,7 @@ public class KelompokController extends BaseController<CommonLembagaRes> {
     private ResponseEntity<Response> get(){
         var result = kmapelService.get();
 
-        return this.get(result);
+        return this.getResponse(result);
     }
 
     @GetMapping("/mapel/{id}/{kode}")

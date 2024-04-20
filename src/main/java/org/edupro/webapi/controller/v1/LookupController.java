@@ -27,24 +27,19 @@ public class LookupController extends BaseController<LookupRes> {
     @GetMapping
     private ResponseEntity<Response> get(){
         var result = service.get();
-        return this.get(result);
+        return this.getResponse(result);
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<Response> get(@PathVariable("id") Integer id){
+    private ResponseEntity<Response> get(@PathVariable("id") String id){
         var result = service.getById(id);
         return getResponse(result);
     }
 
-    @GetMapping("/group")
-    private ResponseEntity<Response> getGroup(){
-        return ResponseEntity.ok()
-                .body(Response.builder()
-                        .statusCode(HttpStatus.OK.value())
-                        .message(MessageApp.SUCCESS)
-                        .data(this.getLookupGroup())
-                        .build()
-                );
+    @GetMapping("/group/{group}")
+    private ResponseEntity<Response> getGroup(@PathVariable("group") String group){
+        var result = service.getByGroup(group);
+        return getResponse(result);
     }
 
     @PostMapping
@@ -55,13 +50,13 @@ public class LookupController extends BaseController<LookupRes> {
 
     @PutMapping("/{id}")
     private ResponseEntity<Response> update(@RequestBody @Valid LookupReq request,
-                                            @PathVariable("id") Integer id){
+                                            @PathVariable("id") String id){
         var result = service.update(request, id);
         return getResponse(result);
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<Response> delete(@PathVariable("id") Integer id){
+    private ResponseEntity<Response> delete(@PathVariable("id") String id){
         var result = service.delete(id);
         return getResponse(result);
     }

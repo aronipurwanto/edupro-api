@@ -19,7 +19,7 @@ public class LevelController extends BaseController<CommonLembagaRes> {
     private ResponseEntity<Response> get(){
         var result = service.get();
 
-        return this.get(result);
+        return this.getResponse(result);
     }
 
     @GetMapping("/{id}/{kode}")

@@ -19,7 +19,7 @@ public class LembagaController extends BaseController<LembagaRes> {
     private ResponseEntity<Response> get(){
         var result = service.get();
 
-        return this.get(result);
+        return this.getResponse(result);
     }
 
     @GetMapping("/{id}")

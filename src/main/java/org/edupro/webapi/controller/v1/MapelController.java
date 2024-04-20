@@ -18,7 +18,7 @@ public class MapelController extends BaseController<CommonRes>{
     @GetMapping
     private ResponseEntity<Response> get(){
         var result = service.get();
-        return this.get(result);
+        return this.getResponse(result);
     }
 
     @GetMapping("/{id}")

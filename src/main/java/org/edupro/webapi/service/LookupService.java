@@ -8,8 +8,9 @@ import java.util.Optional;
 
 public interface LookupService {
     List<LookupRes> get();
-    Optional<LookupRes> getById(Integer id);
+    Optional<LookupRes> getById(String id);
+    List<LookupRes> getByGroup(String group);
     Optional<LookupRes> save(LookupReq request);
-    Optional<LookupRes> update(LookupReq request, Integer id);
-    Optional<LookupRes> delete(Integer id);
+    Optional<LookupRes> update(LookupReq request, String id);
+    Optional<LookupRes> delete(String id);
 }

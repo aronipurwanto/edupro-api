@@ -11,7 +11,7 @@ import org.edupro.webapi.constant.DataStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LookupRes {
-    private Integer id;
+    private String id;
     private String group;
     private String kode;
     private String nama;

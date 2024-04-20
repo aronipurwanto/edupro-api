@@ -40,10 +40,19 @@ public class LookupServiceImpl implements LookupService {
     }
 
     @Override
-    public Optional<LookupRes> getById(Integer id) {
+    public Optional<LookupRes> getById(String id) {
         LookupEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
+    }
+
+    @Override
+    public List<LookupRes> getByGroup(String group) {
+        List<LookupEntity> result = this.repo.findAllByGroup(group);
+        if(result.isEmpty()){
+            return Collections.emptyList();
+        }
+        return result.stream().map(this::convertEntityToRes).collect(Collectors.toList());
     }
 
     @Override
@@ -58,7 +67,7 @@ public class LookupServiceImpl implements LookupService {
     }
 
     @Override
-    public Optional<LookupRes> update(LookupReq request, Integer id) {
+    public Optional<LookupRes> update(LookupReq request, String id) {
         LookupEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
@@ -66,7 +75,7 @@ public class LookupServiceImpl implements LookupService {
     }
 
     @Override
-    public Optional<LookupRes> delete(Integer id) {
+    public Optional<LookupRes> delete(String id) {
         LookupEntity result = this.getEntityById(id);
 
         result.setDeletedAt(LocalDateTime.now());
@@ -91,7 +100,7 @@ public class LookupServiceImpl implements LookupService {
         }
     }
 
-    private LookupEntity getEntityById(Integer id) {
+    private LookupEntity getEntityById(String id) {
         LookupEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("kode", "Kode "+ id +" tidak dapat ditemukan");

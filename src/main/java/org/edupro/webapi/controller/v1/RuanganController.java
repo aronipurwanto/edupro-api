@@ -18,7 +18,7 @@ public class RuanganController extends BaseController<RuanganRes> {
     @GetMapping
     private ResponseEntity<Response> get(){
         var result = service.get();
-        return this.get(result);
+        return this.getResponse(result);
     }
 
     @GetMapping("/{id}")

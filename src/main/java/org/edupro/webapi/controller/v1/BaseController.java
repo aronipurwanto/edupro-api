@@ -25,7 +25,7 @@ public class BaseController<T> {
         ));
     }
 
-    public ResponseEntity<Response> get(List<T> result){
+    public ResponseEntity<Response> getResponse(List<T> result){
         return ResponseEntity.ok().body(
                 Response.builder()
                         .statusCode(HttpStatus.OK.value())

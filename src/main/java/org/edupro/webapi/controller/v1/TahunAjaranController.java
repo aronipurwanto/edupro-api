@@ -2,12 +2,9 @@ package org.edupro.webapi.controller.v1;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.edupro.webapi.model.request.RuanganReq;
 import org.edupro.webapi.model.request.TahunAjaranReq;
 import org.edupro.webapi.model.response.Response;
-import org.edupro.webapi.model.response.RuanganRes;
 import org.edupro.webapi.model.response.TahunAjaranRes;
-import org.edupro.webapi.service.RuanganService;
 import org.edupro.webapi.service.TahunAjaranService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +18,7 @@ public class TahunAjaranController extends BaseController<TahunAjaranRes> {
     @GetMapping
     private ResponseEntity<Response> get(){
         var result = service.get();
-        return this.get(result);
+        return this.getResponse(result);
     }
 
     @GetMapping("/{id}")
