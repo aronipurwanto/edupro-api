@@ -3,17 +3,13 @@
  */
 package org.edupro.webapi.model.entity;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.edupro.webapi.constant.DataStatus;
 
 /**
  * @author Awiyanto Ajisasongko
@@ -44,4 +40,9 @@ public class MapelEntity extends BaseEntity {
 	
 	@Column(name = "MAPELNM", length = 100, nullable = false)
 	private String nama;
+
+	@Builder.Default
+	@Column(name = "KURSTAT", length = 20)
+	@Enumerated(EnumType.STRING)
+	private DataStatus status = DataStatus.AKTIF;
 }

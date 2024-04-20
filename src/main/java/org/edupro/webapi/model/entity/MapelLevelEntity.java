@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.edupro.webapi.constant.DataStatus;
 
 /**
  * Master data mapel per level
@@ -59,4 +60,9 @@ public class MapelLevelEntity extends BaseEntity {
 	
 	@Column(name = "MAPLVLKKM")
 	private double nilaiKKM;
+
+	@Builder.Default
+	@Column(name = "KURSTAT", length = 20)
+	@Enumerated(EnumType.STRING)
+	private DataStatus status = DataStatus.AKTIF;
 }

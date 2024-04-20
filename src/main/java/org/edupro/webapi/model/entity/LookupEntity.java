@@ -2,6 +2,9 @@ package org.edupro.webapi.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.edupro.webapi.constant.DataStatus;
+
+import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -33,4 +36,17 @@ public class LookupEntity extends BaseEntity{
 
     @Column(name = "LKURT", nullable = false)
     private Integer urutan;
+
+    @Builder.Default
+    @Column(name = "KURSTAT", length = 20)
+    @Enumerated(EnumType.STRING)
+    private DataStatus status = DataStatus.AKTIF;
+
+    public LookupEntity(String id, String group, String kode, String nama, Integer urutan) {
+        this.id = id;
+        this.group = group;
+        this.kode = kode;
+        this.nama = nama;
+        this.urutan = urutan;
+    }
 }
