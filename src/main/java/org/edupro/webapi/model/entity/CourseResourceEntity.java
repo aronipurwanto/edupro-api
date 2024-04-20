@@ -32,7 +32,7 @@ public class CourseResourceEntity extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "COURSEID", insertable = false, updatable = false)
-	private CourseEntity courseEntity;
+	private CourseEntity course;
 	
 	@Column(name = "CRSSECID", nullable = false, length = 36)
 	private String courseSectionId;
@@ -41,7 +41,19 @@ public class CourseResourceEntity extends BaseEntity {
 	@JoinColumn(name = "CRSSECID", insertable = false, updatable = false)
 	private CourseSectionEntity courseSection;
 
+	/**
+	 * Mengacu pada google classroom, jenis resource ini contohnya: assignment, quiz, question, material
+	 */
+	@Column(name = "RSRCTPE", nullable = false)
+	private Integer type;
 
-	@Column(name = "RSRCID", nullable = false)
-	private Long resourceId;
+	@Column(name = "RSRCNM", nullable = false)
+	private String name;
+
+	@Column(name = "ATTCHID")
+	private String attachmentId;
+
+	@ManyToOne
+	@JoinColumn(name = "ATTCHID", insertable = false, updatable = false)
+	private AttachmentEntity attachment;
 }

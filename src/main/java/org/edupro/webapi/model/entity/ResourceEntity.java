@@ -37,4 +37,11 @@ public class ResourceEntity extends BaseEntity {
 	
 	@Column(name = "RSRCNM", nullable = false)
 	private String name;
+
+	@Column(name = "ATTCHID")
+	private String attachmentId;
+
+	@ManyToOne
+	@JoinColumn(name = "ATTCHID", insertable = false, updatable = false)
+	private AttachmentEntity attachment;
 }

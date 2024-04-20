@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
-import org.edupro.webapi.exception.CommonApiException;
+import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.model.entity.GedungEntity;
 import org.edupro.webapi.model.entity.RuanganEntity;
 import org.edupro.webapi.model.request.RuanganReq;
@@ -49,7 +49,7 @@ public class RuanganServiceImpl implements RuanganService {
     public Optional<RuanganRes> save(RuanganReq request) {
         if(repo.existsByKode(request.getKode())){
             Map<String, String> errors = Map.of("kode", "Kode "+ request.getKode() +" sudah digunakan");
-            throw new CommonApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
         RuanganEntity result = this.convertReqToEntity(request);
@@ -84,11 +84,11 @@ public class RuanganServiceImpl implements RuanganService {
             log.error("Save Ruangan, SQL error : {}", e.getMessage());
             DataException exception = (DataException) e.getCause();
             Map<String, String> errors = Map.of("sql", exception.getCause().getMessage());
-            throw new  CommonApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
         }catch (Exception e){
             log.error("Save Ruangan gagal, terjadi error : {}", e.getMessage());
             Map<String, String> errors = Map.of("sql", e.getCause().getMessage());
-            throw new  CommonApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
         }
     }
 
@@ -96,7 +96,7 @@ public class RuanganServiceImpl implements RuanganService {
         GedungEntity result = this.gedungRepo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("kode", "Kode "+ id +" tidak dapat ditemukan");
-            throw new CommonApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
         return result;
@@ -106,7 +106,7 @@ public class RuanganServiceImpl implements RuanganService {
         RuanganEntity result = this.repo.findByKode(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("kode", "Kode "+ id +" tidak dapat ditemukan");
-            throw new CommonApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
         return result;

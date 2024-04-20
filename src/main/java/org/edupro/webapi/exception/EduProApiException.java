@@ -2,19 +2,19 @@ package org.edupro.webapi.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class CommonApiException extends RuntimeException {
+public class EduProApiException extends RuntimeException {
     private final HttpStatus status;
     private final String message;
     private final Object errors;
 
-    public CommonApiException(String message, HttpStatus status) {
+    public EduProApiException(String message, HttpStatus status) {
         super(message);
         this.status = status;
         this.message = message;
         this.errors = null;
     }
 
-    public CommonApiException(String message, HttpStatus status, Object errors) {
+    public EduProApiException(String message, HttpStatus status, Object errors) {
         super(message);
         this.status = status;
         this.message = message;

@@ -28,12 +28,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "T_ATTCH")
-public class Attachment extends BlankBaseEntity {
+public class AttachmentEntity extends BlankBaseEntity {
 	private static final long serialVersionUID = 4672155540988374323L;
 	
 	@Id
-	@Column(name = "ATTID")
-	private Long id;
+	@Column(name = "ATTID", nullable = false, length = 36)
+	private String id;
 	
 	@Column(name = "ATTCONTYPE", length = 100)
 	private String contentType;
@@ -45,8 +45,8 @@ public class Attachment extends BlankBaseEntity {
 	@Column(name = "ATTPUBLIC")
 	private boolean publiclyAccessible = true;
 	
-	//@Column(name = "ATTCONTENT")
-	//private byte[] file;
+	@Column(name = "ATTPATH")
+	private String filePath;
 	
 	@Column(name = "ATTSIZE")
 	private Long size;
@@ -57,7 +57,7 @@ public class Attachment extends BlankBaseEntity {
 	@Column(name = "ATTCRUID", length = 100)
 	private String createdBy;
 	
-	@Column(name = "ATTDESC", length = 255)
+	@Column(name = "ATTDESC")
 	private String description;
 	
 	@Column(name = "ATTOWNER", length = 100)

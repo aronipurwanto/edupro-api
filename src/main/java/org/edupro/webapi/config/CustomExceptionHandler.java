@@ -3,10 +3,9 @@ package org.edupro.webapi.config;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.MessageApp;
-import org.edupro.webapi.exception.CommonApiException;
+import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.exception.EmptyResponseBodyException;
 import org.edupro.webapi.model.response.ResponseError;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -191,8 +190,8 @@ public class CustomExceptionHandler {
                 .build());
     }
 
-    @ExceptionHandler(value = {CommonApiException.class})
-    public ResponseEntity<ResponseError> handleException(CommonApiException e) {
+    @ExceptionHandler(value = {EduProApiException.class})
+    public ResponseEntity<ResponseError> handleException(EduProApiException e) {
         if(e.getErrors() == null) {
             return ResponseEntity.status(e.getStatus()).body(ResponseError.builder()
                     .statusCode(e.getStatus().value())

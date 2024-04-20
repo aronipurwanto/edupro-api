@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
-import org.edupro.webapi.exception.CommonApiException;
+import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.model.entity.LookupEntity;
 import org.edupro.webapi.model.request.LookupReq;
 import org.edupro.webapi.model.response.LookupRes;
@@ -59,7 +59,7 @@ public class LookupServiceImpl implements LookupService {
     public Optional<LookupRes> save(LookupReq request) {
         if(repo.existsByGroupAndKode(request.getGroup(), request.getKode())){
             Map<String, String> errors = Map.of("kode", "Group "+ request.getGroup() +" dan Kode "+ request.getKode() +" sudah digunakan");
-            throw new CommonApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
         LookupEntity result = this.convertReqToEntity(request);
@@ -92,11 +92,11 @@ public class LookupServiceImpl implements LookupService {
             log.error("Save Lookup, SQL error : {}", e.getMessage());
             DataException exception = (DataException) e.getCause();
             Map<String, String> errors = Map.of("sql", exception.getCause().getMessage());
-            throw new  CommonApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
         }catch (Exception e){
             log.error("Save Lookup gagal, terjadi error : {}", e.getMessage());
             Map<String, String> errors = Map.of("sql", e.getCause().getMessage());
-            throw new  CommonApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
         }
     }
 
@@ -104,7 +104,7 @@ public class LookupServiceImpl implements LookupService {
         LookupEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("kode", "Kode "+ id +" tidak dapat ditemukan");
-            throw new CommonApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
         return result;

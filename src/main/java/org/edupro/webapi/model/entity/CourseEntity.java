@@ -4,11 +4,10 @@
 package org.edupro.webapi.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -71,9 +70,22 @@ public class CourseEntity extends BaseEntity {
 	 * kodeMapel dan kodeLevel diisi jika course/pembelajaran ini melekat di mapel
 	 * pada level tertentu
 	 */
+	@Column(name = "MAPELID", length = 10, nullable = false)
+	private String mapelId;
+
+	@ManyToOne
+	@JoinColumn(name = "MAPELID", insertable = false, updatable = false)
+	private MapelEntity mapel;
+
 	@Column(name = "MAPELKD", length = 10, nullable = false)
 	private String kodeMapel;
 	
 	@Column(name = "LVLKD", length = 10, nullable = false)
 	private String kodeLevel;
+
+	@OneToMany(mappedBy = "course")
+	private List<CourseResourceEntity> courseResourceList = new ArrayList<>();
+
+	@OneToMany(mappedBy = "course")
+	private List<CourseSectionEntity> courseSectionList = new ArrayList<>();
 }

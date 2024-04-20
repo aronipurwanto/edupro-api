@@ -4,10 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
-import org.edupro.webapi.exception.CommonApiException;
+import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.model.entity.KurikulumEntity;
 import org.edupro.webapi.model.entity.SesiAkademikEntity;
-import org.edupro.webapi.model.entity.SesiAkademikId;
 import org.edupro.webapi.model.entity.TahunAjaranEntity;
 import org.edupro.webapi.model.request.SesiAkademikReq;
 import org.edupro.webapi.model.response.SesiAkademikRes;
@@ -52,7 +51,7 @@ public class SesiAkademikServiceImpl implements SesiAkademikService {
     public Optional<SesiAkademikRes> save(SesiAkademikReq request) {
         if(repo.existsByKurikulumIdAndTahunAjaranIdAndUrut(request.getKurikulumId(), request.getTahunAjaranId(), request.getUrut())){
             Map<String, String> errors = Map.of("tahunAjaranId", "kurikulumId "+ request.getKurikulumId()+" dan tahunAjaranId "+ request.getTahunAjaranId() +" sudah digunakan");
-            throw new CommonApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
         SesiAkademikEntity result = this.convertReqToEntity(request);
@@ -79,11 +78,11 @@ public class SesiAkademikServiceImpl implements SesiAkademikService {
             log.error("Save Sesi gagal, SQL error : {}", e.getMessage());
             DataException exception = (DataException) e.getCause();
             Map<String, String> errors = Map.of("sql", exception.getCause().getMessage());
-            throw new  CommonApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
         }catch (Exception e){
             log.error("Save SesiAkademik gagal, terjadi error : {}", e.getMessage());
             Map<String, String> errors = Map.of("sql", e.getCause().getMessage());
-            throw new  CommonApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
         }
     }
 
@@ -98,7 +97,7 @@ public class SesiAkademikServiceImpl implements SesiAkademikService {
         SesiAkademikEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("id", "Id "+ id +" tidak ditemukan");
-            throw new CommonApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
         return result;
