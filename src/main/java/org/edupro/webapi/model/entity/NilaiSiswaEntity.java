@@ -52,6 +52,13 @@ public class NilaiSiswaEntity extends BaseEntity implements Serializable {
 	@Column(name = "SAURUT", nullable = false)
 	private Integer urut; // 1 = ganjil, 2 = genap
 
+	@Column(name = "MAPELID", nullable = false, length = 36)
+	private String mapelId;
+
+	@ManyToOne
+	@JoinColumn(name = "MAPELID", insertable = false, updatable = false)
+	private MapelEntity mapel;
+
 	@Column(name = "LVLKD", length = 10, nullable = false)
 	private String kodeLevel;
 
