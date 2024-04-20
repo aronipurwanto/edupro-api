@@ -2,16 +2,12 @@ package org.edupro.webapi.controller.v1;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.edupro.webapi.constant.CommonConstant;
 import org.edupro.webapi.model.request.CommonReq;
 import org.edupro.webapi.model.response.CommonRes;
 import org.edupro.webapi.model.response.Response;
 import org.edupro.webapi.service.MapelService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/mapel")

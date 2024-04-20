@@ -11,4 +11,5 @@ import java.util.List;
 public interface LookupRepo extends JpaRepository<LookupEntity, Integer> {
     List<LookupEntity> findAllByStatus(DataStatus status);
     boolean existsByGroupAndKode(String group, String kode);
+    int countAllByGroup(String group);
 }

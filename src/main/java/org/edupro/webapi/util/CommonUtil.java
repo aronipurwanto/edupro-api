@@ -1,7 +1,7 @@
 package org.edupro.webapi.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.edupro.webapi.constant.CommonConstant;
+import org.edupro.webapi.constant.Constant;
 import org.edupro.webapi.exception.CommonApiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -63,7 +63,7 @@ public class CommonUtil {
     }
 
     public String getTransactionId() {
-        return (String) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()).getAttribute(CommonConstant.TRANSACTION_ID, RequestAttributes.SCOPE_REQUEST);
+        return (String) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()).getAttribute(Constant.TRANSACTION_ID, RequestAttributes.SCOPE_REQUEST);
     }
 
     public static String encodeImageToBase64(MultipartFile image) {

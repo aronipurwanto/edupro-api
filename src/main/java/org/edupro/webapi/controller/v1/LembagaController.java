@@ -2,17 +2,12 @@ package org.edupro.webapi.controller.v1;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.edupro.webapi.constant.CommonConstant;
-import org.edupro.webapi.model.entity.BaseEntity;
 import org.edupro.webapi.model.request.LembagaReq;
 import org.edupro.webapi.model.response.LembagaRes;
 import org.edupro.webapi.model.response.Response;
 import org.edupro.webapi.service.LembagaService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/lembaga")

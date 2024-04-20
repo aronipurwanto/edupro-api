@@ -24,12 +24,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "T_RESOURCE")
-public class Resource extends BaseEntity {
+public class ResourceEntity extends BaseEntity {
 	@Id
-	@Column(name = "RSRCID", nullable = false)
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "RESOURCE")
-	@TableGenerator(name = "RESOURCE", table = "T_SEQUENCE", pkColumnName = "SEQ_NAME", pkColumnValue = "RESOURCE", valueColumnName = "SEQ_VAL", allocationSize = 1, initialValue = 1)
-	private Long id;
+	@Column(name = "RSRCID", nullable = false, length = 36)
+	private String id;
 	
 	/**
 	 * Mengacu pada google classroom, jenis resource ini contohnya: assignment, quiz, question, material
