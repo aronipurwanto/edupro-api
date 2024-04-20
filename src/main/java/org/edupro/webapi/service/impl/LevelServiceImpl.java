@@ -100,7 +100,12 @@ public class LevelServiceImpl implements LevelService {
     }
 
     private LevelEntity convertReqToEntity(CommonLembagaReq request){
-        return new LevelEntity(UUID.randomUUID().toString(), request.getIdLembaga(),request.getKode(), request.getNama(), DataStatus.AKTIF);
+        LevelEntity result = new LevelEntity();
+        BeanUtils.copyProperties(request, result);
+        result.setId(UUID.randomUUID().toString().toUpperCase());
+        result.setStatus(DataStatus.AKTIF);
+
+        return result;
     }
 
     private void convertReqToEntity(CommonLembagaReq request, LevelEntity result){

@@ -30,14 +30,18 @@ import lombok.NoArgsConstructor;
 	@AttributeOverride(name = "updatedAt", column = @Column(name="MAPLVLUPD")),
 	@AttributeOverride(name = "updatedBy", column = @Column(name="MAPLVLUPUID"))
 })
-public class MapelLevel extends BaseEntity {
+public class MapelLevelEntity extends BaseEntity {
 	private static final long serialVersionUID = -4046075931995216469L;
 	@Id
 	@Column(name = "MAPLVID", length = 36, nullable = false)
 	private String id;
 
 	@Column(name = "LBGID", nullable = false)
-	private Integer idLembaga;
+	private String idLembaga;
+
+	@ManyToOne
+	@JoinColumn(name = "LBGID", insertable = false, updatable = false)
+	private LembagaEntity lembaga;
 
 	@Column(name = "LVLKD", length = 10, nullable = false)
 	private String kodeLevel;

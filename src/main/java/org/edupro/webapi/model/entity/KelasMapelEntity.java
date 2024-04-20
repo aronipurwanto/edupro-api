@@ -3,12 +3,7 @@
  */
 package org.edupro.webapi.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Builder.Default;
@@ -28,15 +23,30 @@ import org.edupro.webapi.constant.DataStatus;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "T_MAPELKEL")
-public class KelompokMapelEntity extends BlankBaseEntity {
+@Table(name = "T_KELMAPEL")
+public class KelasMapelEntity extends BlankBaseEntity {
 	private static final long serialVersionUID = 6664606117330350877L;
 
-	@EmbeddedId
-	private KelompokMapelId id;
+	@Id
+	@Column(name = "KELMAPELID", nullable = false, length = 36)
+	private String id;
+
+	@Column(name = "KLSID", nullable = false, length = 36)
+	private String kelasId;
+
+	@ManyToOne
+	@JoinColumn(name = "KLSID", insertable = false, updatable = false)
+	private KelasEntity kelas;
 	
-	@Column(name = "MKELNM", length = 100, nullable = false)
-	private String nama;
+	@Column(name = "MAPELID", nullable = false, length = 36)
+	private String mapelId;
+
+	@ManyToOne
+	@JoinColumn(name = "MAPELID", insertable = false, updatable = false)
+	private MapelEntity mapel;
+
+	@Column(name = "SAMKKM")
+	private double nilaiKKM;
 	
 	@Default
 	@Column(name = "MKELSTAT", length = 20, nullable = false)

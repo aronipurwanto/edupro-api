@@ -23,4 +23,6 @@ public class CommonLembagaReq {
     @NotEmpty(message = "tidak boleh kosong")
     @Size(min = 2, max = 100, message = "Nama min 2 dan maksimal 10")
     private String nama;
+
+    private Integer noUrut;
 }

@@ -1,11 +1,6 @@
 package org.edupro.webapi.model.entity;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,13 +27,43 @@ import lombok.NoArgsConstructor;
 		@AttributeOverride(name = "status", column = @Column(name="KLSSTAT"))
 })
 public class KelasEntity extends BaseEntity {
-
-	@EmbeddedId
-	private KelasId id;
+	@Id
+	@Column(name = "KLSID", nullable = false, length = 36)
+	private String id;
 	
 	@Column(name = "KLSNM", length = 20, nullable = false)
 	private String nama;
+
+	@Column(name = "RUANGID", nullable = false, length = 36)
+	private String ruangId;
 	
 	@Column(name = "RUANGKD", length = 20)
 	private String kodeRuangan;
+
+	@Column(name = "LBGID", nullable = false)
+	private Integer idLembaga;
+
+	@Column(name = "TAID", nullable = false)
+	private String tahunAjaranId;
+
+	@ManyToOne
+	@JoinColumn(name = "TAID", insertable = false, updatable = false)
+	private TahunAjaranEntity tahunAjaran;
+
+	@Column(name = "KLSKD", length = 10, nullable = false)
+	private String kode;
+
+	@Column(name = "LVLID", nullable = false, length = 36)
+	private String levelId;
+
+	@ManyToOne
+	@JoinColumn(name = "LVLID", insertable = false, updatable = false)
+	private LevelEntity level;
+
+	@Column(name = "SAID", nullable = false, length = 36)
+	private String SesiAkademikId;
+
+	@ManyToOne
+	@JoinColumn(name = "SAID", insertable = false, updatable = false)
+	private SesiAkademikEntity SesiAkademik;
 }

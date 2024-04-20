@@ -11,6 +11,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.edupro.webapi.constant.DataStatus;
 
+import java.time.LocalDate;
+
 /**
  * Data semester
  * 
@@ -50,6 +52,12 @@ public class SesiAkademikEntity extends BlankBaseEntity {
 
 	@Column(name = "SAURUT", nullable = false)
 	private Integer urut; // 1 = ganjil, 2 = genap
+
+	@Column(name = "SASTARTDATE")
+	private LocalDate startDate;
+
+	@Column(name = "SAENDDATE")
+	private LocalDate endDate;
 
 	@Builder.Default
 	@Column(name = "SASTAT", length = 20, nullable = false)

@@ -5,16 +5,14 @@ package org.edupro.webapi.model.entity;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.edupro.webapi.constant.DataStatus;
 
 /**
  * @author Awiyanto Ajisasongko
@@ -62,4 +60,9 @@ public class AttachmentEntity extends BlankBaseEntity {
 	
 	@Column(name = "ATTOWNER", length = 100)
 	private String owner;
+
+	@Default
+	@Column(name = "ATTSTAT", length = 20, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private DataStatus status = DataStatus.AKTIF;
 }

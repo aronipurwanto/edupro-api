@@ -42,6 +42,9 @@ public class LevelEntity extends BlankBaseEntity {
 
 	@Column(name = "LVLNM", length = 10, nullable = false)
 	private String nama;
+
+	@Column(name = "LVLURUT")
+	private Integer noUrut;
 	
 	@Default
 	@Column(name = "LVLSTAT", length = 20, nullable = false)
