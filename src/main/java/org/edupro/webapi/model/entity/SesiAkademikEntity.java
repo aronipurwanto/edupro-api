@@ -27,7 +27,15 @@ import java.time.LocalDate;
 @Builder
 @Entity
 @Table(name = "T_SESI_AKADEMIK")
-public class SesiAkademikEntity extends BlankBaseEntity {
+@AttributeOverrides({
+		@AttributeOverride(name = "id", column = @Column(name="SAID")),
+		@AttributeOverride(name = "createdAt", column = @Column(name="SACRD")),
+		@AttributeOverride(name = "createdBy", column = @Column(name="SACRUID")),
+		@AttributeOverride(name = "updatedAt", column = @Column(name="SAUPD")),
+		@AttributeOverride(name = "updatedBy", column = @Column(name="SAUPUID")),
+		@AttributeOverride(name = "status", column = @Column(name="SASTAT"))
+})
+public class SesiAkademikEntity extends BaseIdEntity {
 	private static final long serialVersionUID = -9042433341420102754L;
 	@Id
 	@Column(name = "SAID", length = 36, nullable = false)
@@ -58,9 +66,4 @@ public class SesiAkademikEntity extends BlankBaseEntity {
 
 	@Column(name = "SAENDDATE")
 	private LocalDate endDate;
-
-	@Builder.Default
-	@Column(name = "SASTAT", length = 20, nullable = false)
-	@Enumerated(EnumType.STRING)
-	private DataStatus status = DataStatus.AKTIF;
 }

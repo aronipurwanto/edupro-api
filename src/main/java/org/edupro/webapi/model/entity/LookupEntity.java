@@ -14,17 +14,14 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "T_LOOKUP")
 @AttributeOverrides({
+        @AttributeOverride(name = "id", column = @Column(name="LKID")),
         @AttributeOverride(name = "createdAt", column = @Column(name="LKCRD")),
         @AttributeOverride(name = "createdBy", column = @Column(name="LKCRUID")),
         @AttributeOverride(name = "updatedAt", column = @Column(name="LKUPD")),
         @AttributeOverride(name = "updatedBy", column = @Column(name="LKUID")),
         @AttributeOverride(name = "status", column = @Column(name="LKSTAT"))
 })
-public class LookupEntity extends BaseEntity{
-    @Id
-    @Column(name = "LKID", length = 36, nullable = false)
-    private String id;
-
+public class LookupEntity extends BaseIdEntity{
     @Column(name = "LKGRP", length = 32, nullable = false)
     private String group;
 
@@ -43,7 +40,7 @@ public class LookupEntity extends BaseEntity{
     private DataStatus status = DataStatus.AKTIF;
 
     public LookupEntity(String id, String group, String kode, String nama, Integer urutan) {
-        this.id = id;
+        this.setId(id);
         this.group = group;
         this.kode = kode;
         this.nama = nama;

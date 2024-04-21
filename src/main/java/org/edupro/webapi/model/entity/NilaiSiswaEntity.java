@@ -23,17 +23,14 @@ import org.edupro.webapi.constant.DataStatus;
 @Entity
 @Table(name = "T_NILAI_SISWA")
 @AttributeOverrides({
+		@AttributeOverride(name = "id", column = @Column(name="NSID")),
 		@AttributeOverride(name = "createdAt", column = @Column(name="NSCRD")),
 		@AttributeOverride(name = "createdBy", column = @Column(name="NSCRUID")),
 		@AttributeOverride(name = "updatedAt", column = @Column(name="NSUPD")),
 		@AttributeOverride(name = "updatedBy", column = @Column(name="NSUPUID"))
 })
-public class NilaiSiswaEntity extends BaseEntity implements Serializable {
+public class NilaiSiswaEntity extends BaseIdEntity implements Serializable {
 	private static final long serialVersionUID = 6633650732514656422L;
-
-	@Id
-	@Column(name = "NSID")
-	private String id;
 
 	@Column(name = "SAID", nullable = false, length = 36)
 	private String sesiAkademikId;

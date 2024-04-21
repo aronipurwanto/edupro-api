@@ -30,18 +30,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "T_RUANGAN")
 @AttributeOverrides({
+	@AttributeOverride(name = "id", column = @Column(name="RUANGID")),
 	@AttributeOverride(name = "createdAt", column = @Column(name="RUANGCRD")),
 	@AttributeOverride(name = "createdBy", column = @Column(name="RUANGCRUID")),
 	@AttributeOverride(name = "updatedAt", column = @Column(name="RUANGUPD")),
 	@AttributeOverride(name = "updatedBy", column = @Column(name="RUANGUPUID")),
 	@AttributeOverride(name = "status", column = @Column(name="RUANGSTAT"))
 })
-public class RuanganEntity extends BaseEntity {
-	
-	@Id
-	@Column(name = "RUANGID", length = 36, nullable = false)
-	private String id;
-
+public class RuanganEntity extends BaseIdEntity {
 	@Column(name = "RUANGKD", length = 20, nullable = false)
 	private String kode;
 	

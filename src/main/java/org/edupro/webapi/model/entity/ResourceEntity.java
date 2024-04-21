@@ -24,11 +24,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "T_RESOURCE")
-public class ResourceEntity extends BaseEntity {
-	@Id
-	@Column(name = "RSRCID", nullable = false, length = 36)
-	private String id;
-	
+@AttributeOverrides({
+		@AttributeOverride(name = "id", column = @Column(name="RSCID")),
+		@AttributeOverride(name = "createdAt", column = @Column(name="RSCCRD")),
+		@AttributeOverride(name = "createdBy", column = @Column(name="RSCCRUID")),
+		@AttributeOverride(name = "updatedAt", column = @Column(name="RSCUPD")),
+		@AttributeOverride(name = "updatedBy", column = @Column(name="RSCUPUID")),
+		@AttributeOverride(name = "status", column = @Column(name="RSCSTAT"))
+})
+public class ResourceEntity extends BaseIdEntity {
 	/**
 	 * Mengacu pada google classroom, jenis resource ini contohnya: assignment, quiz, question, material
 	 */

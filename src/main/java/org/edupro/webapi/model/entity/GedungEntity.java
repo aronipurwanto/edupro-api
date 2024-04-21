@@ -26,17 +26,13 @@ import java.util.List;
 @Entity
 @Table(name = "T_GEDUNG")
 @AttributeOverrides({
-	@AttributeOverride(name = "createdAt", column = @Column(name="GDCRD")),
+	@AttributeOverride(name = "createdAt", column = @Column(name="GDID")),
 	@AttributeOverride(name = "createdBy", column = @Column(name="GDCRUID")),
 	@AttributeOverride(name = "updatedAt", column = @Column(name="GDUPD")),
 	@AttributeOverride(name = "updatedBy", column = @Column(name="GDUPUID")),
 	@AttributeOverride(name = "status", column = @Column(name="GDSTAT"))
 })
-public class GedungEntity extends BaseEntity {
-	@Id
-	@Column(name = "GDID", length = 36, nullable = false)
-	private String id;
-
+public class GedungEntity extends BaseIdEntity {
 	@Column(name = "GDKD", length = 20, nullable = false)
 	private String kode;
 	

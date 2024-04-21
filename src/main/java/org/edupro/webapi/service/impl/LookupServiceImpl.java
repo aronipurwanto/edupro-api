@@ -1,10 +1,7 @@
 package org.edupro.webapi.service.impl;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.edupro.webapi.constant.DataStatus;
@@ -63,6 +60,7 @@ public class LookupServiceImpl implements LookupService {
         }
 
         LookupEntity result = this.convertReqToEntity(request);
+        result.setId(UUID.randomUUID().toString());
         return saveOrUpdate(result);
     }
 

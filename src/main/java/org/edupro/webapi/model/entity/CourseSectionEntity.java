@@ -25,6 +25,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "T_COURSE_SECTION")
+@AttributeOverrides({
+		@AttributeOverride(name = "id", column = @Column(name="CRSSECID")),
+		@AttributeOverride(name = "createdAt", column = @Column(name="CRSSECCRD")),
+		@AttributeOverride(name = "createdBy", column = @Column(name="CRSSECCRUID")),
+		@AttributeOverride(name = "updatedAt", column = @Column(name="CRSSECUPD")),
+		@AttributeOverride(name = "updatedBy", column = @Column(name="CRSSECUPUID")),
+		@AttributeOverride(name = "status", column = @Column(name="CRSSECSTAT"))
+})
 public class CourseSectionEntity extends BaseEntity {
 	@Id
 	@Column(name = "CRSSECID", nullable = false, length = 36)
