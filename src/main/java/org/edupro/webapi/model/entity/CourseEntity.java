@@ -74,7 +74,7 @@ public class CourseEntity extends BaseIdEntity {
 	 * kodeMapel dan kodeLevel diisi jika course/pembelajaran ini melekat di mapel
 	 * pada level tertentu
 	 */
-	@Column(name = "MAPELID", length = 10, nullable = false)
+	@Column(name = "MAPELID", length = 36, nullable = false)
 	private String mapelId;
 
 	@ManyToOne

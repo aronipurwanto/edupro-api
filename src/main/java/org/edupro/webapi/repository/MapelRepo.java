@@ -11,4 +11,5 @@ import java.util.List;
 public interface MapelRepo extends JpaRepository<MapelEntity, String> {
     List<MapelEntity> findAllByStatus(DataStatus status);
     boolean existsByKode(String kode);
+    boolean existsById(String id);
 }

@@ -23,6 +23,7 @@ public class DbInit implements CommandLineRunner {
         initAgama();
         initWargaNegara();
         initLevelKelas();
+        initAttachmentType();
     }
 
     private void initResourceType(){
@@ -84,6 +85,27 @@ public class DbInit implements CommandLineRunner {
         try {
             lookupRepo.saveAll(lookupEntities);
             log.info("Save Warga Negara is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
+
+    private void initAttachmentType(){
+        int count = lookupRepo.countAllByGroup(Constant.AttachmentType.TYPE);
+        if(count > 0){
+            return;
+        }
+
+        List<LookupEntity> lookupEntities = List.of(
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.AttachmentType.TYPE, Constant.AttachmentType.DRIVE,Constant.AttachmentType.DRIVE,1),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.AttachmentType.TYPE, Constant.AttachmentType.YOUTUBE,Constant.AttachmentType.YOUTUBE,2),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.AttachmentType.TYPE, Constant.AttachmentType.UPLOAD_FILE,Constant.AttachmentType.UPLOAD_FILE,3),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.AttachmentType.TYPE, Constant.AttachmentType.LINK,Constant.AttachmentType.LINK,4)
+        );
+
+        try {
+            lookupRepo.saveAll(lookupEntities);
+            log.info("Save Attachment Type is successful");
         }catch (Exception e){
             log.error(e.getMessage());
         }

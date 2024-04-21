@@ -16,4 +16,12 @@ public class Constant {
         public static final String QUESTION = "QUESTION";
         public static final String MATERIAL = "MATERIAL";
     }
+
+    public static class AttachmentType {
+        public static final String TYPE = "ATTACHMENT_TYPE";
+        public static final String DRIVE = "DRIVE";
+        public static final String YOUTUBE = "YOUTUBE";
+        public static final String UPLOAD_FILE = "UPLOAD_FILE";
+        public static final String LINK = "LINK";
+    }
 }

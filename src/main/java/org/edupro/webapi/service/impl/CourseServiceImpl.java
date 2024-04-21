@@ -6,9 +6,11 @@ import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.model.entity.CourseEntity;
+import org.edupro.webapi.model.entity.MapelEntity;
 import org.edupro.webapi.model.request.CourseReq;
 import org.edupro.webapi.model.response.CourseRes;
 import org.edupro.webapi.repository.CourseRepo;
+import org.edupro.webapi.repository.MapelRepo;
 import org.edupro.webapi.service.CourseService;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
+    private final MapelRepo mapelRepo;
     private final CourseRepo repo;
 
     @Override
@@ -44,15 +47,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Optional<CourseRes> save(CourseReq request) {
-        /*
-        if(repo.existsByKode(request.getKode())){
-            log.info("Save Course gagal, terjadi error : kode sudah digunakan");
-            Map<String, String> errors = Map.of("kode", "Kode "+ request.getKode() +" sudah digunakan");
-            throw new CommonApiException("Save gagal", HttpStatus.BAD_REQUEST, errors);
-        }
-
-         */
-
         CourseEntity result = this.convertReqToEntity(request);
         result.setId(UUID.randomUUID().toString().toUpperCase());
         return saveOrUpdate(result);
@@ -108,8 +102,18 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private CourseEntity convertReqToEntity(CourseReq request){
+        MapelEntity mapel = mapelRepo.findById(request.getMapelId()).orElse(null);
+        if(mapel == null){
+            log.info("Save Course gagal, terjadi error : mapel tidak ditemukan");
+            Map<String, String> errors = Map.of("mapelId", "MapelId "+ request.getMapelId() +" tidak ditemukan");
+            throw new EduProApiException("Save gagal", HttpStatus.BAD_REQUEST, errors);
+        }
+
         CourseEntity result = new CourseEntity();
         BeanUtils.copyProperties(request, result);
+
+        if(!mapel.getKode().isEmpty()) result.setKodeMapel(mapel.getKode());
+
         result.setCreatedAt(LocalDateTime.now());
         result.setUpdatedAt(LocalDateTime.now());
         return result;
