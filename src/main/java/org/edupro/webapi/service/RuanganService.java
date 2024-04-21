@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface RuanganService {
     List<RuanganRes> get();
-    Optional<RuanganRes> getById(String kode);
+    Optional<RuanganRes> getById(String Id);
     Optional<RuanganRes> save(RuanganReq request);
-    Optional<RuanganRes> update(RuanganReq request, String kode);
-    Optional<RuanganRes> delete(String kode);
+    Optional<RuanganRes> update(RuanganReq request, String id);
+    Optional<RuanganRes> delete(String id);
 }

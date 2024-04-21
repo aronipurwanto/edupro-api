@@ -11,6 +11,7 @@ import org.edupro.webapi.constant.DataStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RuanganRes {
+    private String id;
     private String kode;
     private String nama;
     private Integer kapasitas;

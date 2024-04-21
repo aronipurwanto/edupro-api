@@ -54,6 +54,7 @@ public class RuanganServiceImpl implements RuanganService {
 
         RuanganEntity result = this.convertReqToEntity(request);
         result.setId(UUID.randomUUID().toString().toUpperCase());
+
         return saveOrUpdate(result);
     }
 
@@ -114,10 +115,11 @@ public class RuanganServiceImpl implements RuanganService {
 
     private RuanganRes convertEntityToRes(RuanganEntity entity){
         RuanganRes result = new RuanganRes();
-
         BeanUtils.copyProperties(entity, result);
-        if(entity.getGedungEntity() != null && !entity.getGedungEntity().getNama().isEmpty()){
-            result.setNamaGedung(entity.getGedungEntity().getNama());
+        if(entity.getGedungEntity() != null){
+            if(entity.getGedungEntity().getKode() != null) result.setKode(entity.getGedungEntity().getKode());
+
+            if (entity.getGedungEntity().getNama() != null) result.setNama(entity.getGedungEntity().getNama());
         }
         return result;
     }

@@ -13,6 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RuanganReq {
+    private String id;
     @NotEmpty
     @Size(min = 4, max = 20, message = "Kode minimal 4 dan maximal 20")
     private String kode;
