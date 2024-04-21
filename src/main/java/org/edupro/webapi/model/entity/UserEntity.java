@@ -36,9 +36,8 @@ public class UserEntity implements UserDetails {
 	private static final long serialVersionUID = -7513004010560492767L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UID", nullable = false)
-    private Integer id;
+    private String id;
 
     @Column(name = "FIRST_NAME", length = 64)
     private String firstname;

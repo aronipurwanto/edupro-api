@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "T_ROLE")
 public class RoleEntity {
     @Id
-    private Integer id;
+    @Column(name = "RID", length = 36)
+    private String id;
 
     @Column(name = "ROLE_NAME", length = 64)
     private String name;

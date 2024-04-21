@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class LembagaReq {
-    private Integer id;
+    private String id;
 
     @NotEmpty
     @Size(max = 100)
