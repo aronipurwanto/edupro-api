@@ -117,9 +117,9 @@ public class RuanganServiceImpl implements RuanganService {
         RuanganRes result = new RuanganRes();
         BeanUtils.copyProperties(entity, result);
         if(entity.getGedungEntity() != null){
-            if(entity.getGedungEntity().getKode() != null) result.setKode(entity.getGedungEntity().getKode());
+            if(entity.getGedungEntity().getKode() != null) result.setKodeGedung(entity.getGedungEntity().getKode());
 
-            if (entity.getGedungEntity().getNama() != null) result.setNama(entity.getGedungEntity().getNama());
+            if (entity.getGedungEntity().getNama() != null) result.setNamaGedung(entity.getGedungEntity().getNama());
         }
         return result;
     }
