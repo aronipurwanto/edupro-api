@@ -115,12 +115,14 @@ public class SesiAkademikServiceImpl implements SesiAkademikService {
     private SesiAkademikEntity convertReqToEntity(SesiAkademikReq request){
         KurikulumEntity kurikulumEntity = kurikulumRepo.findById(request.getKurikulumId()).orElse(null);
         if(kurikulumEntity == null) {
-            return null;
+            Map<String, String> errors = Map.of("kurikulumId","kurikulum tidak ditemukan");
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
         TahunAjaranEntity tahunAjaran = tahunAjaranRepo.findById(request.getTahunAjaranId()).orElse(null);
         if(tahunAjaran == null) {
-            return null;
+            Map<String, String> errors = Map.of("tahunAjaranId","tahun ajaran tidak ditemukan");
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
         SesiAkademikEntity result = new SesiAkademikEntity();
