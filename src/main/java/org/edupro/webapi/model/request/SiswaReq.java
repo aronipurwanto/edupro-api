@@ -2,6 +2,8 @@ package org.edupro.webapi.model.request;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -32,5 +34,6 @@ public class SiswaReq {
     private String kotaTempatLahir;
 
     @NotNull
+    @Temporal(TemporalType.DATE)
     private LocalDate tanggalLahir;
 }

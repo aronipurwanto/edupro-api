@@ -57,6 +57,8 @@ public class LevelServiceImpl implements LevelService {
     public Optional<CommonLembagaRes> update(CommonLembagaReq request, String id) {
         LevelEntity result = this.getEntityById(id);
         convertReqToEntity(request, result);
+        result.setId(id);
+
         return saveOrUpdate(result);
     }
 
@@ -109,6 +111,6 @@ public class LevelServiceImpl implements LevelService {
     }
 
     private void convertReqToEntity(CommonLembagaReq request, LevelEntity result){
-        result.setNama(request.getNama());
+        BeanUtils.copyProperties(request, result);
     }
 }
