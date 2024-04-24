@@ -104,7 +104,7 @@ public class RuanganServiceImpl implements RuanganService {
     }
 
     private RuanganEntity getEntityById(String id) {
-        RuanganEntity result = this.repo.findByKode(id).orElse(null);
+        RuanganEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("kode", "Kode "+ id +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
