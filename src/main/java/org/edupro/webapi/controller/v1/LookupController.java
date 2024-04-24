@@ -61,6 +61,11 @@ public class LookupController extends BaseController<LookupRes> {
         return getResponse(result);
     }
 
+    @GetMapping("/group")
+    private ResponseEntity<Response> getGroup(){
+        var result = getLookupGroup();
+        return getResponse(result);
+    }
     public List<CommonRes> getLookupGroup(){
         List<CommonRes> result = new ArrayList<>();
         for(Map.Entry entry: LookupGroup.getAllValue().entrySet()){

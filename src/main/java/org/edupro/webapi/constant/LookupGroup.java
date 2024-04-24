@@ -7,8 +7,10 @@ public enum LookupGroup {
     AGAMA("AGAMA"),
     PEKERJAAN("PEKERJAAN"),
     GOL_DARAH("GOL_DARAH"),
+    RESOURCE_TYPE("RESOURCE_TYPE"),
     WARGA_NEGARA("WARGA_NEGARA"),
-    GENDER("GENDER");
+    GENDER("GENDER"),
+    ATTACHMENT_TYPE("ATTACHMENT_TYPE");
 
     private final String value;
     private static final Map<String, LookupGroup> BY_LABEL = new HashMap<>();
