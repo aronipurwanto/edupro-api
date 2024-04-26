@@ -68,7 +68,6 @@ public class KurikulumServiceImpl implements KurikulumService {
 
         result.setDeletedAt(LocalDateTime.now());
         result.setStatus(DataStatus.DIHAPUS);
-        result.setId(UUID.randomUUID().toString().toUpperCase());
 
         return saveOrUpdate(result);
     }
