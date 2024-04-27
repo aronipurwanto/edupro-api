@@ -11,4 +11,5 @@ import java.util.List;
 public interface GedungRepo extends JpaRepository<GedungEntity, String> {
     List<GedungEntity> findAllByStatus(DataStatus status);
     boolean existsByKode(String kode);
+    boolean existsById(String id);
 }

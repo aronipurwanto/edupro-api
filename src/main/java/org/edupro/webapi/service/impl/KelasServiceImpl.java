@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.model.entity.KelasEntity;
+import org.edupro.webapi.model.entity.*;
 import org.edupro.webapi.model.request.KelasReq;
 import org.edupro.webapi.model.response.KelasRes;
 import org.edupro.webapi.repository.*;
@@ -111,27 +111,31 @@ public class KelasServiceImpl implements KelasService {
     }
 
     private KelasEntity convertReqToEntity(KelasReq request){
-        KelasEntity result = new KelasEntity();
-        if(!ruanganRepo.existsByKode(request.getRuangId())){
+        RuanganEntity ruangan = ruanganRepo.findById(request.getRuangId()).orElse(null);
+        if(ruangan == null){
             Map<String, String> errors = Map.of("ruangId", "ruangId "+ request.getRuangId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        if(!lembagaRepo.existsById(request.getLembagaId())){
+        LembagaEntity lembaga = lembagaRepo.findById(request.getLembagaId()).orElse(null);
+        if(lembaga == null){
             Map<String, String> errors = Map.of("lembagaId", "lembagaId "+ request.getLembagaId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        if(!sesiAkademikRepo.existsById(request.getSesiAkademikId())){
+        SesiAkademikEntity sesiAkademik = sesiAkademikRepo.findById(request.getSesiAkademikId()).orElse(null);
+        if(sesiAkademik == null){
             Map<String, String> errors = Map.of("sesiAkademikId", "sesiAkademikId "+ request.getLembagaId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        if(!personRepo.existsById(request.getWaliKelasId())){
+        PersonEntity person = personRepo.findById(request.getWaliKelasId()).orElse(null);
+        if(person == null){
             Map<String, String> errors = Map.of("waliKelasId", "waliKelasId "+ request.getWaliKelasId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
+        KelasEntity result = new KelasEntity();
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
         result.setUpdatedAt(LocalDateTime.now());
