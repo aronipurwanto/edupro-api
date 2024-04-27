@@ -115,17 +115,17 @@ public class KelasServiceImpl implements KelasService {
     private KelasEntity convertReqToEntity(KelasReq request){
         KelasEntity result = new KelasEntity();
         if(!ruanganRepo.existsByKode(request.getRuangId())){
-            Map<String, String> errors = Map.of("ruangId", request.getRuangId());
+            Map<String, String> errors = Map.of("ruangId", "ruangId "+ request.getRuangId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
         if(!lembagaRepo.existsById(request.getLembagaId())){
-            Map<String, String> errors = Map.of("lembaga", request.getLembagaId());
+            Map<String, String> errors = Map.of("lembagaId", "lembagaId "+ request.getLembagaId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
         if(!sesiAkademikRepo.existsById(request.getSesiAkademikId())){
-            Map<String, String> errors = Map.of("sesiAkademik", request.getSesiAkademikId());
+            Map<String, String> errors = Map.of("sesiAkademikId", "sesiAkademikId "+ request.getLembagaId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 

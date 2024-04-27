@@ -36,6 +36,10 @@ public class KelasEntity extends BaseIdEntity {
 
 	@Column(name = "RUANGID", nullable = false, length = 36)
 	private String ruangId;
+
+	@ManyToOne
+	@JoinColumn(name = "RUANGID", insertable = false, updatable = false)
+	private RuanganEntity ruangan;
 	
 	@Column(name = "RUANGKD", length = 20)
 	private String kodeRuangan;

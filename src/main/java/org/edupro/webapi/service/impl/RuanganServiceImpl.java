@@ -126,6 +126,10 @@ public class RuanganServiceImpl implements RuanganService {
 
     private RuanganEntity convertReqToEntity(RuanganReq request){
         RuanganEntity result = new RuanganEntity();
+        if(!gedungRepo.existsById(result.getGedungId())){
+            Map<String, String> errors = Map.of("gedungId", "gedungId "+ request.getGedungId() +" tidak dapat ditemukan");
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+        }
 
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
