@@ -15,6 +15,7 @@ public class RuanganRes {
     private String kode;
     private String nama;
     private Integer kapasitas;
+    private String gedungId;
     private String kodeGedung;
     private String namaGedung;
     private DataStatus status;

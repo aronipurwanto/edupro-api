@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,4 +16,5 @@ public class KelasRes {
     private String nama;
     private String kodeRuangan;
     private String namaRuangan;
+    private List<KelasSiswaRes> siswaList;
 }
