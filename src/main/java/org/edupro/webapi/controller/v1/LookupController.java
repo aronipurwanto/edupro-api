@@ -4,13 +4,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.LookupGroup;
-import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.model.request.LookupReq;
 import org.edupro.webapi.model.response.CommonRes;
-import org.edupro.webapi.model.response.Response;
 import org.edupro.webapi.model.response.LookupRes;
+import org.edupro.webapi.model.response.Response;
 import org.edupro.webapi.service.LookupService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,7 +62,7 @@ public class LookupController extends BaseController<LookupRes> {
     @GetMapping("/group")
     private ResponseEntity<Response> getGroup(){
         var result = getLookupGroup();
-        return getResponse(result);
+        return getObjectResponse(result);
     }
     public List<CommonRes> getLookupGroup(){
         List<CommonRes> result = new ArrayList<>();

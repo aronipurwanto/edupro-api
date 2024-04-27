@@ -9,7 +9,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class BaseController<T> {
-    public ResponseEntity<Response> getResponse(Object result){
+    public ResponseEntity<Response> getObjectResponse(Object result){
+        return ResponseEntity.ok().body(
+                Response.builder()
+                        .statusCode(HttpStatus.OK.value())
+                        .message(Constant.SUCCESS_STATUS)
+                        .data(result)
+                        .build()
+        );
+    }
+
+    public ResponseEntity<Response> getResponse(T result){
         return ResponseEntity.ok().body(
                 Response.builder()
                         .statusCode(HttpStatus.OK.value())
