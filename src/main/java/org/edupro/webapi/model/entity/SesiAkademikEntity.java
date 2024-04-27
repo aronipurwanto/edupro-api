@@ -32,14 +32,14 @@ import java.time.LocalDate;
 })
 public class SesiAkademikEntity extends BaseIdEntity {
 	private static final long serialVersionUID = -9042433341420102754L;
-	@Column(name = "TAID", nullable = false)
+	@Column(name = "TAID", length = 36, nullable = false)
 	private String tahunAjaranId;
 
 	@ManyToOne
 	@JoinColumn(name = "TAID",insertable = false, updatable = false)
 	private TahunAjaranEntity tahunAjaran;
 
-	@Column(name = "KURID", length = 35, nullable = false)
+	@Column(name = "KURID", length = 36, nullable = false)
 	private String kurikulumId;
 	
 	@Column(name = "KURKD", length = 20)

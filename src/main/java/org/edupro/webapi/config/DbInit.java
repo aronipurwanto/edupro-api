@@ -22,8 +22,11 @@ public class DbInit implements CommandLineRunner {
         initResourceType();
         initAgama();
         initWargaNegara();
+        initAbsensi();
         initLevelKelas();
         initAttachmentType();
+        initJenisIbadahOpsi();
+        initJenisIbadahCheck();
     }
 
     private void initResourceType(){
@@ -90,6 +93,28 @@ public class DbInit implements CommandLineRunner {
         }
     }
 
+    private void initAbsensi(){
+        int count = lookupRepo.countAllByGroup(Constant.GROUP_ABSENSI);
+        if(count > 0){
+            return;
+        }
+
+        List<LookupEntity> lookupEntities = List.of(
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_ABSENSI, "HADIR","Hadir",1),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_ABSENSI, "IJIN","Ijin",2),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_ABSENSI, "SAKIT","Sakit",3),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_ABSENSI, "ALPHA","Alpha",4)
+        );
+
+        try {
+            lookupRepo.saveAll(lookupEntities);
+            log.info("Save Absendi is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
+
+
     private void initAttachmentType(){
         int count = lookupRepo.countAllByGroup(Constant.AttachmentType.TYPE);
         if(count > 0){
@@ -142,20 +167,47 @@ public class DbInit implements CommandLineRunner {
         }
     }
 
-    private void initJenisIbadah(){
-        int count = lookupRepo.countAllByGroup(Constant.GROUP_JENIS_IBADAH);
+    private void initJenisIbadahOpsi(){
+        int count = lookupRepo.countAllByGroup(Constant.GROUP_IBADAH_OPSI);
         if(count > 0){
             return;
         }
 
         List<LookupEntity> lookupEntities = List.of(
-                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_JENIS_IBADAH, "TK_01","TK Tahun 1",1),
-                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_JENIS_IBADAH, "TK_01","TK Tahun 1",1)
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_IBADAH_OPSI, "SHOLAT_DHUHA","Sholat Dhuha",1),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_IBADAH_OPSI, "MUROJAAH_PAGI","Murojaah Pagi",2),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_IBADAH_OPSI, "MAJELIS_PAGI","Majelis Pagi",3),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_IBADAH_OPSI, "SHOLAT_ZHUHUR","Sholat Zhuhur",4),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_IBADAH_OPSI, "LITERASI_SIANG","Literasi Siang",5),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_IBADAH_OPSI, "SHOLAT_ASHAR","Sholat Ashar",6),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_IBADAH_OPSI, "LITERASI_SORE","Literasi Sore",7)
         );
 
         try {
             lookupRepo.saveAll(lookupEntities);
-            log.info("Save Level Kelas is successful");
+            log.info("Save Ibadah Opsi is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
+
+    private void initJenisIbadahCheck(){
+        int count = lookupRepo.countAllByGroup(Constant.GROUP_IBADAH_CHECK);
+        if(count > 0){
+            return;
+        }
+
+        List<LookupEntity> lookupEntities = List.of(
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_IBADAH_CHECK, "IBADAH_CHECK_01","Memimpin Sholat Dhuha dan Doa",1),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_IBADAH_OPSI, "IBADAH_CHECK_02","Memimpin Al Ma tsurat",2),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_IBADAH_OPSI, "IBADAH_CHECK_03","Memimpin Tilawah /  Murojaah",3),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_IBADAH_OPSI, "IBADAH_CHECK_04","Terakhir Murojaah",4),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_IBADAH_OPSI, "IBADAH_CHECK_05","Pendamping",5)
+        );
+
+        try {
+            lookupRepo.saveAll(lookupEntities);
+            log.info("Save Ibadah Check is successful");
         }catch (Exception e){
             log.error(e.getMessage());
         }

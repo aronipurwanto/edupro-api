@@ -22,7 +22,8 @@ import java.time.LocalDate;
 		@AttributeOverride(name = "createdAt", column = @Column(name="KLSIBDCRD")),
 		@AttributeOverride(name = "createdBy", column = @Column(name="KLSIBDCRUID")),
 		@AttributeOverride(name = "updatedAt", column = @Column(name="KLSIBDUPD")),
-		@AttributeOverride(name = "updatedBy", column = @Column(name="KLSIBDUPUID"))
+		@AttributeOverride(name = "updatedBy", column = @Column(name="KLSIBDUPUID")),
+		@AttributeOverride(name = "status", column = @Column(name="KLSIBDSTAT"))
 })
 public class KelasIbadahEntity extends BaseIdEntity {
 	@Column(name = "KLSSISWAID", nullable = false, length = 36)
