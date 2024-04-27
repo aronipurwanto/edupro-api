@@ -14,7 +14,7 @@ public interface LookupMapper {
             @Result(property = "kode", column = "LKKD"),
             @Result(property = "nama", column = "LKNM"),
             @Result(property = "urutan", column = "LKURT"),
-            @Result(property = "status", column = "LKSTAT"),
+            @Result(property = "status", column = "LKSTAT",javaType = String.class),
     })
     LookupRes getById(@Param("id") String id);
 

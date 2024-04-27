@@ -4,14 +4,7 @@
 package org.edupro.webapi.model.entity;
 
 import jakarta.persistence.*;
-import org.edupro.webapi.constant.DataStatus;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Builder.Default;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +37,4 @@ public class KurikulumEntity extends BaseIdEntity {
 
 	@OneToMany(mappedBy = "kurikulum")
 	private List<SesiAkademikEntity> sesiAkademikList = new ArrayList<>();
-	
-	@Default
-	@Column(name = "KURSTAT", length = 20)
-	@Enumerated(EnumType.STRING)
-	private DataStatus status = DataStatus.AKTIF;
 }

@@ -4,12 +4,7 @@
 package org.edupro.webapi.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import org.edupro.webapi.constant.DataStatus;
+import lombok.*;
 
 /**
  * @author Awiyanto Ajisasongko
@@ -37,9 +32,4 @@ public class MapelEntity extends BaseIdEntity {
 	
 	@Column(name = "MAPELNM", length = 100, nullable = false)
 	private String nama;
-
-	@Builder.Default
-	@Column(name = "KURSTAT", length = 20)
-	@Enumerated(EnumType.STRING)
-	private DataStatus status = DataStatus.AKTIF;
 }

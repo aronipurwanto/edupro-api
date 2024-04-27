@@ -2,7 +2,6 @@ package org.edupro.webapi.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.edupro.webapi.constant.DataStatus;
 
 /**
  * @author Awiyanto Ajisasongko
@@ -60,9 +59,4 @@ public class KelasSiswaEntity extends BaseIdEntity {
 
 	@Column(name = "CATATAN")
 	private String catatan;
-
-	@Builder.Default
-	@Column(name = "KURSTAT", length = 20)
-	@Enumerated(EnumType.STRING)
-	private DataStatus status = DataStatus.AKTIF;
 }

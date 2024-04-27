@@ -3,15 +3,10 @@
  */
 package org.edupro.webapi.model.entity;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import org.edupro.webapi.constant.DataStatus;
+import lombok.*;
+
+import java.time.LocalDate;
 
 /**
  * @author Awiyanto Ajisasongko
@@ -32,12 +27,7 @@ import org.edupro.webapi.constant.DataStatus;
 	@AttributeOverride(name = "updatedBy", column = @Column(name="LBGUPUID")),
 	@AttributeOverride(name = "status", column = @Column(name="LBSTAT"))
 })
-public class LembagaEntity extends BaseEntity {
-	
-	@Id
-	@Column(name = "LBGID", length = 36, nullable = false)
-	private String id;
-	
+public class LembagaEntity extends BaseIdEntity {
 	@Column(name = "LBGNM", length = 100, nullable = false)
 	private String nama;
 	
@@ -139,9 +129,4 @@ public class LembagaEntity extends BaseEntity {
 
 	@Column(name = "LBGATTIDSTEMPEL")
 	private Long stempel;
-
-	@Builder.Default
-	@Column(name = "KURSTAT", length = 20)
-	@Enumerated(EnumType.STRING)
-	private DataStatus status = DataStatus.AKTIF;
 }

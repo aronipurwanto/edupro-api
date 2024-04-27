@@ -4,13 +4,7 @@
 package org.edupro.webapi.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Builder.Default;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import org.edupro.webapi.constant.DataStatus;
+import lombok.*;
 
 /**
  * Level ini menunjukkan tingkatan kelas
@@ -27,12 +21,16 @@ import org.edupro.webapi.constant.DataStatus;
 @Builder
 @Entity
 @Table(name = "T_LEVEL")
-public class LevelEntity extends BlankBaseEntity {
+@AttributeOverrides({
+		@AttributeOverride(name = "id", column = @Column(name="LVLID")),
+		@AttributeOverride(name = "createdAt", column = @Column(name="LVLCRD")),
+		@AttributeOverride(name = "createdBy", column = @Column(name="LVLCRUID")),
+		@AttributeOverride(name = "updatedAt", column = @Column(name="LVLUPD")),
+		@AttributeOverride(name = "updatedBy", column = @Column(name="LVLUID")),
+		@AttributeOverride(name = "status", column = @Column(name="LVLSTAT"))
+})
+public class LevelEntity extends BaseIdEntity {
 	private static final long serialVersionUID = -1692222214526057221L;
-
-	@Id
-	@Column(name = "LVID",length = 36, nullable = false)
-	private String id;
 
 	@Column(name = "LBGID", nullable = false)
 	private Integer idLembaga;
@@ -45,9 +43,4 @@ public class LevelEntity extends BlankBaseEntity {
 
 	@Column(name = "LVLURUT")
 	private Integer noUrut;
-	
-	@Default
-	@Column(name = "LVLSTAT", length = 20, nullable = false)
-	@Enumerated(EnumType.STRING)
-	private DataStatus status = DataStatus.AKTIF;
 }
