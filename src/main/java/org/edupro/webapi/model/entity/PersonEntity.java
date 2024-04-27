@@ -3,22 +3,10 @@
  */
 package org.edupro.webapi.model.entity;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
+import lombok.*;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.TableGenerator;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import java.time.LocalDate;
 
 /**
  * @author Awiyanto Ajisasongko
@@ -38,8 +26,7 @@ import lombok.NoArgsConstructor;
 	@AttributeOverride(name = "updatedAt", column = @Column(name="PERSONUPD")),
 	@AttributeOverride(name = "updatedBy", column = @Column(name="PERSONUPUID"))
 })
-public class Personel extends BaseEntity {
-
+public class PersonEntity extends BaseIdEntity {
 	@Id
 	@Column(name = "PERSONID", length = 36, nullable = false)
 	private String id;

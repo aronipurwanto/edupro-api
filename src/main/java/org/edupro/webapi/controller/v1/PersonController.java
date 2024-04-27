@@ -2,18 +2,18 @@ package org.edupro.webapi.controller.v1;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.edupro.webapi.model.request.KelasReq;
-import org.edupro.webapi.model.response.KelasRes;
+import org.edupro.webapi.model.request.PersonReq;
+import org.edupro.webapi.model.response.PersonRes;
 import org.edupro.webapi.model.response.Response;
-import org.edupro.webapi.service.KelasService;
+import org.edupro.webapi.service.PersonService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/kelas")
+@RequestMapping("/api/v1/person")
 @RequiredArgsConstructor
-public class KelasController extends BaseController<KelasRes> {
-    private final KelasService service;
+public class PersonController extends BaseController<PersonRes> {
+    private final PersonService service;
 
     @GetMapping("")
     private ResponseEntity<Response> get(){
@@ -29,13 +29,13 @@ public class KelasController extends BaseController<KelasRes> {
     }
 
     @PostMapping("")
-    private ResponseEntity<Response> save(@RequestBody @Valid KelasReq request){
+    private ResponseEntity<Response> save(@RequestBody @Valid PersonReq request){
         var result = service.save(request);
         return getResponse(result);
     }
 
-    @PutMapping("/{id}")
-    private ResponseEntity<Response> update(@RequestBody @Valid KelasReq request,
+    @PutMapping("/{id}/{kode}")
+    private ResponseEntity<Response> update(@RequestBody @Valid PersonReq request,
                                             @PathVariable("id") String id){
         var result = service.update(request, id);
         return getResponse(result);
