@@ -3,7 +3,6 @@ package org.edupro.webapi.model.request;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +31,6 @@ public class CourseReq {
     private Integer layout;
     private Boolean completionTracking;
     @NotEmpty
-    @Size(min = 36, max = 36, message = "mapel id harus 36 karakter")
+    @Size(min = 32, max = 36, message = "mapelId minimal 32 dan maximal 36")
     private String mapelId;
 }

@@ -1,23 +1,22 @@
 package org.edupro.webapi.model.request;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.edupro.webapi.constant.DataStatus;
-import org.edupro.webapi.model.entity.KelasEntity;
-import org.edupro.webapi.model.entity.MapelEntity;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class KelasMapelReq {
     private String id;
+    @NotEmpty
+    @Size(min = 32, max = 36, message = "kelasId minimal 32 dan maximal 36")
     private String kelasId;
+
+    @NotEmpty
+    @Size(min = 32, max = 36, message = "mapelId minimal 32 dan maximal 36")
     private String mapelId;
     private double nilaiKKM;
 }
