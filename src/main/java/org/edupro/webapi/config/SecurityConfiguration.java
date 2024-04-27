@@ -1,7 +1,6 @@
 package org.edupro.webapi.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -12,7 +11,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
@@ -27,6 +25,7 @@ public class SecurityConfiguration {
     //@Value("${spring.security.white-list}")
     private String[] WHITE_LIST_URL = new String[]{
             "/api/v1/**",
+            "/api/v2/**",
             "/v2/api-docs",
             "/v3/api-docs",
             "/v3/api-docs/**",
