@@ -8,10 +8,7 @@ import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.model.entity.KelasEntity;
 import org.edupro.webapi.model.request.KelasReq;
 import org.edupro.webapi.model.response.KelasRes;
-import org.edupro.webapi.repository.KelasRepo;
-import org.edupro.webapi.repository.LembagaRepo;
-import org.edupro.webapi.repository.RuanganRepo;
-import org.edupro.webapi.repository.SesiAkademikRepo;
+import org.edupro.webapi.repository.*;
 import org.edupro.webapi.service.KelasService;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
@@ -34,6 +31,7 @@ public class KelasServiceImpl implements KelasService {
     private final RuanganRepo ruanganRepo;
     private final LembagaRepo lembagaRepo;
     private final SesiAkademikRepo sesiAkademikRepo;
+    private final PersonRepo personRepo;
 
     @Override
     public List<KelasRes> get() {
@@ -126,6 +124,11 @@ public class KelasServiceImpl implements KelasService {
 
         if(!sesiAkademikRepo.existsById(request.getSesiAkademikId())){
             Map<String, String> errors = Map.of("sesiAkademikId", "sesiAkademikId "+ request.getLembagaId() +" tidak dapat ditemukan");
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+        }
+
+        if(!personRepo.existsById(request.getWaliKelasId())){
+            Map<String, String> errors = Map.of("waliKelasId", "waliKelasId "+ request.getWaliKelasId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 

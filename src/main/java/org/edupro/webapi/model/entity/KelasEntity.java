@@ -71,4 +71,11 @@ public class KelasEntity extends BaseIdEntity {
 	@ManyToOne
 	@JoinColumn(name = "SAID", insertable = false, updatable = false)
 	private SesiAkademikEntity SesiAkademik;
+
+	@Column(name = "WALIID", nullable = false, length = 36)
+	private String waliKelasId;
+
+	@ManyToOne
+	@JoinColumn(name = "WALIID", insertable = false, updatable = false)
+	private PersonEntity waliKelas;
 }

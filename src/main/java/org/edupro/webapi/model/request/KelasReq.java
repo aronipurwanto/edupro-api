@@ -17,4 +17,5 @@ public class KelasReq {
     private String tahunAjaranId;
     private String levelId;
     private String SesiAkademikId;
+    private String waliKelasId;
 }
