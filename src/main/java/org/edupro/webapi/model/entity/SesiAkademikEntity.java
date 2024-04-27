@@ -4,12 +4,7 @@
 package org.edupro.webapi.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import org.edupro.webapi.constant.DataStatus;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -37,10 +32,6 @@ import java.time.LocalDate;
 })
 public class SesiAkademikEntity extends BaseIdEntity {
 	private static final long serialVersionUID = -9042433341420102754L;
-	@Id
-	@Column(name = "SAID", length = 36, nullable = false)
-	private String id;
-
 	@Column(name = "TAID", nullable = false)
 	private String tahunAjaranId;
 

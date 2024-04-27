@@ -9,6 +9,7 @@ import org.edupro.webapi.model.entity.KelasMapelEntity;
 import org.edupro.webapi.model.request.KelasMapelReq;
 import org.edupro.webapi.model.response.KelasMapelRes;
 import org.edupro.webapi.repository.KelasMapelRepo;
+import org.edupro.webapi.repository.MapelRepo;
 import org.edupro.webapi.service.KelasMapelService;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class KelasMapelServiceImpl implements KelasMapelService {
     private final KelasMapelRepo repo;
+    private final MapelRepo mapelRepo;
 
     @Override
     public List<KelasMapelRes> get() {

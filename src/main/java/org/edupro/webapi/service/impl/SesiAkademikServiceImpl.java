@@ -106,9 +106,16 @@ public class SesiAkademikServiceImpl implements SesiAkademikService {
     private SesiAkademikRes convertEntityToRes(SesiAkademikEntity entity){
         SesiAkademikRes result = new SesiAkademikRes();
         BeanUtils.copyProperties(entity, result);
-        //result.setTahunPelajaran(entity.getId().getTahunPelajaran());
-        //result.setUrut(entity.getId().getUrut());
         result.setStatus(entity.getStatus());
+
+        if(entity.getKurikulum() != null){
+            result.setKodeKurikulum(entity.getKurikulum().getKode());
+            result.setKurikulumName(entity.getKurikulum().getNama());
+        }
+
+        if(entity.getTahunAjaran() != null){
+            result.setTahunAjaranName(entity.getTahunAjaran().getNama());
+        }
         return result;
     }
 
