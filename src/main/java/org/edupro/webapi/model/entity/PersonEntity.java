@@ -48,4 +48,22 @@ public class PersonEntity extends BaseIdEntity {
 	
 	@Column(name = "PERSONDOB")
 	private LocalDate tanggalLahir;
+
+	@Column(name = "PERSONPOB", length = 100)
+	private String tempatLahir;
+
+	@Column(name = "GENDER", length = 20)
+	private String gender;
+
+	@Column(name = "AGAMA", length = 20)
+	private String agama;
+
+	@Column(name = "GOLDARAH", length = 2)
+	private String golDarah;
+
+	@Column(name = "NOTELP", length = 20)
+	private String noTelp;
+
+	@Column(name = "EMAIL", length = 100)
+	private String email;
 }

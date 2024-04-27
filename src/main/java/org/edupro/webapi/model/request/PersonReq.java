@@ -17,4 +17,10 @@ public class PersonReq {
     private String alamatTinggal;
     private String nik; // NIK KTP
     private LocalDate tanggalLahir;
+    private String tempatLahir;
+    private String gender;
+    private String agama;
+    private String golDarah;
+    private String noTelp;
+    private String email;
 }
