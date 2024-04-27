@@ -28,7 +28,10 @@ import lombok.NoArgsConstructor;
 		@AttributeOverride(name = "status", column = @Column(name="KLSSTAT"))
 })
 public class KelasEntity extends BaseIdEntity {
-	@Column(name = "KLSNM", length = 20, nullable = false)
+	@Column(name = "KLSKD", length = 10, nullable = false)
+	private String kode;
+
+	@Column(name = "KLSNM", length = 100, nullable = false)
 	private String nama;
 
 	@Column(name = "RUANGID", nullable = false, length = 36)
@@ -37,8 +40,12 @@ public class KelasEntity extends BaseIdEntity {
 	@Column(name = "RUANGKD", length = 20)
 	private String kodeRuangan;
 
-	@Column(name = "LBGID", nullable = false)
-	private Integer idLembaga;
+	@Column(name = "LBGID", nullable = false, length = 36)
+	private String lembagaId;
+
+	@ManyToOne
+	@JoinColumn(name = "LBGID", insertable = false, updatable = false)
+	private LembagaEntity lembaga;
 
 	@Column(name = "TAID", nullable = false)
 	private String tahunAjaranId;
@@ -46,9 +53,6 @@ public class KelasEntity extends BaseIdEntity {
 	@ManyToOne
 	@JoinColumn(name = "TAID", insertable = false, updatable = false)
 	private TahunAjaranEntity tahunAjaran;
-
-	@Column(name = "KLSKD", length = 10, nullable = false)
-	private String kode;
 
 	@Column(name = "LVLID", nullable = false, length = 36)
 	private String levelId;

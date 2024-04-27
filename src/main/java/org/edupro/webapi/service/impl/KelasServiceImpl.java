@@ -9,6 +9,9 @@ import org.edupro.webapi.model.entity.KelasEntity;
 import org.edupro.webapi.model.request.KelasReq;
 import org.edupro.webapi.model.response.KelasRes;
 import org.edupro.webapi.repository.KelasRepo;
+import org.edupro.webapi.repository.LembagaRepo;
+import org.edupro.webapi.repository.RuanganRepo;
+import org.edupro.webapi.repository.SesiAkademikRepo;
 import org.edupro.webapi.service.KelasService;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
@@ -28,6 +31,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class KelasServiceImpl implements KelasService {
     private final KelasRepo repo;
+    private final RuanganRepo ruanganRepo;
+    private final LembagaRepo lembagaRepo;
+    private final SesiAkademikRepo sesiAkademikRepo;
 
     @Override
     public List<KelasRes> get() {
@@ -108,6 +114,21 @@ public class KelasServiceImpl implements KelasService {
 
     private KelasEntity convertReqToEntity(KelasReq request){
         KelasEntity result = new KelasEntity();
+        if(!ruanganRepo.existsByKode(request.getRuangId())){
+            Map<String, String> errors = Map.of("ruangId", request.getRuangId());
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+        }
+
+        if(!lembagaRepo.existsById(request.getLembagaId())){
+            Map<String, String> errors = Map.of("lembaga", request.getLembagaId());
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+        }
+
+        if(!sesiAkademikRepo.existsById(request.getSesiAkademikId())){
+            Map<String, String> errors = Map.of("sesiAkademik", request.getSesiAkademikId());
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+        }
+
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
         result.setUpdatedAt(LocalDateTime.now());

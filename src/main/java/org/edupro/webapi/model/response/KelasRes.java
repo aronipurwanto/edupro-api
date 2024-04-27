@@ -10,11 +10,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class KelasRes {
-    private Integer idLembaga;
-    private Integer tahunAjaranId;
+    private String id;
     private String kode;
     private String nama;
+    private String ruangId;
     private String kodeRuangan;
-    private String namaRuangan;
+    private String lembagaId;
+    private String tahunAjaranId;
+    private String levelId;
+    private String SesiAkademikId;
     private List<KelasSiswaRes> siswaList;
 }
