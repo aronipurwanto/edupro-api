@@ -1,8 +1,5 @@
 package org.edupro.webapi.model.response;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +18,10 @@ public class SiswaRes {
     private String nama;
     private String kotaTempatLahir;
     private LocalDate tanggalLahir;
+    private String gender;
+    private String agama;
+    private String golDarah;
+    private String noTelp;
+    private String email;
     private DataStatus status;
 }

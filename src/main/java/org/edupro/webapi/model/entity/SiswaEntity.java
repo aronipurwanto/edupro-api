@@ -3,14 +3,10 @@
  */
 package org.edupro.webapi.model.entity;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.time.LocalDate;
 
 /**
  * @author Awiyanto Ajisasongko
@@ -44,4 +40,19 @@ public class SiswaEntity extends BaseIdEntity {
 	
 	@Column(name = "SWTGLLAHIR")
 	private LocalDate tanggalLahir;
+
+	@Column(name = "GENDER", length = 20)
+	private String gender;
+
+	@Column(name = "AGAMA", length = 20)
+	private String agama;
+
+	@Column(name = "GOLDARAH", length = 2)
+	private String golDarah;
+
+	@Column(name = "NOTELP", length = 20)
+	private String noTelp;
+
+	@Column(name = "EMAIL", length = 100)
+	private String email;
 }

@@ -1,7 +1,5 @@
 package org.edupro.webapi.model.request;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotEmpty;
@@ -36,4 +34,10 @@ public class SiswaReq {
     @NotNull
     @Temporal(TemporalType.DATE)
     private LocalDate tanggalLahir;
+
+    private String gender;
+    private String agama;
+    private String golDarah;
+    private String noTelp;
+    private String email;
 }
