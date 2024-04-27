@@ -10,6 +10,7 @@ import org.edupro.webapi.model.request.NilaiSiswaReq;
 import org.edupro.webapi.model.response.NilaiSiswaRes;
 import org.edupro.webapi.repository.NilaiSiswaRepo;
 import org.edupro.webapi.service.NilaiSiswaService;
+import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,7 +18,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,17 +48,8 @@ public class NilaiSiswaServiceImpl implements NilaiSiswaService {
 
     @Override
     public Optional<NilaiSiswaRes> save(NilaiSiswaReq request) {
-        /*
-        if(repo.existsByKode(request.getKode())){
-            log.info("Save NilaiSiswa gagal, terjadi error : kode sudah digunakan");
-            Map<String, String> errors = Map.of("kode", "Kode "+ request.getKode() +" sudah digunakan");
-            throw new CommonApiException("Save gagal", HttpStatus.BAD_REQUEST, errors);
-        }
-
-         */
-
         NilaiSiswaEntity result = this.convertReqToEntity(request);
-        result.setId(UUID.randomUUID().toString().toUpperCase());
+        result.setId(CommonUtil.getUUID());
         return saveOrUpdate(result);
     }
 

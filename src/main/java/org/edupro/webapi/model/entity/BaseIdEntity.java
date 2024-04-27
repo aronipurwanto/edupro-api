@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.edupro.webapi.constant.DataStatus;
+import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.annotations.SoftDelete;
 import org.hibernate.annotations.SoftDeleteType;
 import org.springframework.data.annotation.CreatedBy;
@@ -16,7 +17,6 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * @author Awiyanto Ajisasongko
@@ -63,7 +63,7 @@ public abstract class BaseIdEntity {
 	public void onCreate(){
 		this.createdAt = LocalDateTime.now();
 		this.updatedAt = LocalDateTime.now();
-		this.id = UUID.randomUUID().toString();
+		this.id = CommonUtil.getUUID();
 		this.status = DataStatus.AKTIF;
 	}
 

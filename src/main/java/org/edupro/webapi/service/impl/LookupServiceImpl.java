@@ -1,9 +1,7 @@
 package org.edupro.webapi.service.impl;
 
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
@@ -12,14 +10,19 @@ import org.edupro.webapi.model.request.LookupReq;
 import org.edupro.webapi.model.response.LookupRes;
 import org.edupro.webapi.repository.LookupRepo;
 import org.edupro.webapi.service.LookupService;
+import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -60,7 +63,7 @@ public class LookupServiceImpl implements LookupService {
         }
 
         LookupEntity result = this.convertReqToEntity(request);
-        result.setId(UUID.randomUUID().toString());
+        result.setId(CommonUtil.getUUID());
         return saveOrUpdate(result);
     }
 

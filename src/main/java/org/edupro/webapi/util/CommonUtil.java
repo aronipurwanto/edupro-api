@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.Constant;
 import org.edupro.webapi.exception.EduProApiException;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,14 +16,10 @@ import java.util.Random;
 import java.util.UUID;
 
 @Slf4j
-@Component
 public class CommonUtil {
 
-    public CommonUtil() {
-    }
-
-    public String getUUID(){
-        return UUID.randomUUID().toString();
+    public static String getUUID(){
+        return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
     public String getAlphaNumericString(int n) {

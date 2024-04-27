@@ -21,16 +21,13 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "T_PERSONEL")
 @AttributeOverrides({
+	@AttributeOverride(name = "id", column = @Column(name="PERSONID")),
 	@AttributeOverride(name = "createdAt", column = @Column(name="PERSONCRD")),
 	@AttributeOverride(name = "createdBy", column = @Column(name="PERSONCRUID")),
 	@AttributeOverride(name = "updatedAt", column = @Column(name="PERSONUPD")),
 	@AttributeOverride(name = "updatedBy", column = @Column(name="PERSONUPUID"))
 })
 public class PersonEntity extends BaseIdEntity {
-	@Id
-	@Column(name = "PERSONID", length = 36, nullable = false)
-	private String id;
-
 	@Column(name = "PERSONUID", length = 100)
 	private String userId;
 

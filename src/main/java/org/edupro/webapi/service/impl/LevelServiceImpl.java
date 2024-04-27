@@ -1,8 +1,7 @@
 package org.edupro.webapi.service.impl;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
@@ -11,14 +10,18 @@ import org.edupro.webapi.model.request.CommonLembagaReq;
 import org.edupro.webapi.model.response.CommonLembagaRes;
 import org.edupro.webapi.repository.LevelRepo;
 import org.edupro.webapi.service.LevelService;
+import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -104,7 +107,7 @@ public class LevelServiceImpl implements LevelService {
     private LevelEntity convertReqToEntity(CommonLembagaReq request){
         LevelEntity result = new LevelEntity();
         BeanUtils.copyProperties(request, result);
-        result.setId(UUID.randomUUID().toString().toUpperCase());
+        result.setId(CommonUtil.getUUID());
         result.setStatus(DataStatus.AKTIF);
 
         return result;

@@ -10,6 +10,7 @@ import org.edupro.webapi.model.request.LembagaReq;
 import org.edupro.webapi.model.response.LembagaRes;
 import org.edupro.webapi.repository.LembagaRepo;
 import org.edupro.webapi.service.LembagaService;
+import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,7 +18,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,7 +52,7 @@ public class LembagaServiceImpl implements LembagaService {
     @Override
     public Optional<LembagaRes> save(LembagaReq request) {
         LembagaEntity result = this.convertReqToEntity(request);
-        result.setId(UUID.randomUUID().toString().toUpperCase());
+        result.setId(CommonUtil.getUUID());
 
         return saveOrUpdate(result);
     }

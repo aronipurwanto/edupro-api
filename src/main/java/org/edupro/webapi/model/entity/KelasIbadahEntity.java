@@ -16,14 +16,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "T_KELAS")
+@Table(name = "T_KELAS_IBADAH")
 @AttributeOverrides({
 		@AttributeOverride(name = "id", column = @Column(name="KLSIBDID")),
 		@AttributeOverride(name = "createdAt", column = @Column(name="KLSIBDCRD")),
 		@AttributeOverride(name = "createdBy", column = @Column(name="KLSIBDCRUID")),
 		@AttributeOverride(name = "updatedAt", column = @Column(name="KLSIBDUPD")),
-		@AttributeOverride(name = "updatedBy", column = @Column(name="KLSIBDUPUID")),
-		@AttributeOverride(name = "status", column = @Column(name="KLSIBDSTAT"))
+		@AttributeOverride(name = "updatedBy", column = @Column(name="KLSIBDUPUID"))
 })
 public class KelasIbadahEntity extends BaseIdEntity {
 	@Column(name = "KLSSISWAID", nullable = false, length = 36)
@@ -40,8 +39,11 @@ public class KelasIbadahEntity extends BaseIdEntity {
 	private LocalDate tglIbadah;
 
 	@Column(name = "IBDSTS", nullable = false, length = 20)
-	private String status;
+	private String ibadahStatus;
 
-	@Column(name = "catatan", length = 100)
+	@Column(name = "CATATAN", length = 100)
 	private String catatan;
+
+	@Column(name = "ISDONE")
+	private Boolean isDone;
 }
