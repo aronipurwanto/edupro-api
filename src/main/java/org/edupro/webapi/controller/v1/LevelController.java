@@ -22,7 +22,7 @@ public class LevelController extends BaseController<CommonLembagaRes> {
         return this.getResponse(result);
     }
 
-    @GetMapping("/{id}/{kode}")
+    @GetMapping("/{id}")
     private ResponseEntity<Response> get(@PathVariable("id") String id){
         var result = service.getById(id);
         return getResponse(result);
@@ -34,14 +34,14 @@ public class LevelController extends BaseController<CommonLembagaRes> {
         return getResponse(result);
     }
 
-    @PutMapping("/{id}/{kode}")
+    @PutMapping("/{id}")
     private ResponseEntity<Response> update(@RequestBody @Valid CommonLembagaReq request,
                                             @PathVariable("id") String id){
         var result = service.update(request, id);
         return getResponse(result);
     }
 
-    @DeleteMapping("/{id}/{kode}")
+    @DeleteMapping("/{id}")
     private ResponseEntity<Response> delete(@PathVariable("id") String id){
         var result = service.delete(id);
         return getResponse(result);

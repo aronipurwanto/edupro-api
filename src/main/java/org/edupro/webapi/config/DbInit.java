@@ -141,4 +141,35 @@ public class DbInit implements CommandLineRunner {
             log.error(e.getMessage());
         }
     }
+
+    private void initJenisIbadah(){
+        int count = lookupRepo.countAllByGroup(Constant.GROUP_LEVEL_KELAS);
+        if(count > 0){
+            return;
+        }
+
+        List<LookupEntity> lookupEntities = List.of(
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "TK_01","TK Tahun 1",1),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "TK_02","TK Tahun 2",2),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SD_01","SD Kelas 1",3),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SD_02","SD Kelas 2",4),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SD_03","SD Kelas 3",5),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SD_04","SD Kelas 4",6),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SD_05","SD Kelas 5",7),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SD_06","SD Kelas 6",8),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SMP_07","SMP Kelas 7",9),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SMP_08","SMP Kelas 8",10),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SMP_09","SMP Kelas 9",11),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SMA_10","SMA Kelas 10",12),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SMA_11","SMA Kelas 11",13),
+                new LookupEntity(UUID.randomUUID().toString().toUpperCase(), Constant.GROUP_LEVEL_KELAS, "SMA_12","SMA Kelas 12",14)
+        );
+
+        try {
+            lookupRepo.saveAll(lookupEntities);
+            log.info("Save Level Kelas is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
 }

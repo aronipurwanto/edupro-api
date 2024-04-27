@@ -34,7 +34,7 @@ public class PersonController extends BaseController<PersonRes> {
         return getResponse(result);
     }
 
-    @PutMapping("/{id}/{kode}")
+    @PutMapping("/{id}")
     private ResponseEntity<Response> update(@RequestBody @Valid PersonReq request,
                                             @PathVariable("id") String id){
         var result = service.update(request, id);

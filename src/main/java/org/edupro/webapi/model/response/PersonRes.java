@@ -3,6 +3,7 @@ package org.edupro.webapi.model.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.edupro.webapi.constant.DataStatus;
 
 import java.time.LocalDate;
 
@@ -23,4 +24,5 @@ public class PersonRes {
     private String golDarah;
     private String noTelp;
     private String email;
+    private DataStatus status;
 }

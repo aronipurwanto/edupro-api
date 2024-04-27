@@ -9,6 +9,7 @@ public class Constant {
     public static final String GROUP_AGAMA = "AGAMA";
     public static final String GROUP_WN = "WARGA_NEGARA";
     public static final String GROUP_LEVEL_KELAS = "LEVEL_KELAS";
+    public static final String GROUP_JENIS_IBADAH = "JENIS_IBADAH";
 
     public static class ResourceType {
         public static final String TYPE = "RESOURCE_TYPE";
