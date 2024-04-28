@@ -5,12 +5,16 @@ import java.util.Map;
 
 public enum LookupGroup {
     AGAMA("AGAMA"),
+    ABSENSI("ABSENDI"),
     PEKERJAAN("PEKERJAAN"),
     GOL_DARAH("GOL_DARAH"),
     RESOURCE_TYPE("RESOURCE_TYPE"),
     WARGA_NEGARA("WARGA_NEGARA"),
     GENDER("GENDER"),
-    ATTACHMENT_TYPE("ATTACHMENT_TYPE");
+    ATTACHMENT_TYPE("ATTACHMENT_TYPE"),
+    IBADAH_OPSI("IBADAH_OPSI"),
+    IBADAH_CHECK("IBADAH_CHECK"),
+    LEVEL_KELAS("LEVEL_KELAS");
 
     private final String value;
     private static final Map<String, LookupGroup> BY_LABEL = new HashMap<>();
