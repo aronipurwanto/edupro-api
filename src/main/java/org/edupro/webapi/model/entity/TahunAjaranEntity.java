@@ -4,11 +4,7 @@
 package org.edupro.webapi.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +33,9 @@ public class TahunAjaranEntity extends BaseIdEntity {
 	private static final long serialVersionUID = 6154593684680418364L;
 	@Column(name = "TANM", length = 50, nullable = false)
 	private String nama;
+
+	@Column(name = "KURID", length = 36, nullable = false)
+	private String kurikulumId;
 	
 	@Column(name = "KURKD", length = 20, nullable = false)
 	private String kodeKurikulum;
@@ -44,4 +43,9 @@ public class TahunAjaranEntity extends BaseIdEntity {
 	@OneToMany(mappedBy = "tahunAjaran")
 	private List<SesiAkademikEntity> sesiAkademikList = new ArrayList<>();
 
+	public TahunAjaranEntity(String nama, String kurikulumId, String kodeKurikulum) {
+		this.nama = nama;
+		this.kurikulumId = kurikulumId;
+		this.kodeKurikulum = kodeKurikulum;
+	}
 }

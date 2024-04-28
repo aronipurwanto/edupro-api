@@ -3,16 +3,15 @@ package org.edupro.webapi.config;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.Constant;
-import org.edupro.webapi.model.entity.LembagaEntity;
-import org.edupro.webapi.model.entity.LevelEntity;
-import org.edupro.webapi.model.entity.LookupEntity;
-import org.edupro.webapi.repository.LembagaRepo;
-import org.edupro.webapi.repository.LevelRepo;
-import org.edupro.webapi.repository.LookupRepo;
+import org.edupro.webapi.constant.DataStatus;
+import org.edupro.webapi.model.entity.*;
+import org.edupro.webapi.repository.*;
 import org.edupro.webapi.util.CommonUtil;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -22,6 +21,8 @@ public class DbInit implements CommandLineRunner {
     private final LookupRepo lookupRepo;
     private final LembagaRepo lembagaRepo;
     private final LevelRepo levelRepo;
+    private final TahunAjaranRepo taRepo;
+    private final KurikulumRepo kurRepo;
 
     @Override
     public void run(String... args) throws Exception {
@@ -41,6 +42,9 @@ public class DbInit implements CommandLineRunner {
 
         initLevelSD();
         initLevelSMP();
+
+        initKurikulum();
+        initTahunAjaran();
     }
 
     private void initLembaga(){
@@ -385,6 +389,59 @@ public class DbInit implements CommandLineRunner {
         try {
             levelRepo.saveAll(levelEntities);
             log.info("Save level smp is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
+
+    private void initKurikulum(){
+        int count = kurRepo.countAllByStatus(DataStatus.AKTIF);
+        if(count > 0){
+            return;
+        }
+
+        List<KurikulumEntity> kurikulum = List.of(
+                new KurikulumEntity("KURIKULUM_1947","Kurikulum Rencana Pelajaran (1947)",1),
+                new KurikulumEntity("KURIKULUM_1953","Kurikulum Rencana Pelajaran Terurai (1952)",2),
+                new KurikulumEntity("KURIKULUM_1964","Kurikulum 1964",3),
+                new KurikulumEntity("KURIKULUM_1968","Kurikulum 1968",4),
+                new KurikulumEntity("KURIKULUM_1975","Kurikulum 1975",5),
+                new KurikulumEntity("KURIKULUM_1984","Kurikulum 1984",6),
+                new KurikulumEntity("KURIKULUM_1994","Kurikulum 1994 dan Suplemen Kurikulum 1999",7),
+                new KurikulumEntity("KURIKULUM_2004","Kurikulum 2004",8),
+                new KurikulumEntity("KURIKULUM_2006","Kurikulum 2006",9),
+                new KurikulumEntity("KURIKULUM_2013","Kurikulum 2013",10)
+        );
+
+        try {
+            kurRepo.saveAll(kurikulum);
+            log.info("Save Kurikulum is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
+
+    private void initTahunAjaran(){
+        int count = taRepo.countByStatus(DataStatus.AKTIF);
+        if(count > 0){
+            return;
+        }
+
+        KurikulumEntity kurikulum = kurRepo.findByKode("KURIKULUM_2013").orElse(null);
+        if(kurikulum == null){
+            return;
+        }
+
+        int curYear = LocalDate.now().getYear();
+        List<TahunAjaranEntity> tahunAjaran = new ArrayList<>();
+        for (int i = curYear-8; i <= curYear+2; i++) {
+            String nama = i +" - "+ (i+1);
+            tahunAjaran.add(new TahunAjaranEntity(nama,kurikulum.getId(), kurikulum.getKode()));
+        }
+
+        try {
+            taRepo.saveAll(tahunAjaran);
+            log.info("Save Tahun Ajaran is successful");
         }catch (Exception e){
             log.error(e.getMessage());
         }

@@ -18,6 +18,10 @@ public class TahunAjaranReq {
     @Size(min = 2, max = 20, message = "Nama tidak boleh kosong")
     private String nama;
 
+    @NotEmpty(message = "Nama tidak boleh kosong")
+    @Size(min = 32, max = 36, message = "Nama tidak boleh kosong")
+    private String kurikulumId;
+
     @NotEmpty(message = "Kode Kurikulum tidak boleh kosong")
     @Size(min = 2, max = 20, message = "Nama tidak boleh kosong")
     private String kodeKurikulum;

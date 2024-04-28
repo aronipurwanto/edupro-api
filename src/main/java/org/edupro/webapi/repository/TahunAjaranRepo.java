@@ -11,4 +11,5 @@ import java.util.List;
 public interface TahunAjaranRepo extends JpaRepository<TahunAjaranEntity, String> {
     List<TahunAjaranEntity> findAllByStatus(DataStatus status);
     boolean existsByNama(String nama);
+    int countByStatus(DataStatus status);
 }

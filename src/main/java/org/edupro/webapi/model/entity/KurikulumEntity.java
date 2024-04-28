@@ -35,6 +35,15 @@ public class KurikulumEntity extends BaseIdEntity {
 	@Column(name = "KURNM", length = 100)
 	private String nama;
 
+	@Column(name = "NOURUT")
+	private Integer noUrut;
+
 	@OneToMany(mappedBy = "kurikulum")
 	private List<SesiAkademikEntity> sesiAkademikList = new ArrayList<>();
+
+	public KurikulumEntity(String kode, String nama, Integer noUrut) {
+		this.kode = kode;
+		this.nama = nama;
+		this.noUrut = noUrut;
+	}
 }

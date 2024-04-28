@@ -13,6 +13,7 @@ import org.edupro.webapi.constant.DataStatus;
 public class TahunAjaranRes {
     private String id;
     private String nama;
+    private String kurikulumId;
     private String kodeKurikulum;
     private DataStatus status;
 }

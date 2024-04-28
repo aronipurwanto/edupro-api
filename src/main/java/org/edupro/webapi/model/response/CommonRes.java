@@ -14,6 +14,7 @@ public class CommonRes {
     private String id;
     private String kode;
     private String nama;
+    private Integer noUrut;
     private DataStatus status;
 
     public CommonRes(String kode, String nama, DataStatus status) {
