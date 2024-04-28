@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface SesiAkademikRepo extends JpaRepository<SesiAkademikEntity, String> {
     List<SesiAkademikEntity> findAllByStatus(DataStatus status);
-    boolean existsByKurikulumIdAndTahunAjaranIdAndUrut(String kurikulumId, String tahunAjaranId, Integer urut);
+    boolean existsByKurikulumIdAndTahunAjaranIdAndSemester(String kurikulumId, String tahunAjaranId, Integer semester);
 }

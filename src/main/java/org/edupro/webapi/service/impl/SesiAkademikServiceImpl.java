@@ -53,7 +53,7 @@ public class SesiAkademikServiceImpl implements SesiAkademikService {
 
     @Override
     public Optional<SesiAkademikRes> save(SesiAkademikReq request) {
-        if(repo.existsByKurikulumIdAndTahunAjaranIdAndUrut(request.getKurikulumId(), request.getTahunAjaranId(), request.getUrut())){
+        if(repo.existsByKurikulumIdAndTahunAjaranIdAndSemester(request.getKurikulumId(), request.getTahunAjaranId(), request.getSemester())){
             Map<String, String> errors = Map.of("tahunAjaranId", "kurikulumId "+ request.getKurikulumId()+" dan tahunAjaranId "+ request.getTahunAjaranId() +" sudah digunakan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
