@@ -22,6 +22,8 @@ public class DbInit implements CommandLineRunner {
         initResourceType();
         initAgama();
         initWargaNegara();
+        initGender();
+        initGolDarah();
         initAbsensi();
         initLevelKelas();
         initAttachmentType();
@@ -92,6 +94,47 @@ public class DbInit implements CommandLineRunner {
             log.error(e.getMessage());
         }
     }
+
+    private void initGender(){
+        int count = lookupRepo.countAllByGroup(Constant.GROUP_GENDER);
+        if(count > 0){
+            return;
+        }
+
+        List<LookupEntity> lookupEntities = List.of(
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_GENDER, "PRIA","Pria",1),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_GENDER, "WANITA","Wanita",2)
+        );
+
+        try {
+            lookupRepo.saveAll(lookupEntities);
+            log.info("Save Gender is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
+
+    private void initGolDarah(){
+        int count = lookupRepo.countAllByGroup(Constant.GROUP_GOL_DARAH);
+        if(count > 0){
+            return;
+        }
+
+        List<LookupEntity> lookupEntities = List.of(
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_GOL_DARAH, "A","A",1),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_GOL_DARAH, "B","B",2),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_GOL_DARAH, "AB","AB",3),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_GOL_DARAH, "O","O",4)
+        );
+
+        try {
+            lookupRepo.saveAll(lookupEntities);
+            log.info("Save Gol Darah is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
+
 
     private void initAbsensi(){
         int count = lookupRepo.countAllByGroup(Constant.GROUP_ABSENSI);

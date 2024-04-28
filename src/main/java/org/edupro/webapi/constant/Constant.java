@@ -12,6 +12,8 @@ public class Constant {
     public static final String GROUP_IBADAH_OPSI = "IBADAH_OPSI";
     public static final String GROUP_IBADAH_CHECK = "IBADAH_CHECK";
     public static final String GROUP_ABSENSI = "ABSENSI";
+    public static final String GROUP_GENDER = "GENDER";
+    public static final String GROUP_GOL_DARAH = "GOL_DARAH";
 
     public static class ResourceType {
         public static final String TYPE = "RESOURCE_TYPE";
