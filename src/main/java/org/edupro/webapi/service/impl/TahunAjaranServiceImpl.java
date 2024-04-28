@@ -40,6 +40,15 @@ public class TahunAjaranServiceImpl implements TahunAjaranService {
     }
 
     @Override
+    public List<TahunAjaranRes> getByKurikulumId(String kurikulumId) {
+        List<TahunAjaranEntity> result = this.repo.findAllByKurikulumId(kurikulumId);
+        if(result.isEmpty()){
+            return Collections.emptyList();
+        }
+        return result.stream().map(this::convertEntityToRes).collect(Collectors.toList());
+    }
+
+    @Override
     public Optional<TahunAjaranRes> getById(String id) {
         TahunAjaranEntity result = this.getEntityById(id);
 

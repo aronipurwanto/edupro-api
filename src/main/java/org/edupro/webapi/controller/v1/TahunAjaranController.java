@@ -21,6 +21,12 @@ public class TahunAjaranController extends BaseController<TahunAjaranRes> {
         return this.getResponse(result);
     }
 
+    @GetMapping("/kurikulum/{id}")
+    private ResponseEntity<Response> getByKurikulumId(@PathVariable String id){
+        var result = service.getByKurikulumId(id);
+        return this.getResponse(result);
+    }
+
     @GetMapping("/{id}")
     private ResponseEntity<Response> get(@PathVariable("id") String id){
         var result = service.getById(id);
