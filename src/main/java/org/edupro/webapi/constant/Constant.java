@@ -15,6 +15,7 @@ public class Constant {
     public static final String GROUP_GENDER = "GENDER";
     public static final String GROUP_GOL_DARAH = "GOL_DARAH";
     public static final String GROUP_SEMESTER = "SEMESTER";
+    public static final String GROUP_JENJANG_PENDIDIKAN = "JENJANG_PENDIDIKAN";
 
     public static class ResourceType {
         public static final String TYPE = "RESOURCE_TYPE";

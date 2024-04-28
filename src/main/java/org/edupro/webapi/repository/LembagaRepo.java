@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LembagaRepo extends JpaRepository<LembagaEntity, String> {
+    boolean existsByNama(String nama);
+    boolean existsByNamaSingkat(String namaSingkat);
 }

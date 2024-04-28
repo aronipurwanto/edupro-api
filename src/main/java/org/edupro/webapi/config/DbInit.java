@@ -3,7 +3,9 @@ package org.edupro.webapi.config;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.Constant;
+import org.edupro.webapi.model.entity.LembagaEntity;
 import org.edupro.webapi.model.entity.LookupEntity;
+import org.edupro.webapi.repository.LembagaRepo;
 import org.edupro.webapi.repository.LookupRepo;
 import org.edupro.webapi.util.CommonUtil;
 import org.springframework.boot.CommandLineRunner;
@@ -16,12 +18,15 @@ import java.util.List;
 @Slf4j
 public class DbInit implements CommandLineRunner {
     private final LookupRepo lookupRepo;
+    private final LembagaRepo lembagaRepo;
 
     @Override
     public void run(String... args) throws Exception {
+        initLembaga();
         initResourceType();
         initAgama();
         initWargaNegara();
+        initJenjangPendidikan();
         initSemester();
         initGender();
         initGolDarah();
@@ -30,6 +35,57 @@ public class DbInit implements CommandLineRunner {
         initAttachmentType();
         initJenisIbadahOpsi();
         initJenisIbadahCheck();
+    }
+
+    private void initLembaga(){
+        if(!lembagaRepo.existsByNama("SDIT")){
+            LembagaEntity lembagaEntity = new LembagaEntity();
+            lembagaEntity.setNama("SDIT");
+            lembagaEntity.setKode("SDIT");
+            lembagaEntity.setNamaSingkat("SDIT");
+
+            try {
+                lembagaRepo.save(lembagaEntity);
+                log.info("Save SDIT is successful");
+            }catch (Exception e){
+                log.error(e.getMessage());
+            }
+        }
+
+        if(!lembagaRepo.existsByNama("SMPIT")){
+            LembagaEntity lembagaEntity = new LembagaEntity();
+            lembagaEntity.setNama("SMPIT");
+            lembagaEntity.setKode("SMPIT");
+            lembagaEntity.setNamaSingkat("SMPIT");
+
+            try {
+                lembagaRepo.save(lembagaEntity);
+                log.info("Save SMPIT is successful");
+            }catch (Exception e){
+                log.error(e.getMessage());
+            }
+        }
+    }
+
+    private void initJenjangPendidikan(){
+        int count = lookupRepo.countAllByGroup(Constant.GROUP_JENJANG_PENDIDIKAN);
+        if(count > 0){
+            return;
+        }
+
+        List<LookupEntity> lookupEntities = List.of(
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_JENJANG_PENDIDIKAN, "TK","Taman Kanak-Kanak",1),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_JENJANG_PENDIDIKAN, "SD","Sekolah Dasar",2),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_JENJANG_PENDIDIKAN, "SMP","Sekolah Menengah Pertama",3),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_JENJANG_PENDIDIKAN, "SMA","Sekolah Menengah Atas",4)
+        );
+
+        try {
+            lookupRepo.saveAll(lookupEntities);
+            log.info("Save Jenjang Pendidikan is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
     }
 
     private void initResourceType(){
