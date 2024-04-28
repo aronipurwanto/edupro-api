@@ -25,7 +25,8 @@ import java.time.LocalDate;
 	@AttributeOverride(name = "createdAt", column = @Column(name="PERSONCRD")),
 	@AttributeOverride(name = "createdBy", column = @Column(name="PERSONCRUID")),
 	@AttributeOverride(name = "updatedAt", column = @Column(name="PERSONUPD")),
-	@AttributeOverride(name = "updatedBy", column = @Column(name="PERSONUPUID"))
+	@AttributeOverride(name = "updatedBy", column = @Column(name="PERSONUPUID")),
+	@AttributeOverride(name = "status", column = @Column(name="PERSONSTAT"))
 })
 public class PersonEntity extends BaseIdEntity {
 	@Column(name = "PERSONUID", length = 100)
