@@ -39,7 +39,8 @@ public class DbInit implements CommandLineRunner {
         initJenisIbadahOpsi();
         initJenisIbadahCheck();
 
-        initLevel();
+        initLevelSD();
+        initLevelSMP();
     }
 
     private void initLembaga(){
@@ -337,40 +338,55 @@ public class DbInit implements CommandLineRunner {
         }
     }
 
-    private void initLevel(){
+    private void initLevelSD(){
         LembagaEntity sdit = lembagaRepo.findByNama("SDIT").orElse(null);
-        if(sdit != null){
-            List<LevelEntity> levelEntities = List.of(
-                    new LevelEntity(sdit.getId(), "SD_01","Kelas 1",1),
-                    new LevelEntity(sdit.getId(), "SD_02","Kelas 2",2),
-                    new LevelEntity(sdit.getId(), "SD_03","Kelas 3",3),
-                    new LevelEntity(sdit.getId(), "SD_04","Kelas 4",4),
-                    new LevelEntity(sdit.getId(), "SD_05","Kelas 5",5),
-                    new LevelEntity(sdit.getId(), "SD_06","Kelas 6",6)
-            );
-
-            try {
-                levelRepo.saveAll(levelEntities);
-                log.info("Save level sd is successful");
-            }catch (Exception e){
-                log.error(e.getMessage());
-            }
+        if(sdit == null){
+            return;
         }
 
-        LembagaEntity smpit = lembagaRepo.findByNama("SMPIT").orElse(null);
-        if(smpit != null){
-            List<LevelEntity> levelEntities = List.of(
-                    new LevelEntity(sdit.getId(), "SMP_07","Kelas 7",1),
-                    new LevelEntity(sdit.getId(), "SMP_08","Kelas 8",2),
-                    new LevelEntity(sdit.getId(), "SMP_09","Kelas 9",3)
-            );
+        int count = levelRepo.countAllByIdLembaga(sdit.getId());
+        if(count > 0){
+            return;
+        }
 
-            try {
-                levelRepo.saveAll(levelEntities);
-                log.info("Save level smp is successful");
-            }catch (Exception e){
-                log.error(e.getMessage());
-            }
+        List<LevelEntity> levelEntities = List.of(
+                new LevelEntity(sdit.getId(), "SD_01", "Kelas 1", 1),
+                new LevelEntity(sdit.getId(), "SD_02", "Kelas 2", 2),
+                new LevelEntity(sdit.getId(), "SD_03", "Kelas 3", 3),
+                new LevelEntity(sdit.getId(), "SD_04", "Kelas 4", 4),
+                new LevelEntity(sdit.getId(), "SD_05", "Kelas 5", 5),
+                new LevelEntity(sdit.getId(), "SD_06", "Kelas 6", 6)
+        );
+
+        try {
+            levelRepo.saveAll(levelEntities);
+            log.info("Save level sd is successful");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    private void initLevelSMP(){
+        LembagaEntity smpit = lembagaRepo.findByNama("SMPIT").orElse(null);
+        if(smpit == null){
+            return;
+        }
+        int count = levelRepo.countAllByIdLembaga(smpit.getId());
+        if(count > 0 ){
+            return;
+        }
+
+        List<LevelEntity> levelEntities = List.of(
+                new LevelEntity(smpit.getId(), "SMP_07","Kelas 7",1),
+                new LevelEntity(smpit.getId(), "SMP_08","Kelas 8",2),
+                new LevelEntity(smpit.getId(), "SMP_09","Kelas 9",3)
+        );
+
+        try {
+            levelRepo.saveAll(levelEntities);
+            log.info("Save level smp is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
         }
     }
 }

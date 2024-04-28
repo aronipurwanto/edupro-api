@@ -11,4 +11,5 @@ import java.util.List;
 public interface LevelRepo extends JpaRepository<LevelEntity, String> {
     List<LevelEntity> findAllByStatus(DataStatus status);
     boolean existsByIdLembagaAndKode(String idLembaga, String kode);
+    int countAllByIdLembaga(String idLembaga);
 }
