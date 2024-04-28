@@ -14,6 +14,7 @@ public enum LookupGroup {
     ATTACHMENT_TYPE("ATTACHMENT_TYPE"),
     IBADAH_OPSI("IBADAH_OPSI"),
     IBADAH_CHECK("IBADAH_CHECK"),
+    SEMESTER("SEMESTER"),
     LEVEL_KELAS("LEVEL_KELAS");
 
     private final String value;

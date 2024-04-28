@@ -15,6 +15,6 @@ public class SesiAkademikRes {
     private String kurikulumId;
     private String kodeKurikulum;
     private String kurikulumName;
-    private Integer urut;
+    private Integer semester;
     private DataStatus status;
 }

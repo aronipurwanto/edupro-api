@@ -22,6 +22,7 @@ public class DbInit implements CommandLineRunner {
         initResourceType();
         initAgama();
         initWargaNegara();
+        initSemester();
         initGender();
         initGolDarah();
         initAbsensi();
@@ -90,6 +91,25 @@ public class DbInit implements CommandLineRunner {
         try {
             lookupRepo.saveAll(lookupEntities);
             log.info("Save Warga Negara is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
+    }
+
+    private void initSemester(){
+        int count = lookupRepo.countAllByGroup(Constant.GROUP_SEMESTER);
+        if(count > 0){
+            return;
+        }
+
+        List<LookupEntity> lookupEntities = List.of(
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_SEMESTER, "1","Semester Ganjil",1),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_SEMESTER, "2","Semester Genap",2)
+        );
+
+        try {
+            lookupRepo.saveAll(lookupEntities);
+            log.info("Save Semester is successful");
         }catch (Exception e){
             log.error(e.getMessage());
         }

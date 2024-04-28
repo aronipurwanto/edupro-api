@@ -49,8 +49,8 @@ public class SesiAkademikEntity extends BaseIdEntity {
 	@JoinColumn(name = "KURID", insertable = false, updatable = false)
 	private KurikulumEntity kurikulum;
 
-	@Column(name = "SAURUT", nullable = false)
-	private Integer urut; // 1 = ganjil, 2 = genap
+	@Column(name = "SEMESTER", nullable = false)
+	private Integer semester; // 1 = ganjil, 2 = genap
 
 	@Column(name = "SASTARTDATE")
 	private LocalDate startDate;

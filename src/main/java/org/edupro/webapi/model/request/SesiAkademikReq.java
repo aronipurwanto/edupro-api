@@ -17,8 +17,8 @@ public class SesiAkademikReq {
     @Size(min = 32, max = 36, message = "Tahun Ajaran Id minimal 36 dan maksimal 36")
     private String tahunAjaranId;
 
-    @NotNull(message = "Nomor Urut wajid diisi")
-    private Integer urut;
+    @NotNull(message = "Semester wajid diisi")
+    private Integer semester;
 
     @NotNull(message = "Kurikulum Id wajid diisi")
     @Size(min = 32, max = 36, message = "Kurikulum Id minimal 36 dan maksimal 36")
