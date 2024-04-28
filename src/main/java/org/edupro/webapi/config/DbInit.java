@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.Constant;
 import org.edupro.webapi.model.entity.LembagaEntity;
+import org.edupro.webapi.model.entity.LevelEntity;
 import org.edupro.webapi.model.entity.LookupEntity;
 import org.edupro.webapi.repository.LembagaRepo;
+import org.edupro.webapi.repository.LevelRepo;
 import org.edupro.webapi.repository.LookupRepo;
 import org.edupro.webapi.util.CommonUtil;
 import org.springframework.boot.CommandLineRunner;
@@ -19,6 +21,7 @@ import java.util.List;
 public class DbInit implements CommandLineRunner {
     private final LookupRepo lookupRepo;
     private final LembagaRepo lembagaRepo;
+    private final LevelRepo levelRepo;
 
     @Override
     public void run(String... args) throws Exception {
@@ -35,6 +38,8 @@ public class DbInit implements CommandLineRunner {
         initAttachmentType();
         initJenisIbadahOpsi();
         initJenisIbadahCheck();
+
+        initLevel();
     }
 
     private void initLembaga(){
@@ -329,6 +334,43 @@ public class DbInit implements CommandLineRunner {
             log.info("Save Ibadah Check is successful");
         }catch (Exception e){
             log.error(e.getMessage());
+        }
+    }
+
+    private void initLevel(){
+        LembagaEntity sdit = lembagaRepo.findByNama("SDIT").orElse(null);
+        if(sdit != null){
+            List<LevelEntity> levelEntities = List.of(
+                    new LevelEntity(sdit.getId(), "SD_01","Kelas 1",1),
+                    new LevelEntity(sdit.getId(), "SD_02","Kelas 2",2),
+                    new LevelEntity(sdit.getId(), "SD_03","Kelas 3",3),
+                    new LevelEntity(sdit.getId(), "SD_04","Kelas 4",4),
+                    new LevelEntity(sdit.getId(), "SD_05","Kelas 5",5),
+                    new LevelEntity(sdit.getId(), "SD_06","Kelas 6",6)
+            );
+
+            try {
+                levelRepo.saveAll(levelEntities);
+                log.info("Save level sd is successful");
+            }catch (Exception e){
+                log.error(e.getMessage());
+            }
+        }
+
+        LembagaEntity smpit = lembagaRepo.findByNama("SMPIT").orElse(null);
+        if(smpit != null){
+            List<LevelEntity> levelEntities = List.of(
+                    new LevelEntity(sdit.getId(), "SMP_07","Kelas 7",1),
+                    new LevelEntity(sdit.getId(), "SMP_08","Kelas 8",2),
+                    new LevelEntity(sdit.getId(), "SMP_09","Kelas 9",3)
+            );
+
+            try {
+                levelRepo.saveAll(levelEntities);
+                log.info("Save level smp is successful");
+            }catch (Exception e){
+                log.error(e.getMessage());
+            }
         }
     }
 }

@@ -33,7 +33,11 @@ public class LevelEntity extends BaseIdEntity {
 	private static final long serialVersionUID = -1692222214526057221L;
 
 	@Column(name = "LBGID", nullable = false)
-	private Integer idLembaga;
+	private String idLembaga;
+
+	@ManyToOne
+	@JoinColumn(name = "LBGID", insertable = false, updatable = false)
+	private LembagaEntity lembaga;
 
 	@Column(name = "LVLKD", length = 10, nullable = false)
 	private String kode;
@@ -43,4 +47,11 @@ public class LevelEntity extends BaseIdEntity {
 
 	@Column(name = "LVLURUT")
 	private Integer noUrut;
+
+	public LevelEntity( String idLembaga,String kode, String nama, Integer noUrut) {
+		this.noUrut = noUrut;
+		this.nama = nama;
+		this.kode = kode;
+		this.idLembaga = idLembaga;
+	}
 }
