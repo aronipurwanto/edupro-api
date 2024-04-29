@@ -66,7 +66,7 @@ public class KelasEntity extends BaseIdEntity {
 	private LevelEntity level;
 
 	@Column(name = "SAID", nullable = false, length = 36)
-	private String SesiAkademikId;
+	private String sesiAkademikId;
 
 	@ManyToOne
 	@JoinColumn(name = "SAID", insertable = false, updatable = false)
