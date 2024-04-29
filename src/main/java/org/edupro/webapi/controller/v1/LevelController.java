@@ -2,9 +2,9 @@ package org.edupro.webapi.controller.v1;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.edupro.webapi.model.request.CommonLembagaReq;
+import org.edupro.webapi.model.request.LevelReq;
 import org.edupro.webapi.model.response.Response;
-import org.edupro.webapi.model.response.CommonLembagaRes;
+import org.edupro.webapi.model.response.LevelRes;
 import org.edupro.webapi.service.LevelService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/level")
 @RequiredArgsConstructor
-public class LevelController extends BaseController<CommonLembagaRes> {
+public class LevelController extends BaseController<LevelRes> {
     private final LevelService service;
 
     @GetMapping
@@ -29,13 +29,13 @@ public class LevelController extends BaseController<CommonLembagaRes> {
     }
 
     @PostMapping
-    private ResponseEntity<Response> save(@RequestBody @Valid CommonLembagaReq request){
+    private ResponseEntity<Response> save(@RequestBody @Valid LevelReq request){
         var result = service.save(request);
         return getResponse(result);
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<Response> update(@RequestBody @Valid CommonLembagaReq request,
+    private ResponseEntity<Response> update(@RequestBody @Valid LevelReq request,
                                             @PathVariable("id") String id){
         var result = service.update(request, id);
         return getResponse(result);

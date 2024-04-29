@@ -1,15 +1,15 @@
 package org.edupro.webapi.service;
 
-import org.edupro.webapi.model.request.CommonLembagaReq;
-import org.edupro.webapi.model.response.CommonLembagaRes;
+import org.edupro.webapi.model.request.LevelReq;
+import org.edupro.webapi.model.response.LevelRes;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface LevelService {
-    List<CommonLembagaRes> get();
-    Optional<CommonLembagaRes> getById(String id);
-    Optional<CommonLembagaRes> save(CommonLembagaReq request);
-    Optional<CommonLembagaRes> update(CommonLembagaReq request, String id);
-    Optional<CommonLembagaRes> delete(String id);
+    List<LevelRes> get();
+    Optional<LevelRes> getById(String id);
+    Optional<LevelRes> save(LevelReq request);
+    Optional<LevelRes> update(LevelReq request, String id);
+    Optional<LevelRes> delete(String id);
 }

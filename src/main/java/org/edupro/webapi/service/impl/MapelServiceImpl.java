@@ -6,8 +6,8 @@ import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.model.entity.MapelEntity;
-import org.edupro.webapi.model.request.CommonReq;
-import org.edupro.webapi.model.response.CommonRes;
+import org.edupro.webapi.model.request.MapelReq;
+import org.edupro.webapi.model.response.MapelRes;
 import org.edupro.webapi.repository.MapelRepo;
 import org.edupro.webapi.service.MapelService;
 import org.hibernate.exception.DataException;
@@ -30,7 +30,7 @@ public class MapelServiceImpl implements MapelService {
     private final MapelRepo repo;
 
     @Override
-    public List<CommonRes> get() {
+    public List<MapelRes> get() {
         List<MapelEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
         if(result.isEmpty()){
             return Collections.emptyList();
@@ -39,14 +39,14 @@ public class MapelServiceImpl implements MapelService {
     }
 
     @Override
-    public Optional<CommonRes> getById(String id) {
+    public Optional<MapelRes> getById(String id) {
         MapelEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
     }
 
     @Override
-    public Optional<CommonRes> save(CommonReq request) {
+    public Optional<MapelRes> save(MapelReq request) {
         if(repo.existsByKode(request.getKode())){
             log.info("Save Mapel gagal, terjadi error : kode sudah digunakan");
             Map<String, String> errors = Map.of("kode", "Kode "+ request.getKode() +" sudah digunakan");
@@ -58,7 +58,7 @@ public class MapelServiceImpl implements MapelService {
     }
 
     @Override
-    public Optional<CommonRes> update(CommonReq request, String id) {
+    public Optional<MapelRes> update(MapelReq request, String id) {
         MapelEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
@@ -67,7 +67,7 @@ public class MapelServiceImpl implements MapelService {
     }
 
     @Override
-    public Optional<CommonRes> delete(String id) {
+    public Optional<MapelRes> delete(String id) {
         MapelEntity result = this.getEntityById(id);
 
         result.setDeletedAt(LocalDateTime.now());
@@ -76,7 +76,7 @@ public class MapelServiceImpl implements MapelService {
         return saveOrUpdate(result);
     }
 
-    private Optional<CommonRes> saveOrUpdate(MapelEntity result) {
+    private Optional<MapelRes> saveOrUpdate(MapelEntity result) {
         try{
             this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
@@ -102,13 +102,13 @@ public class MapelServiceImpl implements MapelService {
         return result;
     }
 
-    private CommonRes convertEntityToRes(MapelEntity entity){
-        CommonRes result = new CommonRes();
+    private MapelRes convertEntityToRes(MapelEntity entity){
+        MapelRes result = new MapelRes();
         BeanUtils.copyProperties(entity, result);
         return result;
     }
 
-    private MapelEntity convertReqToEntity(CommonReq request){
+    private MapelEntity convertReqToEntity(MapelReq request){
         MapelEntity result = new MapelEntity();
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
@@ -116,7 +116,7 @@ public class MapelServiceImpl implements MapelService {
         return result;
     }
 
-    private void convertReqToEntity(CommonReq request, MapelEntity result){
+    private void convertReqToEntity(MapelReq request, MapelEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
     }
