@@ -18,7 +18,7 @@ public class KelasRes {
     private String lembagaId;
     private String tahunAjaranId;
     private String levelId;
-    private String SesiAkademikId;
+    private String sesiAkademikId;
     private String waliKelasId;
     private List<KelasSiswaRes> siswaList;
 }

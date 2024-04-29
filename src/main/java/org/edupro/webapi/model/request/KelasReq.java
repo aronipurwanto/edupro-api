@@ -34,7 +34,7 @@ public class KelasReq {
 
     @NotEmpty
     @Size(min = 32, max = 36, message = "SesiAkademikId minimal 32 dan maximal 36")
-    private String SesiAkademikId;
+    private String sesiAkademikId;
 
     @NotEmpty
     @Size(min = 32, max = 36, message = "waliKelasId minimal 32 dan maximal 36")
