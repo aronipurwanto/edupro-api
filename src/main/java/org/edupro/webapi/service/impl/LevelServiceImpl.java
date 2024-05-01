@@ -17,6 +17,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,8 @@ public class LevelServiceImpl implements LevelService {
     @Override
     public Optional<LevelRes> delete(String id) {
         LevelEntity result = this.getEntityById(id);
+
+        result.setDeletedAt(LocalDateTime.now());
         result.setStatus(DataStatus.DIHAPUS);
         return saveOrUpdate(result);
     }
@@ -101,6 +104,11 @@ public class LevelServiceImpl implements LevelService {
     private LevelRes convertEntityToRes(LevelEntity entity){
         LevelRes result = new LevelRes();
         BeanUtils.copyProperties(entity, result);
+
+        if (entity.getLembaga() != null){
+            result.setNamaLembaga(entity.getLembaga().getNama());
+        }
+
         return result;
     }
 
