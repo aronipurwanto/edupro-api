@@ -42,7 +42,7 @@ public class LevelEntity extends BaseIdEntity {
 	@Column(name = "LVLKD", length = 10, nullable = false)
 	private String kode;
 
-	@Column(name = "LVLNM", length = 10, nullable = false)
+	@Column(name = "LVLNM", length = 100, nullable = false)
 	private String nama;
 
 	@Column(name = "LVLURUT")

@@ -13,6 +13,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommonLembagaReq {
+
+    private String id;
+
     @NotNull(message = "Lembaga Id tidak boleh kosong")
     private String idLembaga;
 
@@ -21,7 +24,7 @@ public class CommonLembagaReq {
     private String kode;
 
     @NotEmpty(message = "tidak boleh kosong")
-    @Size(min = 2, max = 100, message = "Nama min 2 dan maksimal 10")
+    @Size(min = 2, max = 100, message = "Nama min 2 dan maksimal 100")
     private String nama;
 
     private Integer noUrut;
