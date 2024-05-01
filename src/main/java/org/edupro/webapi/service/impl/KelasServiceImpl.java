@@ -10,6 +10,7 @@ import org.edupro.webapi.model.request.KelasReq;
 import org.edupro.webapi.model.response.KelasRes;
 import org.edupro.webapi.repository.*;
 import org.edupro.webapi.service.KelasService;
+import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -32,6 +33,8 @@ public class KelasServiceImpl implements KelasService {
     private final LembagaRepo lembagaRepo;
     private final SesiAkademikRepo sesiAkademikRepo;
     private final PersonRepo personRepo;
+    private final TahunAjaranRepo tahunAjaranRepo;
+    private final LevelRepo levelRepo;
 
     @Override
     public List<KelasRes> get() {
@@ -58,6 +61,7 @@ public class KelasServiceImpl implements KelasService {
         }
 
         KelasEntity result = this.convertReqToEntity(request);
+        result.setId(CommonUtil.getUUID());
         return saveOrUpdate(result);
     }
 
@@ -107,6 +111,37 @@ public class KelasServiceImpl implements KelasService {
     private KelasRes convertEntityToRes(KelasEntity entity){
         KelasRes result = new KelasRes();
         BeanUtils.copyProperties(entity, result);
+        result.setStatus(entity.getStatus());
+
+        if (entity.getRuangan() != null){
+            result.setRuangId(entity.getRuangan().getId());
+            result.setKodeRuangan(entity.getRuangan().getKode());
+        }
+
+        if (entity.getLembaga() != null){
+            result.setLembagaId(entity.getLembaga().getId());
+            result.setNamaLembaga(entity.getLembaga().getNama());
+        }
+
+        if (entity.getSesiAkademik() != null){
+            result.setSesiAkademikId(entity.getSesiAkademik().getId());
+            result.setSemester(entity.getSesiAkademik().getSemester());
+        }
+
+        if (entity.getWaliKelas() != null){
+            result.setWaliKelasId(entity.getWaliKelas().getId());
+            result.setNamaWaliKelas(entity.getWaliKelas().getNama());
+        }
+
+        if (entity.getTahunAjaran() != null){
+            result.setTahunAjaranId(entity.getTahunAjaran().getId());
+            result.setNamaTahunAjaran(entity.getTahunAjaran().getNama());
+        }
+
+        if (entity.getLevel() != null){
+            result.setLevelId(entity.getLevel().getId());
+            result.setNamaLevel(entity.getLevel().getNama());
+        }
         return result;
     }
 
@@ -125,13 +160,25 @@ public class KelasServiceImpl implements KelasService {
 
         SesiAkademikEntity sesiAkademik = sesiAkademikRepo.findById(request.getSesiAkademikId()).orElse(null);
         if(sesiAkademik == null){
-            Map<String, String> errors = Map.of("sesiAkademikId", "sesiAkademikId "+ request.getLembagaId() +" tidak dapat ditemukan");
+            Map<String, String> errors = Map.of("sesiAkademikId", "sesiAkademikId "+ request.getSesiAkademikId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
         PersonEntity person = personRepo.findById(request.getWaliKelasId()).orElse(null);
         if(person == null){
             Map<String, String> errors = Map.of("waliKelasId", "waliKelasId "+ request.getWaliKelasId() +" tidak dapat ditemukan");
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+        }
+
+        TahunAjaranEntity tahunAjaran = tahunAjaranRepo.findById(request.getTahunAjaranId()).orElse(null);
+        if(tahunAjaran == null){
+            Map<String, String> errors = Map.of("tahunAjaranId", "tahunAjaranId" + request.getTahunAjaranId()+ " tidak dapat ditemukan");
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+        }
+
+        LevelEntity level = levelRepo.findById(request.getLevelId()).orElse(null);
+        if(level == null){
+            Map<String, String> errors = Map.of("levelId", "levelId "+ request.getLevelId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
