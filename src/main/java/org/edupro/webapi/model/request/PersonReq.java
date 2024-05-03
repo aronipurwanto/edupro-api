@@ -1,5 +1,7 @@
 package org.edupro.webapi.model.request;
 
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +18,7 @@ public class PersonReq {
     private String nama;
     private String alamatTinggal;
     private String nik; // NIK KTP
+    @Temporal(TemporalType.DATE)
     private LocalDate tanggalLahir;
     private String tempatLahir;
     private String gender;
