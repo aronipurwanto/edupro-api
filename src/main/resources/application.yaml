@@ -1,6 +1,11 @@
 server:
   port: 8081
 spring:
+  mvc:
+    format:
+      date: yyyy-MM-dd
+      date-time: yyyy-MM-dd HH:mm:ss
+      time: HH:mm:ss
   application:
     name: edupro-webapi
     security:

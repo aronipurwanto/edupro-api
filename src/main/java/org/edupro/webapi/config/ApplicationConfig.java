@@ -1,6 +1,7 @@
 package org.edupro.webapi.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,10 @@ public class ApplicationConfig {
 
     @Bean
     public ObjectMapper objectMapper(){
-        return new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // support Java 8 date time apis
+        objectMapper.registerModule(new JavaTimeModule());
+        return objectMapper;
     }
 }
