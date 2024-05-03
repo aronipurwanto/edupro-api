@@ -7,7 +7,7 @@ import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.model.entity.GedungEntity;
 import org.edupro.webapi.model.request.CommonReq;
-import org.edupro.webapi.model.response.CommonRes;
+import org.edupro.webapi.model.response.GedungRes;
 import org.edupro.webapi.repository.GedungRepo;
 import org.edupro.webapi.service.GedungService;
 import org.edupro.webapi.util.CommonUtil;
@@ -31,7 +31,7 @@ public class GedungServiceImpl implements GedungService {
     private final GedungRepo repo;
 
     @Override
-    public List<CommonRes> get() {
+    public List<GedungRes> get() {
         List<GedungEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
         if(result.isEmpty()){
             return Collections.emptyList();
@@ -40,14 +40,14 @@ public class GedungServiceImpl implements GedungService {
     }
 
     @Override
-    public Optional<CommonRes> getById(String id) {
+    public Optional<GedungRes> getById(String id) {
         GedungEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
     }
 
     @Override
-    public Optional<CommonRes> save(CommonReq request) {
+    public Optional<GedungRes> save(CommonReq request) {
         if(repo.existsByKode(request.getKode())){
             log.info("Save Gedung gagal, terjadi error : kode sudah digunakan");
             Map<String, String> errors = Map.of("kode", "Kode "+ request.getKode() +" sudah digunakan");
@@ -60,7 +60,7 @@ public class GedungServiceImpl implements GedungService {
     }
 
     @Override
-    public Optional<CommonRes> update(CommonReq request, String id) {
+    public Optional<GedungRes> update(CommonReq request, String id) {
         GedungEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
@@ -68,7 +68,7 @@ public class GedungServiceImpl implements GedungService {
     }
 
     @Override
-    public Optional<CommonRes> delete(String id) {
+    public Optional<GedungRes> delete(String id) {
         GedungEntity result = this.getEntityById(id);
 
         result.setDeletedAt(LocalDateTime.now());
@@ -76,7 +76,7 @@ public class GedungServiceImpl implements GedungService {
         return saveOrUpdate(result);
     }
 
-    private Optional<CommonRes> saveOrUpdate(GedungEntity result) {
+    private Optional<GedungRes> saveOrUpdate(GedungEntity result) {
         try{
             this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
@@ -102,8 +102,8 @@ public class GedungServiceImpl implements GedungService {
         return result;
     }
 
-    private CommonRes convertEntityToRes(GedungEntity entity){
-        CommonRes result = new CommonRes();
+    private GedungRes convertEntityToRes(GedungEntity entity){
+        GedungRes result = new GedungRes();
         BeanUtils.copyProperties(entity, result);
         return result;
     }

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.edupro.webapi.model.request.CommonReq;
 import org.edupro.webapi.model.response.CommonRes;
+import org.edupro.webapi.model.response.GedungRes;
 import org.edupro.webapi.model.response.Response;
 import org.edupro.webapi.service.GedungService;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/gedung")
 @RequiredArgsConstructor
-public class GedungController extends BaseController<CommonRes>{
+public class GedungController extends BaseController<GedungRes>{
     private final GedungService service;
 
     @GetMapping

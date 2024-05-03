@@ -6,8 +6,8 @@ import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.model.entity.KurikulumEntity;
-import org.edupro.webapi.model.request.CommonReq;
-import org.edupro.webapi.model.response.CommonRes;
+import org.edupro.webapi.model.request.KurikulumReq;
+import org.edupro.webapi.model.response.KurikulumRes;
 import org.edupro.webapi.repository.KurikulumRepo;
 import org.edupro.webapi.service.KurikulumService;
 import org.hibernate.exception.DataException;
@@ -27,7 +27,7 @@ public class KurikulumServiceImpl implements KurikulumService {
     private final KurikulumRepo repo;
 
     @Override
-    public List<CommonRes> get() {
+    public List<KurikulumRes> get() {
         List<KurikulumEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
         if(result.isEmpty()){
             return Collections.emptyList();
@@ -36,14 +36,14 @@ public class KurikulumServiceImpl implements KurikulumService {
     }
 
     @Override
-    public Optional<CommonRes> getById(String id) {
+    public Optional<KurikulumRes> getById(String id) {
         KurikulumEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
     }
 
     @Override
-    public Optional<CommonRes> save(CommonReq request) {
+    public Optional<KurikulumRes> save(KurikulumReq request) {
         if(repo.existsByKode(request.getKode())){
             log.info("Save Kurikulum gagal, terjadi error : kode sudah digunakan");
             Map<String, String> errors = Map.of("kode", "Kode "+ request.getKode() +" sudah digunakan");
@@ -55,7 +55,7 @@ public class KurikulumServiceImpl implements KurikulumService {
     }
 
     @Override
-    public Optional<CommonRes> update(CommonReq request, String id) {
+    public Optional<KurikulumRes> update(KurikulumReq request, String id) {
         KurikulumEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
@@ -63,7 +63,7 @@ public class KurikulumServiceImpl implements KurikulumService {
     }
 
     @Override
-    public Optional<CommonRes> delete(String id) {
+    public Optional<KurikulumRes> delete(String id) {
         KurikulumEntity result = this.getEntityById(id);
 
         result.setDeletedAt(LocalDateTime.now());
@@ -72,7 +72,7 @@ public class KurikulumServiceImpl implements KurikulumService {
         return saveOrUpdate(result);
     }
 
-    private Optional<CommonRes> saveOrUpdate(KurikulumEntity result) {
+    private Optional<KurikulumRes> saveOrUpdate(KurikulumEntity result) {
         try{
             this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
@@ -98,13 +98,13 @@ public class KurikulumServiceImpl implements KurikulumService {
         return result;
     }
 
-    private CommonRes convertEntityToRes(KurikulumEntity entity){
-        CommonRes result = new CommonRes();
+    private KurikulumRes convertEntityToRes(KurikulumEntity entity){
+        KurikulumRes result = new KurikulumRes();
         BeanUtils.copyProperties(entity, result);
         return result;
     }
 
-    private KurikulumEntity convertReqToEntity(CommonReq request){
+    private KurikulumEntity convertReqToEntity(KurikulumReq request){
         KurikulumEntity result = new KurikulumEntity();
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
@@ -112,7 +112,7 @@ public class KurikulumServiceImpl implements KurikulumService {
         return result;
     }
 
-    private void convertReqToEntity(CommonReq request, KurikulumEntity result){
+    private void convertReqToEntity(KurikulumReq request, KurikulumEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
     }
