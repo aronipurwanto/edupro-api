@@ -1,18 +1,6 @@
 server:
   port: 8081
 spring:
-  security:
-    white-list:
-      - "/v2/api-docs"
-      - "/v3/api-docs"
-      - "/v3/api-docs/**"
-      - "/swagger-resources"
-      - "/swagger-resources/**"
-      - "/configuration/ui"
-      - "/configuration/security"
-      - "/swagger-ui/**"
-      - "/webjars/**"
-      - "/swagger-ui.html"
   application:
     name: edupro-webapi
     security:
@@ -41,3 +29,31 @@ spring:
         show_sql: false
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
+  security:
+    white-list:
+      - "/v2/api-docs"
+      - "/v3/api-docs"
+      - "/v3/api-docs/**"
+      - "/swagger-resources"
+      - "/swagger-resources/**"
+      - "/configuration/ui"
+      - "/configuration/security"
+      - "/swagger-ui/**"
+      - "/webjars/**"
+      - "/swagger-ui.html"
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: edupro-login
+            authorization-grant-type: authorization_code
+            scope: openid, profile, roles
+            client-secret: RBJ6eu1QalyjhtNZhEXjPKgx9RkXlDT1
+            redirect-uri: http://localhost:8082/login/oauth2/code/edupro-login
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/edupro
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/edupro
