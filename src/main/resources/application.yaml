@@ -50,10 +50,10 @@ spring:
       client:
         registration:
           keycloak:
-            client-id: edupro-login
+            client-id: edupro-oauth2-client
             authorization-grant-type: authorization_code
             scope: openid, profile, roles
-            client-secret: 1VMf1MSCIG11ZJwwZm04iOXDcPzs3mME
+            client-secret: R9t4gwhcmUAXphfgATSkgtLXHaOnfbDW
             redirect-uri: http://localhost:8082/login/oauth2/code/edupro-login
         provider:
           keycloak:
@@ -61,4 +61,5 @@ spring:
             user-name-attribute: preferred_username
       resourceserver:
         jwt:
+          jwk-set-uri: http://localhost:8080/realms/edupro/protocol/openid-connect/certs
           issuer-uri: http://localhost:8080/realms/edupro
