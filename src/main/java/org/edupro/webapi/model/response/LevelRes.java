@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.edupro.webapi.constant.DataStatus;
 
 @Getter
 @Setter
@@ -16,4 +17,5 @@ public class LevelRes {
     private String kode;
     private String nama;
     private Integer noUrut;
+    private DataStatus status;
 }
