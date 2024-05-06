@@ -9,6 +9,7 @@ import org.edupro.webapi.model.entity.*;
 import org.edupro.webapi.model.request.KelasReq;
 import org.edupro.webapi.model.response.KelasRes;
 import org.edupro.webapi.repository.*;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.KelasService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class KelasServiceImpl implements KelasService {
+public class KelasServiceImpl extends BaseService implements KelasService {
     private final KelasRepo repo;
     private final RuanganRepo ruanganRepo;
     private final LembagaRepo lembagaRepo;
@@ -192,5 +193,11 @@ public class KelasServiceImpl implements KelasService {
     private void convertReqToEntity(KelasReq request, KelasEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }

@@ -9,6 +9,7 @@ import org.edupro.webapi.model.entity.KurikulumEntity;
 import org.edupro.webapi.model.request.KurikulumReq;
 import org.edupro.webapi.model.response.KurikulumRes;
 import org.edupro.webapi.repository.KurikulumRepo;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.KurikulumService;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class KurikulumServiceImpl implements KurikulumService {
+public class KurikulumServiceImpl extends BaseService implements KurikulumService {
     private final KurikulumRepo repo;
 
     @Override
@@ -115,5 +116,11 @@ public class KurikulumServiceImpl implements KurikulumService {
     private void convertReqToEntity(KurikulumReq request, KurikulumEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }

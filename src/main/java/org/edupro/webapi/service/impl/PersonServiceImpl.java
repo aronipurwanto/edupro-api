@@ -9,6 +9,7 @@ import org.edupro.webapi.model.entity.PersonEntity;
 import org.edupro.webapi.model.request.PersonReq;
 import org.edupro.webapi.model.response.PersonRes;
 import org.edupro.webapi.repository.PersonRepo;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.PersonService;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class PersonServiceImpl implements PersonService {
+public class PersonServiceImpl extends BaseService implements PersonService {
     private final PersonRepo repo;
 
     @Override
@@ -117,5 +118,11 @@ public class PersonServiceImpl implements PersonService {
     private void convertReqToEntity(PersonReq request, PersonEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }

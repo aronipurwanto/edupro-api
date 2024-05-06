@@ -3,16 +3,12 @@
  */
 package org.edupro.webapi.model.entity;
 
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * Menyimpan data pembelajaran/course/classroom
@@ -74,17 +70,13 @@ public class CourseEntity extends BaseIdEntity {
 	 * kodeMapel dan kodeLevel diisi jika course/pembelajaran ini melekat di mapel
 	 * pada level tertentu
 	 */
-	@Column(name = "MAPELID", length = 36, nullable = false)
+	@Column(name = "MAPELID", length = 36)
 	private String mapelId;
 
-	@ManyToOne
-	@JoinColumn(name = "MAPELID", insertable = false, updatable = false)
-	private MapelEntity mapel;
-
-	@Column(name = "MAPELKD", length = 10, nullable = false)
+	@Column(name = "MAPELKD", length = 10)
 	private String kodeMapel;
 	
-	@Column(name = "LVLKD", length = 10, nullable = false)
+	@Column(name = "LVLKD", length = 10)
 	private String kodeLevel;
 
 	@OneToMany(mappedBy = "course")

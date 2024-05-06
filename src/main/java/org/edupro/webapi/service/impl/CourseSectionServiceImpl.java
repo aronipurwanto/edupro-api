@@ -5,10 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
+import org.edupro.webapi.model.entity.CourseEntity;
 import org.edupro.webapi.model.entity.CourseSectionEntity;
 import org.edupro.webapi.model.request.CourseSectionReq;
 import org.edupro.webapi.model.response.CourseSectionRes;
+import org.edupro.webapi.repository.CourseRepo;
 import org.edupro.webapi.repository.CourseSectionRepo;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.CourseSectionService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
@@ -27,8 +30,9 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class CourseSectionServiceImpl implements CourseSectionService {
+public class CourseSectionServiceImpl extends BaseService implements CourseSectionService {
     private final CourseSectionRepo repo;
+    private final CourseRepo courseRepo;
 
     @Override
     public List<CourseSectionRes> get() {
@@ -48,17 +52,9 @@ public class CourseSectionServiceImpl implements CourseSectionService {
 
     @Override
     public Optional<CourseSectionRes> save(CourseSectionReq request) {
-        /*
-        if(repo.existsByKode(request.getKode())){
-            log.info("Save CourseSection gagal, terjadi error : kode sudah digunakan");
-            Map<String, String> errors = Map.of("kode", "Kode "+ request.getKode() +" sudah digunakan");
-            throw new CommonApiException("Save gagal", HttpStatus.BAD_REQUEST, errors);
-        }
-
-         */
-
         CourseSectionEntity result = this.convertReqToEntity(request);
         result.setId(CommonUtil.getUUID());
+
         return saveOrUpdate(result);
     }
 
@@ -112,15 +108,32 @@ public class CourseSectionServiceImpl implements CourseSectionService {
     }
 
     private CourseSectionEntity convertReqToEntity(CourseSectionReq request){
+        CourseEntity course = courseRepo.findById(request.getCourseId()).orElse(null);
+        if(course == null) {
+            Map<String, String> errors = Map.of("courseId", "courseId "+ request.getCourseId() +" tidak ditemukan");
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+        }
+
         CourseSectionEntity result = new CourseSectionEntity();
         BeanUtils.copyProperties(request, result);
-        result.setCreatedAt(LocalDateTime.now());
-        result.setUpdatedAt(LocalDateTime.now());
+
+        String userId = this.getUserInfo().getUserId();
+        if(userId != null && !userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
+
         return result;
     }
 
     private void convertReqToEntity(CourseSectionReq request, CourseSectionEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }

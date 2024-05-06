@@ -9,6 +9,7 @@ import org.edupro.webapi.model.entity.LevelEntity;
 import org.edupro.webapi.model.request.LevelReq;
 import org.edupro.webapi.model.response.LevelRes;
 import org.edupro.webapi.repository.LevelRepo;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.LevelService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class LevelServiceImpl implements LevelService {
+public class LevelServiceImpl extends BaseService implements LevelService {
     private final LevelRepo repo;
 
     @Override
@@ -123,5 +124,11 @@ public class LevelServiceImpl implements LevelService {
 
     private void convertReqToEntity(LevelReq request, LevelEntity result){
         BeanUtils.copyProperties(request, result);
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }

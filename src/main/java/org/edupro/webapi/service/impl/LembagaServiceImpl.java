@@ -9,6 +9,7 @@ import org.edupro.webapi.model.entity.LembagaEntity;
 import org.edupro.webapi.model.request.LembagaReq;
 import org.edupro.webapi.model.response.LembagaRes;
 import org.edupro.webapi.repository.LembagaRepo;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.LembagaService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class LembagaServiceImpl implements LembagaService {
+public class LembagaServiceImpl extends BaseService implements LembagaService {
     private final LembagaRepo repo;
 
     @Override
@@ -114,5 +115,11 @@ public class LembagaServiceImpl implements LembagaService {
     private void convertReqToEntity(LembagaReq request, LembagaEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }

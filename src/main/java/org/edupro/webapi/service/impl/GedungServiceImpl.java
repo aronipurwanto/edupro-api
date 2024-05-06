@@ -9,6 +9,7 @@ import org.edupro.webapi.model.entity.GedungEntity;
 import org.edupro.webapi.model.request.CommonReq;
 import org.edupro.webapi.model.response.GedungRes;
 import org.edupro.webapi.repository.GedungRepo;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.GedungService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
@@ -27,11 +28,12 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class GedungServiceImpl implements GedungService {
+public class GedungServiceImpl extends BaseService implements GedungService {
     private final GedungRepo repo;
 
     @Override
     public List<GedungRes> get() {
+        var userId = this.getUserInfo();
         List<GedungEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
         if(result.isEmpty()){
             return Collections.emptyList();
@@ -113,6 +115,12 @@ public class GedungServiceImpl implements GedungService {
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
         result.setUpdatedAt(LocalDateTime.now());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
         return result;
     }
 

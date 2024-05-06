@@ -4,11 +4,10 @@
 package org.edupro.webapi.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Menyimpan topic/section dari suatu course/classroom
@@ -35,7 +34,7 @@ import lombok.NoArgsConstructor;
 })
 public class CourseSectionEntity extends BaseEntity {
 	@Id
-	@Column(name = "CRSSECID", nullable = false, length = 36)
+	@Column(name = "SECID", nullable = false, length = 36)
 	private String id;
 	
 	@Column(name = "COURSEID", nullable = false)
@@ -44,10 +43,26 @@ public class CourseSectionEntity extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "COURSEID", insertable = false, updatable = false)
 	private CourseEntity course;
+
+	@Column(name = "SECTYPE", length = 20, nullable = false)
+	private String sectionType;
 	
-	@Column(name = "CRSSECNM", length = 100, nullable = false)
+	@Column(name = "SECNAME", length = 100, nullable = false)
 	private String name;
 
-	@Column(name = "CRSSECDESC", nullable = false)
+	@Column(name = "SECDESC", nullable = false)
 	private String description;
+
+	@Column(name = "PARENTID", length = 36)
+	private String parentId;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "PARENTID", insertable = false, updatable = false)
+	private CourseSectionEntity parent;
+
+	@OneToMany(mappedBy = "parent")
+	private Set<CourseSectionEntity> children = new HashSet<>();
+
+	@Column(name = "NOURUT")
+	private Integer noUrut;
 }

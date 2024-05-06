@@ -9,6 +9,7 @@ import org.edupro.webapi.model.entity.SiswaEntity;
 import org.edupro.webapi.model.request.SiswaReq;
 import org.edupro.webapi.model.response.SiswaRes;
 import org.edupro.webapi.repository.SiswaRepo;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.SiswaService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class SiswaServiceImpl implements SiswaService {
+public class SiswaServiceImpl extends BaseService implements SiswaService {
     private final SiswaRepo repo;
 
     @Override
@@ -120,5 +121,11 @@ public class SiswaServiceImpl implements SiswaService {
         result.setNisn(request.getNisn());
         result.setTanggalLahir(request.getTanggalLahir());
         result.setKotaTempatLahir(request.getKotaTempatLahir());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }

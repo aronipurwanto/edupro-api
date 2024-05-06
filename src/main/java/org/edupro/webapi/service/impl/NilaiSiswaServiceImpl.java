@@ -9,6 +9,7 @@ import org.edupro.webapi.model.entity.NilaiSiswaEntity;
 import org.edupro.webapi.model.request.NilaiSiswaReq;
 import org.edupro.webapi.model.response.NilaiSiswaRes;
 import org.edupro.webapi.repository.NilaiSiswaRepo;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.NilaiSiswaService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class NilaiSiswaServiceImpl implements NilaiSiswaService {
+public class NilaiSiswaServiceImpl extends BaseService implements NilaiSiswaService {
     private final NilaiSiswaRepo repo;
 
     @Override
@@ -113,5 +114,11 @@ public class NilaiSiswaServiceImpl implements NilaiSiswaService {
     private void convertReqToEntity(NilaiSiswaReq request, NilaiSiswaEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }

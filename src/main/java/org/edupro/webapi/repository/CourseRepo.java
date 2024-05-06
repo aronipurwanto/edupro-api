@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface CourseRepo extends JpaRepository<CourseEntity, String> {
     List<CourseEntity> findAllByStatus(DataStatus status);
+    List<CourseEntity> findAllByStatusAndCreatedBy(DataStatus status, String createdBy);
 }

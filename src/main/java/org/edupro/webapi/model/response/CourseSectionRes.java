@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 public class CourseSectionRes {
     private String id;
     private String courseId;
+    private String sectionType;
     private String name;
     private String description;
+    private String parentId;
+    private Integer noUrut;
 }

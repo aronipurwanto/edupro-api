@@ -2,13 +2,18 @@ package org.edupro.webapi.controller.v1;
 
 import org.edupro.webapi.constant.Constant;
 import org.edupro.webapi.model.response.Response;
+import org.edupro.webapi.service.BaseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.oidc.OidcIdToken;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-public class BaseController<T> {
+public class BaseController<T> extends BaseService {
     public ResponseEntity<Response> getObjectResponse(Object result){
         return ResponseEntity.ok().body(
                 Response.builder()
@@ -53,5 +58,28 @@ public class BaseController<T> {
                         .data(result)
                         .build()
         );
+    }
+
+    public String getUserId(){
+        final DefaultOidcUser user = (DefaultOidcUser) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        String dob = "";
+        String userId = "";
+
+        OidcIdToken token = user.getIdToken();
+
+        Map<String, Object> customClaims = token.getClaims();
+
+        if (customClaims.containsKey("user_id")) {
+            userId = String.valueOf(customClaims.get("user_id"));
+        }
+
+        if (customClaims.containsKey("DOB")) {
+            dob = String.valueOf(customClaims.get("DOB"));
+        }
+
+        return userId;
     }
 }

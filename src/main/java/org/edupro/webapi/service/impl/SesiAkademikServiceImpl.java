@@ -13,6 +13,7 @@ import org.edupro.webapi.model.response.SesiAkademikRes;
 import org.edupro.webapi.repository.KurikulumRepo;
 import org.edupro.webapi.repository.SesiAkademikRepo;
 import org.edupro.webapi.repository.TahunAjaranRepo;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.SesiAkademikService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class SesiAkademikServiceImpl implements SesiAkademikService {
+public class SesiAkademikServiceImpl extends BaseService implements SesiAkademikService {
     private final SesiAkademikRepo repo;
     private final KurikulumRepo kurikulumRepo;
     private final TahunAjaranRepo tahunAjaranRepo;
@@ -145,5 +146,11 @@ public class SesiAkademikServiceImpl implements SesiAkademikService {
 
     private void convertReqToEntity(SesiAkademikReq request, SesiAkademikEntity result){
         result.setKodeKurikulum(request.getKodeKurikulum());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }

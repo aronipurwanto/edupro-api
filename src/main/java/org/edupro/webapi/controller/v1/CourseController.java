@@ -9,6 +9,8 @@ import org.edupro.webapi.service.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+
 @RestController
 @RequestMapping("/api/v1/course")
 @RequiredArgsConstructor
@@ -19,6 +21,17 @@ public class CourseController extends BaseController<CourseRes>{
     private ResponseEntity<Response> get(){
         var result = service.get();
 
+        return this.getResponse(result);
+    }
+
+    @GetMapping("/user")
+    private ResponseEntity<Response> getByUser(){
+        String userId = this.getUserInfo().getUserId();
+        if(userId == null || userId.isEmpty()){
+            return getResponse(Collections.emptyList());
+        }
+
+        var result = service.getByUserId(userId);
         return this.getResponse(result);
     }
 

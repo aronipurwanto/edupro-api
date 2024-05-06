@@ -10,6 +10,7 @@ import org.edupro.webapi.model.request.AttachmentReq;
 import org.edupro.webapi.model.response.AttachmentRes;
 import org.edupro.webapi.repository.AttachmentRepo;
 import org.edupro.webapi.service.AttachmentService;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class AttachmentServiceImpl implements AttachmentService {
+public class AttachmentServiceImpl extends BaseService implements AttachmentService {
     private final AttachmentRepo repo;
 
     @Override
@@ -109,5 +110,10 @@ public class AttachmentServiceImpl implements AttachmentService {
 
     private void convertReqToEntity(AttachmentReq request, AttachmentEntity result){
         BeanUtils.copyProperties(request, result);
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+        }
     }
 }

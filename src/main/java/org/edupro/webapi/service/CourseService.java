@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface CourseService {
     List<CourseRes> get();
+    List<CourseRes> getByUserId(String userId);
     Optional<CourseRes> getById(String id);
     Optional<CourseRes> save(CourseReq request);
     Optional<CourseRes> update(CourseReq request, String id);

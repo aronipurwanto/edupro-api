@@ -9,6 +9,7 @@ import org.edupro.webapi.model.entity.MapelEntity;
 import org.edupro.webapi.model.request.MapelReq;
 import org.edupro.webapi.model.response.MapelRes;
 import org.edupro.webapi.repository.MapelRepo;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.MapelService;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class MapelServiceImpl implements MapelService {
+public class MapelServiceImpl extends BaseService implements MapelService {
     private final MapelRepo repo;
 
     @Override
@@ -119,5 +120,11 @@ public class MapelServiceImpl implements MapelService {
     private void convertReqToEntity(MapelReq request, MapelEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }

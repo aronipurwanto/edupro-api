@@ -9,6 +9,7 @@ import org.edupro.webapi.model.entity.LookupEntity;
 import org.edupro.webapi.model.request.LookupReq;
 import org.edupro.webapi.model.response.LookupRes;
 import org.edupro.webapi.repository.LookupRepo;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.LookupService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class LookupServiceImpl implements LookupService {
+public class LookupServiceImpl extends BaseService implements LookupService {
     private final LookupRepo repo;
 
     @Override
@@ -130,5 +131,11 @@ public class LookupServiceImpl implements LookupService {
     private void convertReqToEntity(LookupReq request, LookupEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }

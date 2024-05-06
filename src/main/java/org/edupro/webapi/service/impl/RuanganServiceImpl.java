@@ -11,6 +11,7 @@ import org.edupro.webapi.model.request.RuanganReq;
 import org.edupro.webapi.model.response.RuanganRes;
 import org.edupro.webapi.repository.GedungRepo;
 import org.edupro.webapi.repository.RuanganRepo;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.RuanganService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class RuanganServiceImpl implements RuanganService {
+public class RuanganServiceImpl extends BaseService implements RuanganService {
     private final RuanganRepo repo;
     private final GedungRepo gedungRepo;
 
@@ -150,5 +151,11 @@ public class RuanganServiceImpl implements RuanganService {
 
         GedungEntity gedungEntity =  this.getGedungById(request.getGedungId());
         result.setGedungId(gedungEntity.getId());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }

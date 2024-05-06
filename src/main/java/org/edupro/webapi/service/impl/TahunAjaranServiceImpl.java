@@ -9,6 +9,7 @@ import org.edupro.webapi.model.entity.TahunAjaranEntity;
 import org.edupro.webapi.model.request.TahunAjaranReq;
 import org.edupro.webapi.model.response.TahunAjaranRes;
 import org.edupro.webapi.repository.TahunAjaranRepo;
+import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.TahunAjaranService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class TahunAjaranServiceImpl implements TahunAjaranService {
+public class TahunAjaranServiceImpl extends BaseService implements TahunAjaranService {
     private final TahunAjaranRepo repo;
 
     @Override
@@ -127,5 +128,11 @@ public class TahunAjaranServiceImpl implements TahunAjaranService {
     private void convertReqToEntity(TahunAjaranReq request, TahunAjaranEntity result){
         result.setNama(request.getNama());
         result.setKodeKurikulum(request.getKodeKurikulum());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }
