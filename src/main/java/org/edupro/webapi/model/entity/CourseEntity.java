@@ -35,6 +35,9 @@ import java.util.List;
 public class CourseEntity extends BaseIdEntity {
 	@Column(name = "COURSENM", nullable = false)
 	private String name;
+
+	@Column(name = "COURSEDESC", columnDefinition = "TEXT")
+	private String description;
 	
 	@Column(name = "COURSENMSHORT", nullable = false)
 	private String shortName;

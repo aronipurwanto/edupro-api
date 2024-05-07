@@ -16,6 +16,7 @@ public class CourseReq {
     private String id;
     @NotEmpty(message = "Nama tidak boleh kosong")
     private String name;
+    private String description;
     @NotEmpty(message = "shortName tidak boleh kosong")
     private String shortName;
     private Boolean shown;

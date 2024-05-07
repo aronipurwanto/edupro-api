@@ -1,6 +1,5 @@
 package org.edupro.webapi.model.response;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +12,7 @@ import java.time.LocalDateTime;
 public class CourseRes {
     private String id;
     private String name;
+    private String description;
     private String shortName;
     private Boolean shown;
     private LocalDateTime startDate;
