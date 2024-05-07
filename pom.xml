@@ -9,12 +9,12 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.edupro</groupId>
-    <artifactId>edupro-webapi</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>edupro</artifactId>
+    <version>1.0.1</version>
     <name>edupro</name>
     <description>edupro</description>
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>
