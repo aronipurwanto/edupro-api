@@ -6,9 +6,11 @@ import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.model.entity.CourseEntity;
+import org.edupro.webapi.model.entity.CourseSectionEntity;
 import org.edupro.webapi.model.entity.MapelEntity;
 import org.edupro.webapi.model.request.CourseReq;
 import org.edupro.webapi.model.response.CourseRes;
+import org.edupro.webapi.model.response.CourseSectionRes;
 import org.edupro.webapi.repository.CourseRepo;
 import org.edupro.webapi.repository.MapelRepo;
 import org.edupro.webapi.service.BaseService;
@@ -21,10 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,7 +55,7 @@ public class CourseServiceImpl extends BaseService implements CourseService {
     public Optional<CourseRes> getById(String id) {
         CourseEntity result = this.getEntityById(id);
 
-        return Optional.of(this.convertEntityToRes(result));
+        return Optional.of(this.convertEntityToResWithSection(result));
     }
 
     @Override
@@ -115,6 +114,23 @@ public class CourseServiceImpl extends BaseService implements CourseService {
 
     private CourseRes convertEntityToRes(CourseEntity entity){
         CourseRes result = new CourseRes();
+        BeanUtils.copyProperties(entity, result);
+        return result;
+    }
+
+    private CourseRes convertEntityToResWithSection(CourseEntity entity){
+        CourseRes result = new CourseRes();
+        BeanUtils.copyProperties(entity, result);
+
+        if(!entity.getCourseSectionList().isEmpty()){
+            List<CourseSectionRes> sectionResList = entity.getCourseSectionList().stream().map(this::convertEntityToSectionRes).toList();
+            result.setSections(sectionResList);
+        }
+        return result;
+    }
+
+    private CourseSectionRes convertEntityToSectionRes(CourseSectionEntity entity){
+        CourseSectionRes result = new CourseSectionRes();
         BeanUtils.copyProperties(entity, result);
         return result;
     }

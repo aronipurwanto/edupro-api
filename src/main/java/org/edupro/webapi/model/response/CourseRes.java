@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -26,4 +28,5 @@ public class CourseRes {
     private String mapelId;
     private String kodeMapel;
     private String kodeLevel;
+    private List<CourseSectionRes> sections = new ArrayList<>();
 }
