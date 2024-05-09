@@ -1,0 +1,54 @@
+server:
+  port: 8081
+spring:
+  mvc:
+    format:
+      date: yyyy-MM-dd
+      date-time: yyyy-MM-dd HH:mm:ss
+      time: HH:mm:ss
+  application:
+    name: edupro-webapi
+    security:
+      jwt:
+        secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+        expiration: 86400000 # a day
+        refresh-token:
+          expiration: 604800000 # 7 days
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #username: edupro
+    #password: 3duPR032!
+    username: root
+    password: P@ssW0rd32!
+    url: jdbc:mysql://localhost:3306/edupro_db
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: edupro-oauth2-client
+            authorization-grant-type: authorization_code
+            scope: openid, profile, roles
+            client-secret: aZLsX4VeBQIIFYKPozaEXT4EXxtfNolT
+            redirect-uri: http://localhost:8082/login/oauth2/code/edupro-login
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/edupro
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/edupro/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8080/realms/edupro
