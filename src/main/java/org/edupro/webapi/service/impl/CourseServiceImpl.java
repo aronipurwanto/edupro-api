@@ -139,7 +139,11 @@ public class CourseServiceImpl extends BaseService implements CourseService {
         CourseEntity result = new CourseEntity();
         BeanUtils.copyProperties(request, result);
 
-        MapelEntity mapel = mapelRepo.findById(request.getMapelId()).orElse(null);
+        MapelEntity mapel = null;
+        if(request.getMapelId() != null && !request.getMapelId().isEmpty()) {
+            mapel = mapelRepo.findById(request.getMapelId()).orElse(null);
+        }
+        
         if(mapel != null) {
             result.setMapelId(mapel.getId());
             result.setKodeMapel(mapel.getKode());

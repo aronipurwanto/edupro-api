@@ -6,7 +6,7 @@ package org.edupro.webapi.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,10 +46,10 @@ public class CourseEntity extends BaseIdEntity {
 	private Boolean shown;
 	
 	@Column(name = "COURSESTARTD")
-	private LocalDateTime startDate;
+	private LocalDate startDate;
 	
 	@Column(name = "COURSEENDD")
-	private LocalDateTime endDate;
+	private LocalDate endDate;
 	
 	@Column(name = "COURSESMRY")
 	private String summary;
