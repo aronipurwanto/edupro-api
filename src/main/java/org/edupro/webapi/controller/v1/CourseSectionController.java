@@ -10,14 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/section")
+@RequestMapping("/api/v1/course/{courseId}/section")
 @RequiredArgsConstructor
 public class CourseSectionController extends BaseController<CourseSectionRes>{
     private final CourseSectionService service;
 
-    @GetMapping("/{id}")
-    private ResponseEntity<Response> get(){
-        var result = service.get();
+    @GetMapping
+    private ResponseEntity<Response> get(@PathVariable("courseId") String courseId){
+        var result = service.getByCourseId(courseId);
 
         return this.getResponse(result);
     }
@@ -35,8 +35,7 @@ public class CourseSectionController extends BaseController<CourseSectionRes>{
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<Response> update(@RequestBody @Valid CourseSectionReq request,
-                                            @PathVariable("id") String id){
+    private ResponseEntity<Response> update(@RequestBody @Valid CourseSectionReq request, @PathVariable("id") String id){
         var result = service.update(request, id);
         return getResponse(result);
     }
