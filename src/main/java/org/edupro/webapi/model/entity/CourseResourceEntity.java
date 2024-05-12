@@ -56,4 +56,10 @@ public class CourseResourceEntity extends BaseEntity {
 	@ManyToOne
 	@JoinColumn(name = "ATTCHID", insertable = false, updatable = false)
 	private AttachmentEntity attachment;
+
+	public CourseResourceEntity(String courseId, String name, String courseSectionId) {
+		this.courseId = courseId;
+		this.name = name;
+		this.courseSectionId = courseSectionId;
+	}
 }

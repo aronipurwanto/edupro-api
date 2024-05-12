@@ -23,6 +23,8 @@ public class DbInit implements CommandLineRunner {
     private final LevelRepo levelRepo;
     private final TahunAjaranRepo taRepo;
     private final KurikulumRepo kurRepo;
+    private final CourseRepo courseRepo;
+    private final CourseSectionRepo sectionRepo;
 
     @Override
     public void run(String... args) throws Exception {
@@ -45,6 +47,7 @@ public class DbInit implements CommandLineRunner {
 
         initKurikulum();
         initTahunAjaran();
+        initCourse();
     }
 
     private void initLembaga(){
@@ -444,6 +447,159 @@ public class DbInit implements CommandLineRunner {
             log.info("Save Tahun Ajaran is successful");
         }catch (Exception e){
             log.error(e.getMessage());
+        }
+    }
+
+    private void initCourse(){
+        if(courseRepo.countAllByStatus(DataStatus.AKTIF) > 0){
+            return;
+        }
+
+        CourseEntity course1 = new CourseEntity("Matematika","Mata pelajaran Matematika","MTK",LocalDate.now().minusMonths(6),LocalDate.now().plusMonths(2),"edupro.user");
+        course1.setId(CommonUtil.getUUID());
+        course1.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course1,"TOPIC","Topik Matematika 1",1));
+        course1.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course1,"TOPIC","Topik Matematika 2",2));
+        course1.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course1,"TOPIC","Topik Matematika 3",3));
+        course1.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course1,"TOPIC","Topik Matematika 4",4));
+        course1.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course1,"TOPIC","Topik Matematika 5",5));
+        course1.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course1,"TOPIC","Topik Matematika 6",6));
+        course1.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course1,"TOPIC","Topik Matematika 7",7));
+        course1.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course1,"TOPIC","Topik Matematika 8",8));
+        course1.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course1,"TOPIC","Topik Matematika 9",9));
+        course1.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course1,"TOPIC","Topik Matematika 10",10));
+        course1.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course1,"TOPIC","Topik Matematika 11",11));
+        course1.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course1,"TOPIC","Topik Matematika 12",12));
+        course1.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course1,"TOPIC","Topik Matematika 13",13));
+
+        try {
+            courseRepo.saveAndFlush(course1);
+            log.info("Save Course 1 is successful");
+            initSection();
+        }catch (Exception e){
+            log.error("Save Course 1 error: {}",e.getMessage());
+        }
+
+        CourseEntity course2 = new CourseEntity("Bahasa Indonesia","Mata pelajaran Bahasa Indonesia","MTK",LocalDate.now().minusMonths(6),LocalDate.now().plusMonths(2),"edupro.user");
+        course2.setId(CommonUtil.getUUID());
+        course2.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course2,"TOPIC","Topik Bhs Indonesia 1",1));
+        course2.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course2,"TOPIC","Topik Bhs Indonesia 2",2));
+        course2.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course2,"TOPIC","Topik Bhs Indonesia 3",3));
+        course2.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course2,"TOPIC","Topik Bhs Indonesia 4",4));
+        course2.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course2,"TOPIC","Topik Bhs Indonesia 5",5));
+        course2.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course2,"TOPIC","Topik Bhs Indonesia 6",6));
+        course2.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course2,"TOPIC","Topik Bhs Indonesia 7",7));
+        course2.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course2,"TOPIC","Topik Bhs Indonesia 8",8));
+
+        try {
+            courseRepo.saveAndFlush(course2);
+            log.info("Save Course 2 is successful");
+        }catch (Exception e){
+            log.error("Save Course 2 error: {}",e.getMessage());
+        }
+
+        CourseEntity course3 = new CourseEntity("Bahasa Inggris","Mata pelajaran Bahasa Inggris","MTK",LocalDate.now().minusMonths(6),LocalDate.now().plusMonths(2),"edupro.user");
+        course3.setId(CommonUtil.getUUID());
+        course3.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course3,"TOPIC","Topik Bhs Inggris 1",1));
+        course3.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course3,"TOPIC","Topik Bhs Inggris 2",2));
+        course3.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course3,"TOPIC","Topik Bhs Inggris 3",3));
+        course3.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course3,"TOPIC","Topik Bhs Inggris 4",4));
+        course3.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course3,"TOPIC","Topik Bhs Inggris 5",5));
+        course3.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course3,"TOPIC","Topik Bhs Inggris 6",6));
+        course3.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course3,"TOPIC","Topik Bhs Inggris 7",7));
+        course3.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course3,"TOPIC","Topik Bhs Inggris 8",8));
+        course3.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course3,"TOPIC","Topik Bhs Inggris 9",9));
+        course3.addCourseSection(new CourseSectionEntity(CommonUtil.getUUID(),course3,"TOPIC","Topik Bhs Inggris 10",10));
+
+        try {
+            courseRepo.saveAndFlush(course3);
+            log.info("Save Course 3 is successful");
+        }catch (Exception e){
+            log.error("Save Course 3 error: {}",e.getMessage());
+        }
+    }
+
+    private void initSection(){
+
+        CourseSectionEntity section1 = sectionRepo.findAllByName("Topik Matematika 1").get(0);
+        section1.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section1.getCourse(),"SUB-TOPIC","Sub Topik Matematika 1.1", 1, section1));
+        section1.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section1.getCourse(),"SUB-TOPIC","Sub Topik Matematika 1.2", 2, section1));
+        section1.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section1.getCourse(),"SUB-TOPIC","Sub Topik Matematika 1.3", 3, section1));
+        section1.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section1.getCourse(),"SUB-TOPIC","Sub Topik Matematika 1.4", 4, section1));
+
+        try {
+            sectionRepo.saveAndFlush(section1);
+            log.info("Save Section 1 is successful");
+        }catch (Exception e){
+            log.error("Save Section 1 error: {}",e.getMessage());
+        }
+
+        CourseSectionEntity section2 = sectionRepo.findAllByName("Topik Matematika 2").get(0);
+        section2.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section2.getCourse(),"SUB-TOPIC","Sub Topik Matematika 2.1",1, section2));
+        section2.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section2.getCourse(),"SUB-TOPIC","Sub Topik Matematika 2.2",2, section2));
+        section2.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section2.getCourse(),"SUB-TOPIC","Sub Topik Matematika 2.3",3, section2));
+        section2.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section2.getCourse(),"SUB-TOPIC","Sub Topik Matematika 2.4",4, section2));
+        section2.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section2.getCourse(),"SUB-TOPIC","Sub Topik Matematika 2.5",5, section2));
+
+        try {
+            sectionRepo.saveAndFlush(section2);
+            log.info("Save Section 2 is successful");
+        }catch (Exception e){
+            log.error("Save Section 2 error: {}",e.getMessage());
+        }
+
+        CourseSectionEntity section3 = sectionRepo.findAllByName("Topik Matematika 3").get(0);
+        section3.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section3.getCourse(),"SUB-TOPIC","Sub Topik Matematika 3.1",1, section3));
+        section3.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section3.getCourse(),"SUB-TOPIC","Sub Topik Matematika 3.2",2, section3));
+        section3.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section3.getCourse(),"SUB-TOPIC","Sub Topik Matematika 3.3",3, section3));
+        section3.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section3.getCourse(),"SUB-TOPIC","Sub Topik Matematika 3.4",4, section3));
+        section3.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section3.getCourse(),"SUB-TOPIC","Sub Topik Matematika 3.5",5, section3));
+        section3.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section3.getCourse(),"SUB-TOPIC","Sub Topik Matematika 3.6",6, section3));
+        section3.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section3.getCourse(),"SUB-TOPIC","Sub Topik Matematika 3.7",7, section3));
+
+        try {
+            sectionRepo.saveAndFlush(section3);
+            log.info("Save Section 3 is successful");
+        }catch (Exception e){
+            log.error("Save Section 3 error: {}",e.getMessage());
+        }
+
+        CourseSectionEntity section4 = sectionRepo.findAllByName("Topik Matematika 4").get(0);
+        section4.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section4.getCourse(),"SUB-TOPIC","Sub Topik Matematika 4.1",1,section4));
+        section4.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section4.getCourse(),"SUB-TOPIC","Sub Topik Matematika 4.2",2,section4));
+        section4.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section4.getCourse(),"SUB-TOPIC","Sub Topik Matematika 4.3",3,section4));
+        section4.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section4.getCourse(),"SUB-TOPIC","Sub Topik Matematika 4.4",4,section4));
+        section4.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section4.getCourse(),"SUB-TOPIC","Sub Topik Matematika 4.5",5,section4));
+        section4.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section4.getCourse(),"SUB-TOPIC","Sub Topik Matematika 4.6",6,section4));
+        section4.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section4.getCourse(),"SUB-TOPIC","Sub Topik Matematika 4.7",7,section4));
+        section4.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section4.getCourse(),"SUB-TOPIC","Sub Topik Matematika 4.8",8,section4));
+        section4.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section4.getCourse(),"SUB-TOPIC","Sub Topik Matematika 4.9",9,section4));
+        section4.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section4.getCourse(),"SUB-TOPIC","Sub Topik Matematika 4.10",10,section4));
+
+        try {
+            sectionRepo.saveAndFlush(section4);
+            log.info("Save Section 4 is successful");
+        }catch (Exception e){
+            log.error("Save Section 4 error: {}",e.getMessage());
+        }
+
+        CourseSectionEntity section5 = sectionRepo.findAllByName("Topik Matematika 5").get(0);
+        section5.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section5.getCourse(),"SUB-TOPIC","Sub Topik Matematika 5.1", 1, section5));
+        section5.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section5.getCourse(),"SUB-TOPIC","Sub Topik Matematika 5.2", 2, section5));
+        section5.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section5.getCourse(),"SUB-TOPIC","Sub Topik Matematika 5.3", 3, section5));
+        section5.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section5.getCourse(),"SUB-TOPIC","Sub Topik Matematika 5.4", 4, section5));
+        section5.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section5.getCourse(),"SUB-TOPIC","Sub Topik Matematika 5.5", 5, section5));
+        section5.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section5.getCourse(),"SUB-TOPIC","Sub Topik Matematika 5.6", 6, section5));
+        section5.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section5.getCourse(),"SUB-TOPIC","Sub Topik Matematika 5.7", 7, section5));
+        section5.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section5.getCourse(),"SUB-TOPIC","Sub Topik Matematika 5.8", 8, section5));
+        section5.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section5.getCourse(),"SUB-TOPIC","Sub Topik Matematika 5.9", 9, section5));
+        section5.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section5.getCourse(),"SUB-TOPIC","Sub Topik Matematika 5.10", 10, section5));
+        section5.addChild(new CourseSectionEntity(CommonUtil.getUUID(),section5.getCourse(),"SUB-TOPIC","Sub Topik Matematika 5.11", 11, section5));
+
+        try {
+            sectionRepo.saveAndFlush(section5);
+            log.info("Save Section 5 is successful");
+        }catch (Exception e){
+            log.error("Save Section 5 error: {}",e.getMessage());
         }
     }
 }

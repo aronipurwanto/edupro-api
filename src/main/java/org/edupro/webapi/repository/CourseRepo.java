@@ -11,4 +11,6 @@ import java.util.List;
 public interface CourseRepo extends JpaRepository<CourseEntity, String> {
     List<CourseEntity> findAllByStatus(DataStatus status);
     List<CourseEntity> findAllByStatusAndCreatedBy(DataStatus status, String createdBy);
+    Integer countAllByStatusAndCreatedBy(DataStatus status, String createdBy);
+    Integer countAllByStatus(DataStatus status);
 }

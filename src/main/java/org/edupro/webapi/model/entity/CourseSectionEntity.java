@@ -6,8 +6,8 @@ package org.edupro.webapi.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Menyimpan topic/section dari suatu course/classroom
@@ -37,11 +37,11 @@ public class CourseSectionEntity extends BaseEntity {
 	@Column(name = "SECID", nullable = false, length = 36)
 	private String id;
 	
-	@Column(name = "COURSEID", nullable = false)
+	@Column(name = "COURSEID", insertable = false, updatable = false)
 	private String courseId;
 
-	@ManyToOne
-	@JoinColumn(name = "COURSEID", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "COURSEID", nullable = false)
 	private CourseEntity course;
 
 	@Column(name = "SECTYPE", length = 20, nullable = false)
@@ -50,19 +50,41 @@ public class CourseSectionEntity extends BaseEntity {
 	@Column(name = "SECNAME", length = 100, nullable = false)
 	private String name;
 
-	@Column(name = "SECDESC", nullable = false)
+	@Column(name = "SECDESC")
 	private String description;
 
-	@Column(name = "PARENTID", length = 36)
+	@Column(name = "PARENTID", length = 36, insertable = false, updatable = false)
 	private String parentId;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "PARENTID", insertable = false, updatable = false)
+	@ManyToOne
+	@JoinColumn(name = "PARENTID")
 	private CourseSectionEntity parent;
 
-	@OneToMany(mappedBy = "parent")
-	private Set<CourseSectionEntity> children = new HashSet<>();
+	@OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+	private List<CourseSectionEntity> children = new ArrayList<>();
 
 	@Column(name = "NOURUT")
 	private Integer noUrut;
+
+	public CourseSectionEntity(String id, CourseEntity course, String sectionType, String name, Integer noUrut) {
+		this.id = id;
+		this.course = course;
+		this.sectionType = sectionType;
+		this.name = name;
+		this.noUrut = noUrut;
+	}
+
+	public CourseSectionEntity(String id, CourseEntity course, String sectionType, String name, Integer noUrut, CourseSectionEntity parent) {
+		this.id = id;
+		this.course = course;
+		this.sectionType = sectionType;
+		this.name = name;
+		this.noUrut = noUrut;
+		this.parent = parent;
+	}
+
+	public void addChild(CourseSectionEntity courseSectionEntity) {
+		this.children.add(courseSectionEntity);
+		courseSectionEntity.setParent(this);
+	}
 }

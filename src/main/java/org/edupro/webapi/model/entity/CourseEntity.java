@@ -82,9 +82,28 @@ public class CourseEntity extends BaseIdEntity {
 	@Column(name = "LVLKD", length = 10)
 	private String kodeLevel;
 
-	@OneToMany(mappedBy = "course")
+	@OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<CourseResourceEntity> courseResourceList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "course")
+	@OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<CourseSectionEntity> courseSectionList = new ArrayList<>();
+
+	public CourseEntity(String name, String description, String shortName, LocalDate startDate, LocalDate endDate, String createdBy) {
+		this.name = name;
+		this.description = description;
+		this.shortName = shortName;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.setCreatedBy(createdBy);
+	}
+
+	public void addCourseResource(CourseResourceEntity courseResource) {
+		courseResourceList.add(courseResource);
+		courseResource.setCourse(this);
+	}
+
+	public void addCourseSection(CourseSectionEntity courseSection) {
+		courseSectionList.add(courseSection);
+		courseSection.setCourse(this);
+	}
 }
