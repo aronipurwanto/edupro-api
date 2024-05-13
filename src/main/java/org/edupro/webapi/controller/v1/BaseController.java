@@ -82,4 +82,15 @@ public class BaseController<T> extends BaseService {
 
         return userId;
     }
+
+    public String getToken(){
+        final DefaultOidcUser user = (DefaultOidcUser) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        OidcIdToken token = user.getIdToken();
+        if (token != null) {
+            return token.getTokenValue();
+        }
+        return "";
+    }
 }

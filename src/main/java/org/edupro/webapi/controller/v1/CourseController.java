@@ -2,6 +2,7 @@ package org.edupro.webapi.controller.v1;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.model.request.CourseReq;
 import org.edupro.webapi.model.response.CourseRes;
 import org.edupro.webapi.model.response.Response;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/course")
 @RequiredArgsConstructor
@@ -21,6 +23,7 @@ public class CourseController extends BaseController<CourseRes>{
     private ResponseEntity<Response> get(){
         var result = service.get();
 
+        log.info("token: {}", this.getToken());
         return this.getResponse(result);
     }
 
@@ -30,6 +33,8 @@ public class CourseController extends BaseController<CourseRes>{
         if(userId == null || userId.isEmpty()){
             return getResponse(Collections.emptyList());
         }
+
+        log.info("token: {}", this.getToken());
 
         var result = service.getByUserId(userId);
         return this.getResponse(result);
