@@ -18,7 +18,6 @@ import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -50,7 +49,7 @@ public class SecurityConfiguration {
                 // Allows preflight requests from browser
                 //.requestMatchers(new AntPathRequestMatcher("/customers*", HttpMethod.OPTIONS.name())).permitAll()
                 //.requestMatchers(new AntPathRequestMatcher("/customers*","/users*")).hasRole("user")
-                .requestMatchers(new AntPathRequestMatcher("/*")).permitAll()
+                //.requestMatchers(new AntPathRequestMatcher("/*")).permitAll()
                 .anyRequest().authenticated());
         http.oauth2Login(Customizer.withDefaults())
                 .logout(logout -> logout.addLogoutHandler(keycloakLogoutHandler)

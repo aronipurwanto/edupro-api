@@ -1,5 +1,6 @@
 package org.edupro.webapi.controller.v1;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +21,10 @@ public class CourseController extends BaseController<CourseRes>{
     private final CourseService service;
 
     @GetMapping
-    private ResponseEntity<Response> get(){
+    private ResponseEntity<Response> get(HttpServletRequest request){
         var result = service.get();
 
-        log.info("token: {}", this.getToken());
+        log.info("header: {}", request.getHeader("Authorization"));
         return this.getResponse(result);
     }
 
@@ -33,9 +34,6 @@ public class CourseController extends BaseController<CourseRes>{
         if(userId == null || userId.isEmpty()){
             return getResponse(Collections.emptyList());
         }
-
-        log.info("token: {}", this.getToken());
-
         var result = service.getByUserId(userId);
         return this.getResponse(result);
     }
