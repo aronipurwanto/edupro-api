@@ -63,7 +63,7 @@ public class CourseServiceImpl extends BaseService implements CourseService {
     public Optional<CourseSiswaRes> saveSiswa(String id, CourseSiswaReq request) {
         CourseEntity course  = this.getEntityById(request.getCourseId());
         SiswaEntity siswa = this.siswaRepo.findById(request.getSiswaId()).orElse(null);
-        if(siswa != null){
+        if(siswa == null){
             return Optional.empty();
         }
 
@@ -89,7 +89,7 @@ public class CourseServiceImpl extends BaseService implements CourseService {
     public Optional<CoursePersonRes> savePerson(String id, CoursePersonReq request) {
         CourseEntity course  = this.getEntityById(request.getCourseId());
         PersonEntity person = this.personRepo.findById(request.getPersonId()).orElse(null);
-        if(person != null){
+        if(person == null){
             return Optional.empty();
         }
 
