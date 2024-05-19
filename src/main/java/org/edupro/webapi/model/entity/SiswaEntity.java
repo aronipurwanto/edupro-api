@@ -55,4 +55,10 @@ public class SiswaEntity extends BaseIdEntity {
 
 	@Column(name = "EMAIL", length = 100)
 	private String email;
+
+	public SiswaEntity(String nama, String nisn, String gender) {
+		this.nama = nama;
+		this.nisn = nisn;
+		this.gender = gender;
+	}
 }

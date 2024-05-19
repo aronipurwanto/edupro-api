@@ -13,4 +13,5 @@ public interface SiswaRepo extends JpaRepository<SiswaEntity, String> {
     Optional<SiswaEntity> findByNisn(String name);
     List<SiswaEntity> findAllByStatus(DataStatus status);
     boolean existsByNisn(String nisn);
+    int countByStatus(DataStatus status);
 }

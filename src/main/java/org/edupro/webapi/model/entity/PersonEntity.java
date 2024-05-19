@@ -32,6 +32,9 @@ public class PersonEntity extends BaseIdEntity {
 	@Column(name = "PERSONUID", length = 100)
 	private String userId;
 
+	@Column(name = "PERSONNIK", length = 50)
+	private String nik; // NIK KTP
+
 	@Column(name = "PERSONNO", length = 50, nullable = false)
 	private String nomor;
 	
@@ -40,9 +43,6 @@ public class PersonEntity extends BaseIdEntity {
 	
 	@Column(name = "PERSONADDR", length = 255)
 	private String alamatTinggal;
-	
-	@Column(name = "PERSONNIK", length = 50)
-	private String nik; // NIK KTP
 	
 	@Column(name = "PERSONDOB")
 	private LocalDate tanggalLahir;
@@ -64,4 +64,10 @@ public class PersonEntity extends BaseIdEntity {
 
 	@Column(name = "EMAIL", length = 100)
 	private String email;
+
+	public PersonEntity(String nomor, String nama, String nik) {
+		this.nomor = nomor;
+		this.nama = nama;
+		this.nik = nik;
+	}
 }

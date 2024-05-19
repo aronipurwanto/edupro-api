@@ -32,11 +32,7 @@ import java.util.List;
 		@AttributeOverride(name = "updatedBy", column = @Column(name="CRSSECUPUID")),
 		@AttributeOverride(name = "status", column = @Column(name="CRSSECSTAT"))
 })
-public class CourseSectionEntity extends BaseEntity {
-	@Id
-	@Column(name = "SECID", nullable = false, length = 36)
-	private String id;
-	
+public class CourseSectionEntity extends BaseIdEntity {
 	@Column(name = "COURSEID", insertable = false, updatable = false)
 	private String courseId;
 

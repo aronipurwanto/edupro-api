@@ -5,14 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.model.entity.CourseEntity;
-import org.edupro.webapi.model.entity.CourseSectionEntity;
-import org.edupro.webapi.model.entity.MapelEntity;
+import org.edupro.webapi.model.entity.*;
+import org.edupro.webapi.model.request.CoursePersonReq;
 import org.edupro.webapi.model.request.CourseReq;
+import org.edupro.webapi.model.request.CourseSiswaReq;
+import org.edupro.webapi.model.response.CoursePersonRes;
 import org.edupro.webapi.model.response.CourseRes;
 import org.edupro.webapi.model.response.CourseSectionRes;
-import org.edupro.webapi.repository.CourseRepo;
-import org.edupro.webapi.repository.MapelRepo;
+import org.edupro.webapi.model.response.CourseSiswaRes;
+import org.edupro.webapi.repository.*;
 import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.CourseService;
 import org.edupro.webapi.util.CommonUtil;
@@ -23,7 +24,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +36,10 @@ import java.util.stream.Collectors;
 public class CourseServiceImpl extends BaseService implements CourseService {
     private final MapelRepo mapelRepo;
     private final CourseRepo repo;
+    private final CoursePersonRepo coursePersonRepo;
+    private final CourseSiswaRepo courseSiswaRepo;
+    private final SiswaRepo siswaRepo;
+    private final PersonRepo personRepo;
 
     @Override
     public List<CourseRes> get() {
@@ -49,6 +57,58 @@ public class CourseServiceImpl extends BaseService implements CourseService {
             return Collections.emptyList();
         }
         return result.stream().map(this::convertEntityToRes).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<CourseSiswaRes> saveSiswa(CourseSiswaReq request) {
+        CourseEntity course  = this.getEntityById(request.getCourseId());
+        SiswaEntity siswa = this.siswaRepo.findById(request.getSiswaId()).orElse(null);
+        if(siswa != null){
+            return Optional.empty();
+        }
+
+        CourseSiswaEntity entity = new CourseSiswaEntity(course, siswa);
+        try{
+            courseSiswaRepo.saveAndFlush(entity);
+            CourseSiswaRes result = new CourseSiswaRes();
+            BeanUtils.copyProperties(entity, result);
+            return Optional.of(result);
+        }catch (DataIntegrityViolationException e){
+            log.error("Save Course Siswa gagal, terjadi error : {}", e.getMessage());
+            Map<String, String> errors = Map.of("sql", e.getCause().getMessage());
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
+        }
+    }
+
+    @Override
+    public List<CourseSiswaRes> saveSiswaList(List<CourseSiswaReq> request) {
+        return List.of();
+    }
+
+    @Override
+    public Optional<CoursePersonRes> savePerson(CoursePersonReq request) {
+        CourseEntity course  = this.getEntityById(request.getCourseId());
+        PersonEntity person = this.personRepo.findById(request.getPersonId()).orElse(null);
+        if(person != null){
+            return Optional.empty();
+        }
+
+        CoursePersonEntity entity = new CoursePersonEntity(course, person);
+        try{
+            coursePersonRepo.saveAndFlush(entity);
+            CoursePersonRes result = new CoursePersonRes();
+            BeanUtils.copyProperties(entity, result);
+            return Optional.of(result);
+        }catch (DataIntegrityViolationException e){
+            log.error("Save Course Person gagal, terjadi error : {}", e.getMessage());
+            Map<String, String> errors = Map.of("sql", e.getCause().getMessage());
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.MULTI_STATUS, errors);
+        }
+    }
+
+    @Override
+    public List<CoursePersonRes> savePersonList(List<CoursePersonReq> request) {
+        return List.of();
     }
 
     @Override

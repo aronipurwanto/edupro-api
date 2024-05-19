@@ -11,4 +11,5 @@ import java.util.List;
 public interface PersonRepo extends JpaRepository<PersonEntity, String> {
     List<PersonEntity> findAllByStatus(DataStatus status);
     boolean existsByNik(String nik);
+    int countByStatus(DataStatus status);
 }

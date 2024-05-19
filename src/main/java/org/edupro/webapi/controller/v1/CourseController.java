@@ -4,7 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.edupro.webapi.model.request.CoursePersonReq;
 import org.edupro.webapi.model.request.CourseReq;
+import org.edupro.webapi.model.request.CourseSiswaReq;
 import org.edupro.webapi.model.response.CourseRes;
 import org.edupro.webapi.model.response.Response;
 import org.edupro.webapi.service.CourseService;
@@ -42,6 +44,18 @@ public class CourseController extends BaseController<CourseRes>{
     private ResponseEntity<Response> get(@PathVariable("id") String id){
         var result = service.getById(id);
         return getResponse(result);
+    }
+
+    @PostMapping("/{id}/person")
+    private ResponseEntity<Response> savePerson(@PathVariable("id") String id, @RequestBody @Valid CoursePersonReq req){
+        var result = service.savePerson(req).orElse(null);
+        return getObjectResponse(result);
+    }
+
+    @PostMapping("/{id}/siswa")
+    private ResponseEntity<Response> saveSiswa(@PathVariable("id") String id, @RequestBody @Valid CourseSiswaReq req){
+        var result = service.saveSiswa(req).orElse(null);
+        return getObjectResponse(result);
     }
 
     @PostMapping

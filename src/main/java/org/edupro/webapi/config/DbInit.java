@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -25,6 +26,8 @@ public class DbInit implements CommandLineRunner {
     private final KurikulumRepo kurRepo;
     private final CourseRepo courseRepo;
     private final CourseSectionRepo sectionRepo;
+    private final PersonRepo personRepo;
+    private final SiswaRepo siswaRepo;
 
     @Override
     public void run(String... args) throws Exception {
@@ -48,6 +51,73 @@ public class DbInit implements CommandLineRunner {
         initKurikulum();
         initTahunAjaran();
         initCourse();
+
+        initPerson();
+        initSiswa();
+    }
+
+    private void initPerson(){
+        if (personRepo.countByStatus(DataStatus.AKTIF) > 0) {
+            return;
+        }
+
+        List<PersonEntity> personList = Arrays.asList(
+                new PersonEntity("P001","Awiyanto","18010101"),
+                new PersonEntity("P002","Anton Baskoro","18010102"),
+                new PersonEntity("P003","Akbar Nugroho","18010103"),
+                new PersonEntity("P004","Roni Purwanto","18010104"),
+                new PersonEntity("P005","Pandu Wicaksono","18010105"),
+                new PersonEntity("P006","Zainal Arifin","18010106")
+        );
+
+        try{
+            personRepo.saveAll(personList);
+            log.info("Save person successfully");
+        }catch (Exception e){
+            log.error("Save person failed");
+        }
+    }
+
+    private void initSiswa(){
+        if(siswaRepo.countByStatus(DataStatus.AKTIF) > 0) {
+            return;
+        }
+
+        List<SiswaEntity> siswaList = Arrays.asList(
+                new SiswaEntity("Diktya", "110011001","PRIA"),
+                new SiswaEntity("Sabil", "110011002","PRIA"),
+                new SiswaEntity("Mustopa", "110011003","PRIA"),
+                new SiswaEntity("Umam", "110011004","PRIA"),
+                new SiswaEntity("Arif", "110011005","PRIA"),
+                new SiswaEntity("Siti Khoiriyah", "110011006","WANITA"),
+                new SiswaEntity("Siti Marfuah", "110011007","WANITA"),
+                new SiswaEntity("Siti Maimunah", "110011008","WANITA"),
+                new SiswaEntity("Siti Zubaidah", "110011008","WANITA"),
+                new SiswaEntity("Siti Aminah", "110011009","WANITA"),
+                new SiswaEntity("Siti Jamillah", "110011010","WANITA"),
+                new SiswaEntity("Siti Sumarsih", "110011011","WANITA"),
+                new SiswaEntity("Ahmad Mustolih", "110011012","PRIA"),
+                new SiswaEntity("Ahmad Syukur", "110011013","PRIA"),
+                new SiswaEntity("Ahmad Masykur", "110011014","PRIA"),
+                new SiswaEntity("Ahmad Subur", "110011015","PRIA"),
+                new SiswaEntity("Ahmad Ghofur", "110011016","PRIA"),
+                new SiswaEntity("Ahmad Yusron", "110011017","PRIA"),
+                new SiswaEntity("Sugeng Fitriyadi", "110011018","PRIA"),
+                new SiswaEntity("Sugeng Rawuh", "110011019","PRIA"),
+                new SiswaEntity("Sugeng Riyadi", "110011020","PRIA"),
+                new SiswaEntity("Sugeng Waras", "110011021","PRIA"),
+                new SiswaEntity("Sugeng Tindak", "110011022","PRIA"),
+                new SiswaEntity("Sugeng Dahar", "110011023","PRIA"),
+                new SiswaEntity("Sugeng Sare", "110011024","PRIA"),
+                new SiswaEntity("Sugeng Makaryo", "110011025","PRIA")
+        );
+
+        try{
+            siswaRepo.saveAll(siswaList);
+            log.info("Save siswa successfully");
+        }catch (Exception e){
+            log.error("Save siswa failed");
+        }
     }
 
     private void initLembaga(){
@@ -224,7 +294,6 @@ public class DbInit implements CommandLineRunner {
         }
     }
 
-
     private void initAbsensi(){
         int count = lookupRepo.countAllByGroup(Constant.GROUP_ABSENSI);
         if(count > 0){
@@ -245,7 +314,6 @@ public class DbInit implements CommandLineRunner {
             log.error(e.getMessage());
         }
     }
-
 
     private void initAttachmentType(){
         int count = lookupRepo.countAllByGroup(Constant.AttachmentType.TYPE);
