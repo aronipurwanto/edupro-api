@@ -71,7 +71,8 @@ public class CourseServiceImpl extends BaseService implements CourseService {
         try{
             courseSiswaRepo.saveAndFlush(entity);
             CourseSiswaRes result = new CourseSiswaRes();
-            BeanUtils.copyProperties(entity, result);
+            BeanUtils.copyProperties(request, result);
+            result.setSiswaName(siswa.getNama());
             return Optional.of(result);
         }catch (DataIntegrityViolationException e){
             log.error("Save Course Siswa gagal, terjadi error : {}", e.getMessage());
@@ -97,7 +98,9 @@ public class CourseServiceImpl extends BaseService implements CourseService {
         try{
             coursePersonRepo.saveAndFlush(entity);
             CoursePersonRes result = new CoursePersonRes();
-            BeanUtils.copyProperties(entity, result);
+            BeanUtils.copyProperties(request, result);
+            result.setPersonName(person.getNama());
+
             return Optional.of(result);
         }catch (DataIntegrityViolationException e){
             log.error("Save Course Person gagal, terjadi error : {}", e.getMessage());
