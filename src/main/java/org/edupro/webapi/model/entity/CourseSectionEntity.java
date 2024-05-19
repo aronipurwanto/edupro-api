@@ -63,7 +63,7 @@ public class CourseSectionEntity extends BaseIdEntity {
 	private Integer noUrut;
 
 	public CourseSectionEntity(String id, CourseEntity course, String sectionType, String name, Integer noUrut) {
-		this.id = id;
+		this.setId(id);
 		this.course = course;
 		this.sectionType = sectionType;
 		this.name = name;
@@ -71,7 +71,7 @@ public class CourseSectionEntity extends BaseIdEntity {
 	}
 
 	public CourseSectionEntity(String id, CourseEntity course, String sectionType, String name, Integer noUrut, CourseSectionEntity parent) {
-		this.id = id;
+		this.setId(id);
 		this.course = course;
 		this.sectionType = sectionType;
 		this.name = name;
