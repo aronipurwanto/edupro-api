@@ -13,9 +13,9 @@ import java.util.Optional;
 public interface CourseService {
     List<CourseRes> get();
     List<CourseRes> getByUserId(String userId);
-    Optional<CourseSiswaRes> saveSiswa(CourseSiswaReq request);
+    Optional<CourseSiswaRes> saveSiswa(String id, CourseSiswaReq request);
     List<CourseSiswaRes> saveSiswaList(List<CourseSiswaReq> request);
-    Optional<CoursePersonRes> savePerson(CoursePersonReq request);
+    Optional<CoursePersonRes> savePerson(String id, CoursePersonReq request);
     List<CoursePersonRes> savePersonList(List<CoursePersonReq> request);
     Optional<CourseRes> getById(String id);
     Optional<CourseRes> save(CourseReq request);

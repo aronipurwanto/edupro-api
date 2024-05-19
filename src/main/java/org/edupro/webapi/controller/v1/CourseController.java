@@ -48,13 +48,13 @@ public class CourseController extends BaseController<CourseRes>{
 
     @PostMapping("/{id}/person")
     private ResponseEntity<Response> savePerson(@PathVariable("id") String id, @RequestBody @Valid CoursePersonReq req){
-        var result = service.savePerson(req).orElse(null);
+        var result = service.savePerson(id, req).orElse(null);
         return getObjectResponse(result);
     }
 
     @PostMapping("/{id}/siswa")
     private ResponseEntity<Response> saveSiswa(@PathVariable("id") String id, @RequestBody @Valid CourseSiswaReq req){
-        var result = service.saveSiswa(req).orElse(null);
+        var result = service.saveSiswa(id, req).orElse(null);
         return getObjectResponse(result);
     }
 
