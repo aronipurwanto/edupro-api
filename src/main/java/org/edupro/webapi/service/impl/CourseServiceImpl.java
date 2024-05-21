@@ -9,10 +9,7 @@ import org.edupro.webapi.model.entity.*;
 import org.edupro.webapi.model.request.CoursePersonReq;
 import org.edupro.webapi.model.request.CourseReq;
 import org.edupro.webapi.model.request.CourseSiswaReq;
-import org.edupro.webapi.model.response.CoursePersonRes;
-import org.edupro.webapi.model.response.CourseRes;
-import org.edupro.webapi.model.response.CourseSectionRes;
-import org.edupro.webapi.model.response.CourseSiswaRes;
+import org.edupro.webapi.model.response.*;
 import org.edupro.webapi.repository.*;
 import org.edupro.webapi.service.BaseService;
 import org.edupro.webapi.service.CourseService;
@@ -60,6 +57,34 @@ public class CourseServiceImpl extends BaseService implements CourseService {
     }
 
     @Override
+    public Optional<CoursePeopleRes> getPeopleById(String id) {
+        CoursePeopleRes result = new CoursePeopleRes(id);
+
+        List<CourseSiswaEntity> students = courseSiswaRepo.findAllByCourseIdAndStatus(id, DataStatus.AKTIF);
+        if(!students.isEmpty()){
+            List<CourseSiswaRes> collect = students.stream().map(this::convertEntityToRes).toList();
+            result.setStudents(collect);
+        }
+
+        List<CoursePersonEntity> persons = coursePersonRepo.findAllByCourseIdAndStatus(id, DataStatus.AKTIF);
+        if(!persons.isEmpty()){
+            List<CoursePersonRes> collect = persons.stream().map(this::convertEntityToRes).toList();
+            result.setTeachers(collect);
+        }
+
+        return Optional.of(result);
+    }
+
+    private CourseSiswaRes convertEntityToRes(CourseSiswaEntity entity) {
+        CourseSiswaRes res = new CourseSiswaRes();
+        BeanUtils.copyProperties(entity, res);
+        if(entity.getSiswa() != null){
+            res.setSiswaName(entity.getSiswa().getNama());
+        }
+        return res;
+    }
+
+    @Override
     public Optional<CourseSiswaRes> saveSiswa(String id, CourseSiswaReq request) {
         CourseEntity course  = this.getEntityById(request.getCourseId());
         SiswaEntity siswa = this.siswaRepo.findById(request.getSiswaId()).orElse(null);
@@ -70,10 +95,7 @@ public class CourseServiceImpl extends BaseService implements CourseService {
         CourseSiswaEntity entity = new CourseSiswaEntity(course, siswa);
         try{
             courseSiswaRepo.saveAndFlush(entity);
-            CourseSiswaRes result = new CourseSiswaRes();
-            BeanUtils.copyProperties(request, result);
-            result.setSiswaName(siswa.getNama());
-            return Optional.of(result);
+            return Optional.of(convertEntityToRes(entity));
         }catch (DataIntegrityViolationException e){
             log.error("Save Course Siswa gagal, terjadi error : {}", e.getMessage());
             Map<String, String> errors = Map.of("sql", e.getCause().getMessage());
@@ -84,6 +106,15 @@ public class CourseServiceImpl extends BaseService implements CourseService {
     @Override
     public List<CourseSiswaRes> saveSiswaList(List<CourseSiswaReq> request) {
         return List.of();
+    }
+
+    private CoursePersonRes convertEntityToRes(CoursePersonEntity entity) {
+        CoursePersonRes res = new CoursePersonRes();
+        BeanUtils.copyProperties(entity, res);
+        if(entity.getPerson() != null){
+            res.setPersonName(entity.getPerson().getNama());
+        }
+        return res;
     }
 
     @Override
@@ -97,11 +128,7 @@ public class CourseServiceImpl extends BaseService implements CourseService {
         CoursePersonEntity entity = new CoursePersonEntity(course, person);
         try{
             coursePersonRepo.saveAndFlush(entity);
-            CoursePersonRes result = new CoursePersonRes();
-            BeanUtils.copyProperties(request, result);
-            result.setPersonName(person.getNama());
-
-            return Optional.of(result);
+            return Optional.of(convertEntityToRes(entity));
         }catch (DataIntegrityViolationException e){
             log.error("Save Course Person gagal, terjadi error : {}", e.getMessage());
             Map<String, String> errors = Map.of("sql", e.getCause().getMessage());

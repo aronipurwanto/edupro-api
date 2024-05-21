@@ -46,6 +46,12 @@ public class CourseController extends BaseController<CourseRes>{
         return getResponse(result);
     }
 
+    @GetMapping("/{id}/people")
+    private ResponseEntity<Response> getPeople(@PathVariable("id") String id){
+        var result = service.getPeopleById(id).orElse(null);
+        return getObjectResponse(result);
+    }
+
     @PostMapping("/{id}/person")
     private ResponseEntity<Response> savePerson(@PathVariable("id") String id, @RequestBody @Valid CoursePersonReq req){
         var result = service.savePerson(id, req).orElse(null);
