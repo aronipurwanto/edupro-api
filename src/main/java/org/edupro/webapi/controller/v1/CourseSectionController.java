@@ -30,7 +30,7 @@ public class CourseSectionController extends BaseController<CourseSectionRes>{
 
     @PostMapping("/{id}")
     private ResponseEntity<Response> save(@PathVariable("id") String id, @RequestBody @Valid CourseSectionReq request){
-        var result = service.save(request);
+        var result = service.save(id, request);
         return getResponse(result);
     }
 

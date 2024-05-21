@@ -55,7 +55,7 @@ public class CourseSectionServiceImpl extends BaseService implements CourseSecti
     }
 
     @Override
-    public Optional<CourseSectionRes> save(CourseSectionReq request) {
+    public Optional<CourseSectionRes> save(String id, CourseSectionReq request) {
         CourseSectionEntity result = this.convertReqToEntity(request);
         result.setId(CommonUtil.getUUID());
 
