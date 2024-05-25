@@ -28,6 +28,12 @@ public class CourseSectionController extends BaseController<CourseSectionRes>{
         return getResponse(result);
     }
 
+    @GetMapping("/{id}/topic")
+    private ResponseEntity<Response> getTopic(@PathVariable("id") String id){
+        var result = service.getByTopic(id);
+        return getResponse(result);
+    }
+
     @PostMapping("/{id}")
     private ResponseEntity<Response> save(@PathVariable("id") String id, @RequestBody @Valid CourseSectionReq request){
         var result = service.save(id, request);

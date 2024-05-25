@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface CourseSectionService {
     List<CourseSectionRes> getByCourseId(String courseId);
+    List<CourseSectionRes> getByTopic(String courseId);
     Optional<CourseSectionRes> getById(String id);
     Optional<CourseSectionRes> save(String id, CourseSectionReq request);
     Optional<CourseSectionRes> update(CourseSectionReq request, String id);

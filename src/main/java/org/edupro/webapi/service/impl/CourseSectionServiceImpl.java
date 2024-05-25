@@ -37,6 +37,17 @@ public class CourseSectionServiceImpl extends BaseService implements CourseSecti
     @Override
     public List<CourseSectionRes> getByCourseId(String courseId) {
         List<CourseSectionEntity> result = this.repo.findAllByCourseId(courseId);
+        if(result.isEmpty()) return Collections.emptyList();
+
+        List<CourseSectionEntity> sections = result.stream()
+                .filter(f -> f.getParentId() == null || f.getCourseId() == null)
+                .toList();
+        return sections.stream().map(this::convertEntityToResWithChild).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CourseSectionRes> getByTopic(String courseId) {
+        List<CourseSectionEntity> result = this.repo.findAllByCourseId(courseId);
         if(result.isEmpty()){
             return Collections.emptyList();
         }
@@ -108,8 +119,14 @@ public class CourseSectionServiceImpl extends BaseService implements CourseSecti
     private CourseSectionRes convertEntityToRes(CourseSectionEntity entity){
         CourseSectionRes result = new CourseSectionRes();
         BeanUtils.copyProperties(entity, result);
+        return result;
+    }
+
+    private CourseSectionRes convertEntityToResWithChild(CourseSectionEntity entity){
+        CourseSectionRes result = new CourseSectionRes();
+        BeanUtils.copyProperties(entity, result);
         if(entity.getChildren().size() > 0){
-            List<CourseSectionRes> children = entity.getChildren().stream().map(this::convertEntityToRes).collect(Collectors.toList());
+            List<CourseSectionRes> children = entity.getChildren().stream().map(this::convertEntityToResWithChild).collect(Collectors.toList());
             result.setChildren(children);
         }
         return result;
