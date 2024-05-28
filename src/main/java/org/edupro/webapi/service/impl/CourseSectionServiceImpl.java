@@ -34,27 +34,24 @@ public class CourseSectionServiceImpl extends BaseService implements CourseSecti
     private final CourseSectionRepo repo;
     private final CourseRepo courseRepo;
 
-    @Override
-    public List<CourseSectionRes> getByCourseId(String courseId) {
-        List<CourseSectionEntity> result = this.repo.findAllByCourseId(courseId);
+    private List<CourseSectionEntity> getCourseSections(String id) {
+        List<CourseSectionEntity> result = this.repo.findAllByCourseId(id);
         if(result.isEmpty()) return Collections.emptyList();
 
-        List<CourseSectionEntity> sections = result.stream()
+        return result.stream()
                 .filter(f -> f.getParentId() == null || f.getCourseId() == null)
                 .toList();
+    }
+
+    @Override
+    public List<CourseSectionRes> getByCourseId(String courseId) {
+        var sections = this.getCourseSections(courseId);
         return sections.stream().map(this::convertEntityToResWithChild).collect(Collectors.toList());
     }
 
     @Override
     public List<CourseSectionRes> getByTopic(String courseId) {
-        List<CourseSectionEntity> result = this.repo.findAllByCourseId(courseId);
-        if(result.isEmpty()){
-            return Collections.emptyList();
-        }
-
-        List<CourseSectionEntity> sections = result.stream()
-                .filter(f -> f.getParentId() == null || f.getCourseId() == null)
-                .toList();
+        var sections = this.getCourseSections(courseId);
         return sections.stream().map(this::convertEntityToRes).collect(Collectors.toList());
     }
 
@@ -141,6 +138,20 @@ public class CourseSectionServiceImpl extends BaseService implements CourseSecti
 
         CourseSectionEntity result = new CourseSectionEntity();
         BeanUtils.copyProperties(request, result);
+        result.setCourse(course);
+
+        int noUrut = 0;
+        if(request.getParentId() != null){
+            var section = this.getEntityById(request.getParentId());
+            var maxNoUrut = this.repo.findMaxNoUrutByParentId(request.getParentId());
+            noUrut = (maxNoUrut != null) ? maxNoUrut : 0;
+            result.setParent(section);
+        }else {
+           var maxNoUrut= this.repo.findMaxNoUrutByCourseId(request.getCourseId());
+            noUrut = (maxNoUrut != null) ? maxNoUrut : 0;
+        }
+
+        result.setNoUrut(noUrut+1);
 
         String userId = this.getUserInfo().getUserId();
         if(userId != null && !userId.isEmpty()){
