@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.model.entity.NilaiSiswaEntity;
+import org.edupro.webapi.model.entity.StudentScoreEntity;
 import org.edupro.webapi.model.request.NilaiSiswaReq;
 import org.edupro.webapi.model.response.NilaiSiswaRes;
 import org.edupro.webapi.repository.NilaiSiswaRepo;
@@ -33,7 +33,7 @@ public class NilaiSiswaServiceImpl extends BaseService implements NilaiSiswaServ
 
     @Override
     public List<NilaiSiswaRes> get() {
-        List<NilaiSiswaEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
+        List<StudentScoreEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
         if(result.isEmpty()){
             return Collections.emptyList();
         }
@@ -42,21 +42,21 @@ public class NilaiSiswaServiceImpl extends BaseService implements NilaiSiswaServ
 
     @Override
     public Optional<NilaiSiswaRes> getById(String id) {
-        NilaiSiswaEntity result = this.getEntityById(id);
+        StudentScoreEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
     }
 
     @Override
     public Optional<NilaiSiswaRes> save(NilaiSiswaReq request) {
-        NilaiSiswaEntity result = this.convertReqToEntity(request);
+        StudentScoreEntity result = this.convertReqToEntity(request);
         result.setId(CommonUtil.getUUID());
         return saveOrUpdate(result);
     }
 
     @Override
     public Optional<NilaiSiswaRes> update(NilaiSiswaReq request, String id) {
-        NilaiSiswaEntity result = this.getEntityById(id);
+        StudentScoreEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
         return saveOrUpdate(result);
@@ -64,14 +64,14 @@ public class NilaiSiswaServiceImpl extends BaseService implements NilaiSiswaServ
 
     @Override
     public Optional<NilaiSiswaRes> delete(String id) {
-        NilaiSiswaEntity result = this.getEntityById(id);
+        StudentScoreEntity result = this.getEntityById(id);
 
         result.setDeletedAt(LocalDateTime.now());
         result.setStatus(DataStatus.DIHAPUS);
         return saveOrUpdate(result);
     }
 
-    private Optional<NilaiSiswaRes> saveOrUpdate(NilaiSiswaEntity result) {
+    private Optional<NilaiSiswaRes> saveOrUpdate(StudentScoreEntity result) {
         try{
             this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
@@ -87,8 +87,8 @@ public class NilaiSiswaServiceImpl extends BaseService implements NilaiSiswaServ
         }
     }
 
-    private NilaiSiswaEntity getEntityById(String id) {
-        NilaiSiswaEntity result = this.repo.findById(id).orElse(null);
+    private StudentScoreEntity getEntityById(String id) {
+        StudentScoreEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("kode", "Kode "+ id +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
@@ -97,21 +97,21 @@ public class NilaiSiswaServiceImpl extends BaseService implements NilaiSiswaServ
         return result;
     }
 
-    private NilaiSiswaRes convertEntityToRes(NilaiSiswaEntity entity){
+    private NilaiSiswaRes convertEntityToRes(StudentScoreEntity entity){
         NilaiSiswaRes result = new NilaiSiswaRes();
         BeanUtils.copyProperties(entity, result);
         return result;
     }
 
-    private NilaiSiswaEntity convertReqToEntity(NilaiSiswaReq request){
-        NilaiSiswaEntity result = new NilaiSiswaEntity();
+    private StudentScoreEntity convertReqToEntity(NilaiSiswaReq request){
+        StudentScoreEntity result = new StudentScoreEntity();
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
         result.setUpdatedAt(LocalDateTime.now());
         return result;
     }
 
-    private void convertReqToEntity(NilaiSiswaReq request, NilaiSiswaEntity result){
+    private void convertReqToEntity(NilaiSiswaReq request, StudentScoreEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
 

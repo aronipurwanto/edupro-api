@@ -1,8 +1,6 @@
 package org.edupro.webapi.repository;
 
 import org.edupro.webapi.constant.DataStatus;
-import org.edupro.webapi.model.entity.KurikulumMapel;
-import org.edupro.webapi.model.entity.KurikulumMapelId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

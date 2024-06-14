@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.edupro.webapi.config.JwtService;
 import org.edupro.webapi.model.entity.RoleEntity;
 import org.edupro.webapi.model.entity.TokenEntity;
 import org.edupro.webapi.model.entity.TokenType;

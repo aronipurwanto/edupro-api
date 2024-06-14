@@ -6,6 +6,8 @@ package org.edupro.webapi.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * @author Awiyanto Ajisasongko
  *
@@ -17,19 +19,19 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "T_ATTCH_RESOURCE")
-public class AssignmentResourceEntity extends BlankBaseEntity {
+@Table(name = "t_attach_resource")
+public class AssignmentResourceEntity implements Serializable {
 	@Id
-	@Column(name = "ATTCHRSCID", nullable = false, length = 36)
+	@Column(name = "id", nullable = false, length = 36)
 	private String id;
 
-	@Column(name = "ATTCHID", nullable = false, length = 36)
+	@Column(name = "attachment_id", nullable = false, length = 36)
 	private String attachmentId;
 
 	@ManyToOne
-	@JoinColumn(name = "ATTCHID", insertable = false, updatable = false)
+	@JoinColumn(name = "attachment_id", insertable = false, updatable = false)
 	private AttachmentEntity attachment;
 
-	@Column(name = "INSTRUCTION")
+	@Column(name = "instruction")
 	private String instruction;
 }

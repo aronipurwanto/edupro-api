@@ -12,6 +12,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.edupro.webapi.constant.DataStatus;
 
+import java.io.Serializable;
+
 /**
  * @author Awiyanto Ajisasongko
  *
@@ -24,7 +26,7 @@ import org.edupro.webapi.constant.DataStatus;
 @Builder
 @Entity
 @Table(name = "T_KELMAPEL")
-public class KelasMapelEntity extends BlankBaseEntity {
+public class KelasMapelEntity implements Serializable {
 	private static final long serialVersionUID = 6664606117330350877L;
 
 	@Id
@@ -36,14 +38,14 @@ public class KelasMapelEntity extends BlankBaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "KLSID", insertable = false, updatable = false)
-	private KelasEntity kelas;
+	private ClassEntity kelas;
 	
 	@Column(name = "MAPELID", nullable = false, length = 36)
 	private String mapelId;
 
 	@ManyToOne
 	@JoinColumn(name = "MAPELID", insertable = false, updatable = false)
-	private MapelEntity mapel;
+	private SubjectEntity mapel;
 
 	@Column(name = "SAMKKM")
 	private double nilaiKKM;

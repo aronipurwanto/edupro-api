@@ -3,7 +3,7 @@ package org.edupro.webapi.model.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.edupro.webapi.model.entity.SesiAkademikEntity;
+import org.edupro.webapi.model.entity.AcademicSessionEntity;
 
 @Data
 @NoArgsConstructor
@@ -11,7 +11,7 @@ import org.edupro.webapi.model.entity.SesiAkademikEntity;
 public class NilaiSiswaRes {
     private String id;
     private String sesiAkademikId;
-    private SesiAkademikEntity sesiAkademik;
+    private AcademicSessionEntity sesiAkademik;
     private String tahunAjaranId;
     private Integer urut; // 1 = ganjil, 2 = genap
     private String mapelId;

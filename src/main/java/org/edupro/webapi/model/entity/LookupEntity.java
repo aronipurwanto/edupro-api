@@ -9,33 +9,25 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "T_LOOKUP")
-@AttributeOverrides({
-        @AttributeOverride(name = "id", column = @Column(name="LKID")),
-        @AttributeOverride(name = "createdAt", column = @Column(name="LKCRD")),
-        @AttributeOverride(name = "createdBy", column = @Column(name="LKCRUID")),
-        @AttributeOverride(name = "updatedAt", column = @Column(name="LKUPD")),
-        @AttributeOverride(name = "updatedBy", column = @Column(name="LKUID")),
-        @AttributeOverride(name = "status", column = @Column(name="LKSTAT"))
-})
+@Table(name = "t_lookup")
 public class LookupEntity extends BaseIdEntity{
-    @Column(name = "LKGRP", length = 32, nullable = false)
+    @Column(name = "groups", length = 32, nullable = false)
     private String group;
 
-    @Column(name = "LKKD", length = 32, nullable = false)
+    @Column(name = "code", length = 32, nullable = false)
     private String kode;
 
-    @Column(name = "LKNM", length = 128, nullable = false)
+    @Column(name = "name", length = 128, nullable = false)
     private String nama;
 
-    @Column(name = "LKURT", nullable = false)
-    private Integer urutan;
+    @Column(name = "position", nullable = false)
+    private Integer position;
 
-    public LookupEntity(String id, String group, String kode, String nama, Integer urutan) {
+    public LookupEntity(String id, String group, String kode, String nama, Integer position) {
         this.setId(id);
         this.group = group;
         this.kode = kode;
         this.nama = nama;
-        this.urutan = urutan;
+        this.position = position;
     }
 }

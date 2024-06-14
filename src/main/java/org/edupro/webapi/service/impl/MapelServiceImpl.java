@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.model.entity.MapelEntity;
+import org.edupro.webapi.model.entity.SubjectEntity;
 import org.edupro.webapi.model.request.MapelReq;
 import org.edupro.webapi.model.response.MapelRes;
 import org.edupro.webapi.repository.MapelRepo;
@@ -32,7 +32,7 @@ public class MapelServiceImpl extends BaseService implements MapelService {
 
     @Override
     public List<MapelRes> get() {
-        List<MapelEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
+        List<SubjectEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
         if(result.isEmpty()){
             return Collections.emptyList();
         }
@@ -41,7 +41,7 @@ public class MapelServiceImpl extends BaseService implements MapelService {
 
     @Override
     public Optional<MapelRes> getById(String id) {
-        MapelEntity result = this.getEntityById(id);
+        SubjectEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
     }
@@ -54,13 +54,13 @@ public class MapelServiceImpl extends BaseService implements MapelService {
             throw new EduProApiException("Save gagal", HttpStatus.BAD_REQUEST, errors);
         }
 
-        MapelEntity result = this.convertReqToEntity(request);
+        SubjectEntity result = this.convertReqToEntity(request);
         return saveOrUpdate(result);
     }
 
     @Override
     public Optional<MapelRes> update(MapelReq request, String id) {
-        MapelEntity result = this.getEntityById(id);
+        SubjectEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
 
@@ -69,7 +69,7 @@ public class MapelServiceImpl extends BaseService implements MapelService {
 
     @Override
     public Optional<MapelRes> delete(String id) {
-        MapelEntity result = this.getEntityById(id);
+        SubjectEntity result = this.getEntityById(id);
 
         result.setDeletedAt(LocalDateTime.now());
         result.setStatus(DataStatus.DIHAPUS);
@@ -77,7 +77,7 @@ public class MapelServiceImpl extends BaseService implements MapelService {
         return saveOrUpdate(result);
     }
 
-    private Optional<MapelRes> saveOrUpdate(MapelEntity result) {
+    private Optional<MapelRes> saveOrUpdate(SubjectEntity result) {
         try{
             this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
@@ -93,8 +93,8 @@ public class MapelServiceImpl extends BaseService implements MapelService {
         }
     }
 
-    private MapelEntity getEntityById(String id) {
-        MapelEntity result = this.repo.findById(id).orElse(null);
+    private SubjectEntity getEntityById(String id) {
+        SubjectEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("kode", "Kode "+ id +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
@@ -103,21 +103,21 @@ public class MapelServiceImpl extends BaseService implements MapelService {
         return result;
     }
 
-    private MapelRes convertEntityToRes(MapelEntity entity){
+    private MapelRes convertEntityToRes(SubjectEntity entity){
         MapelRes result = new MapelRes();
         BeanUtils.copyProperties(entity, result);
         return result;
     }
 
-    private MapelEntity convertReqToEntity(MapelReq request){
-        MapelEntity result = new MapelEntity();
+    private SubjectEntity convertReqToEntity(MapelReq request){
+        SubjectEntity result = new SubjectEntity();
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
         result.setUpdatedAt(LocalDateTime.now());
         return result;
     }
 
-    private void convertReqToEntity(MapelReq request, MapelEntity result){
+    private void convertReqToEntity(MapelReq request, SubjectEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
 

@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.model.entity.KurikulumEntity;
+import org.edupro.webapi.model.entity.CurriculumEntity;
 import org.edupro.webapi.model.request.KurikulumReq;
 import org.edupro.webapi.model.response.KurikulumRes;
 import org.edupro.webapi.repository.KurikulumRepo;
@@ -29,7 +29,7 @@ public class KurikulumServiceImpl extends BaseService implements KurikulumServic
 
     @Override
     public List<KurikulumRes> get() {
-        List<KurikulumEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
+        List<CurriculumEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
         if(result.isEmpty()){
             return Collections.emptyList();
         }
@@ -38,7 +38,7 @@ public class KurikulumServiceImpl extends BaseService implements KurikulumServic
 
     @Override
     public Optional<KurikulumRes> getById(String id) {
-        KurikulumEntity result = this.getEntityById(id);
+        CurriculumEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
     }
@@ -51,13 +51,13 @@ public class KurikulumServiceImpl extends BaseService implements KurikulumServic
             throw new EduProApiException("Save gagal", HttpStatus.BAD_REQUEST, errors);
         }
 
-        KurikulumEntity result = this.convertReqToEntity(request);
+        CurriculumEntity result = this.convertReqToEntity(request);
         return saveOrUpdate(result);
     }
 
     @Override
     public Optional<KurikulumRes> update(KurikulumReq request, String id) {
-        KurikulumEntity result = this.getEntityById(id);
+        CurriculumEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
         return saveOrUpdate(result);
@@ -65,7 +65,7 @@ public class KurikulumServiceImpl extends BaseService implements KurikulumServic
 
     @Override
     public Optional<KurikulumRes> delete(String id) {
-        KurikulumEntity result = this.getEntityById(id);
+        CurriculumEntity result = this.getEntityById(id);
 
         result.setDeletedAt(LocalDateTime.now());
         result.setStatus(DataStatus.DIHAPUS);
@@ -73,7 +73,7 @@ public class KurikulumServiceImpl extends BaseService implements KurikulumServic
         return saveOrUpdate(result);
     }
 
-    private Optional<KurikulumRes> saveOrUpdate(KurikulumEntity result) {
+    private Optional<KurikulumRes> saveOrUpdate(CurriculumEntity result) {
         try{
             this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
@@ -89,8 +89,8 @@ public class KurikulumServiceImpl extends BaseService implements KurikulumServic
         }
     }
 
-    private KurikulumEntity getEntityById(String id) {
-        KurikulumEntity result = this.repo.findById(id).orElse(null);
+    private CurriculumEntity getEntityById(String id) {
+        CurriculumEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("kode", "Kode "+ id +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
@@ -99,21 +99,21 @@ public class KurikulumServiceImpl extends BaseService implements KurikulumServic
         return result;
     }
 
-    private KurikulumRes convertEntityToRes(KurikulumEntity entity){
+    private KurikulumRes convertEntityToRes(CurriculumEntity entity){
         KurikulumRes result = new KurikulumRes();
         BeanUtils.copyProperties(entity, result);
         return result;
     }
 
-    private KurikulumEntity convertReqToEntity(KurikulumReq request){
-        KurikulumEntity result = new KurikulumEntity();
+    private CurriculumEntity convertReqToEntity(KurikulumReq request){
+        CurriculumEntity result = new CurriculumEntity();
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
         result.setUpdatedAt(LocalDateTime.now());
         return result;
     }
 
-    private void convertReqToEntity(KurikulumReq request, KurikulumEntity result){
+    private void convertReqToEntity(KurikulumReq request, CurriculumEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
 

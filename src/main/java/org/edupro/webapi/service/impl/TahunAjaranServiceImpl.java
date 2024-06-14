@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.model.entity.TahunAjaranEntity;
+import org.edupro.webapi.model.entity.AcademicYearEntity;
 import org.edupro.webapi.model.request.TahunAjaranReq;
 import org.edupro.webapi.model.response.TahunAjaranRes;
 import org.edupro.webapi.repository.TahunAjaranRepo;
@@ -33,7 +33,7 @@ public class TahunAjaranServiceImpl extends BaseService implements TahunAjaranSe
 
     @Override
     public List<TahunAjaranRes> get() {
-        List<TahunAjaranEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
+        List<AcademicYearEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
         if(result.isEmpty()){
             return Collections.emptyList();
         }
@@ -42,7 +42,7 @@ public class TahunAjaranServiceImpl extends BaseService implements TahunAjaranSe
 
     @Override
     public List<TahunAjaranRes> getByKurikulumId(String kurikulumId) {
-        List<TahunAjaranEntity> result = this.repo.findAllByKurikulumId(kurikulumId);
+        List<AcademicYearEntity> result = this.repo.findAllByKurikulumId(kurikulumId);
         if(result.isEmpty()){
             return Collections.emptyList();
         }
@@ -51,7 +51,7 @@ public class TahunAjaranServiceImpl extends BaseService implements TahunAjaranSe
 
     @Override
     public Optional<TahunAjaranRes> getById(String id) {
-        TahunAjaranEntity result = this.getEntityById(id);
+        AcademicYearEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
     }
@@ -63,14 +63,14 @@ public class TahunAjaranServiceImpl extends BaseService implements TahunAjaranSe
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        TahunAjaranEntity result = this.convertReqToEntity(request);
+        AcademicYearEntity result = this.convertReqToEntity(request);
         result.setId(CommonUtil.getUUID());
         return saveOrUpdate(result);
     }
 
     @Override
     public Optional<TahunAjaranRes> update(TahunAjaranReq request, String id) {
-        TahunAjaranEntity result = this.getEntityById(id);
+        AcademicYearEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
         return saveOrUpdate(result);
@@ -78,13 +78,13 @@ public class TahunAjaranServiceImpl extends BaseService implements TahunAjaranSe
 
     @Override
     public Optional<TahunAjaranRes> delete(String id) {
-        TahunAjaranEntity result = this.getEntityById(id);
+        AcademicYearEntity result = this.getEntityById(id);
         result.setStatus(DataStatus.DIHAPUS);
 
         return saveOrUpdate(result);
     }
 
-    public Optional<TahunAjaranRes> saveOrUpdate(TahunAjaranEntity entity) {
+    public Optional<TahunAjaranRes> saveOrUpdate(AcademicYearEntity entity) {
         try{
             this.repo.saveAndFlush(entity);
             return Optional.of(this.convertEntityToRes(entity));
@@ -100,8 +100,8 @@ public class TahunAjaranServiceImpl extends BaseService implements TahunAjaranSe
         }
     }
 
-    private TahunAjaranEntity getEntityById(String id) {
-        TahunAjaranEntity result = this.repo.findById(id).orElse(null);
+    private AcademicYearEntity getEntityById(String id) {
+        AcademicYearEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("id", "Id "+ id +" tidak ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
@@ -110,14 +110,14 @@ public class TahunAjaranServiceImpl extends BaseService implements TahunAjaranSe
         return result;
     }
 
-    private TahunAjaranRes convertEntityToRes(TahunAjaranEntity entity){
+    private TahunAjaranRes convertEntityToRes(AcademicYearEntity entity){
         TahunAjaranRes result = new TahunAjaranRes();
         BeanUtils.copyProperties(entity, result);
         return result;
     }
 
-    private TahunAjaranEntity convertReqToEntity(TahunAjaranReq request){
-        TahunAjaranEntity result = new TahunAjaranEntity();
+    private AcademicYearEntity convertReqToEntity(TahunAjaranReq request){
+        AcademicYearEntity result = new AcademicYearEntity();
         BeanUtils.copyProperties(request, result);
         result.setStatus(DataStatus.AKTIF);
         result.setCreatedAt(LocalDateTime.now());
@@ -125,8 +125,8 @@ public class TahunAjaranServiceImpl extends BaseService implements TahunAjaranSe
         return result;
     }
 
-    private void convertReqToEntity(TahunAjaranReq request, TahunAjaranEntity result){
-        result.setNama(request.getNama());
+    private void convertReqToEntity(TahunAjaranReq request, AcademicYearEntity result){
+        result.setName(request.getNama());
         result.setKodeKurikulum(request.getKodeKurikulum());
 
         String userId = this.getUserInfo().getUserId();

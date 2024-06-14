@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.model.entity.LembagaEntity;
+import org.edupro.webapi.model.entity.InstitutionEntity;
 import org.edupro.webapi.model.request.LembagaReq;
 import org.edupro.webapi.model.response.LembagaRes;
 import org.edupro.webapi.repository.LembagaRepo;
@@ -33,7 +33,7 @@ public class LembagaServiceImpl extends BaseService implements LembagaService {
 
     @Override
     public List<LembagaRes> get() {
-        List<LembagaEntity> result = this.repo.findAll();
+        List<InstitutionEntity> result = this.repo.findAll();
         if(result.isEmpty()){
             return Collections.emptyList();
         }
@@ -42,7 +42,7 @@ public class LembagaServiceImpl extends BaseService implements LembagaService {
 
     @Override
     public Optional<LembagaRes> getById(String id) {
-        LembagaEntity result = this.repo.findById(id).orElse(null);
+        InstitutionEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             return Optional.empty();
         }
@@ -52,7 +52,7 @@ public class LembagaServiceImpl extends BaseService implements LembagaService {
 
     @Override
     public Optional<LembagaRes> save(LembagaReq request) {
-        LembagaEntity result = this.convertReqToEntity(request);
+        InstitutionEntity result = this.convertReqToEntity(request);
         result.setId(CommonUtil.getUUID());
 
         return saveOrUpdate(result);
@@ -60,7 +60,7 @@ public class LembagaServiceImpl extends BaseService implements LembagaService {
 
     @Override
     public Optional<LembagaRes> update(LembagaReq request, String id) {
-        LembagaEntity result = this.repo.findById(id).orElse(null);
+        InstitutionEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             return Optional.empty();
         }
@@ -71,7 +71,7 @@ public class LembagaServiceImpl extends BaseService implements LembagaService {
 
     @Override
     public Optional<LembagaRes> delete(String id) {
-        LembagaEntity result = this.repo.findById(id).orElse(null);
+        InstitutionEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             return Optional.empty();
         }
@@ -82,7 +82,7 @@ public class LembagaServiceImpl extends BaseService implements LembagaService {
         return saveOrUpdate(result);
     }
 
-    private Optional<LembagaRes> saveOrUpdate(LembagaEntity result) {
+    private Optional<LembagaRes> saveOrUpdate(InstitutionEntity result) {
         try{
             this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
@@ -98,21 +98,21 @@ public class LembagaServiceImpl extends BaseService implements LembagaService {
         }
     }
 
-    private LembagaRes convertEntityToRes(LembagaEntity entity){
+    private LembagaRes convertEntityToRes(InstitutionEntity entity){
         LembagaRes result = new LembagaRes();
         BeanUtils.copyProperties(entity, result);
         return result;
     }
 
-    private LembagaEntity convertReqToEntity(LembagaReq request){
-        LembagaEntity result = new LembagaEntity();
+    private InstitutionEntity convertReqToEntity(LembagaReq request){
+        InstitutionEntity result = new InstitutionEntity();
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
         result.setUpdatedAt(LocalDateTime.now());
         return result;
     }
 
-    private void convertReqToEntity(LembagaReq request, LembagaEntity result){
+    private void convertReqToEntity(LembagaReq request, InstitutionEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
 

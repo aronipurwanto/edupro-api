@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.model.entity.SiswaEntity;
+import org.edupro.webapi.model.entity.StudentEntity;
 import org.edupro.webapi.model.request.SiswaReq;
 import org.edupro.webapi.model.response.SiswaRes;
 import org.edupro.webapi.repository.SiswaRepo;
@@ -33,7 +33,7 @@ public class SiswaServiceImpl extends BaseService implements SiswaService {
 
     @Override
     public List<SiswaRes> get() {
-        List<SiswaEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
+        List<StudentEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
         if(result.isEmpty()){
             return Collections.emptyList();
         }
@@ -42,7 +42,7 @@ public class SiswaServiceImpl extends BaseService implements SiswaService {
 
     @Override
     public Optional<SiswaRes> getById(String id) {
-        SiswaEntity result = this.getEntityById(id);
+        StudentEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
     }
@@ -54,14 +54,14 @@ public class SiswaServiceImpl extends BaseService implements SiswaService {
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        SiswaEntity result = this.convertReqToEntity(request);
+        StudentEntity result = this.convertReqToEntity(request);
         result.setId(CommonUtil.getUUID());
         return saveOrUpdate(result);
     }
 
     @Override
     public Optional<SiswaRes> update(SiswaReq request, String id) {
-        SiswaEntity result = this.getEntityById(id);
+        StudentEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
         return saveOrUpdate(result);
@@ -69,13 +69,13 @@ public class SiswaServiceImpl extends BaseService implements SiswaService {
 
     @Override
     public Optional<SiswaRes> delete(String id) {
-        SiswaEntity result = this.getEntityById(id);
+        StudentEntity result = this.getEntityById(id);
         result.setStatus(DataStatus.DIHAPUS);
 
         return saveOrUpdate(result);
     }
 
-    public Optional<SiswaRes> saveOrUpdate(SiswaEntity entity) {
+    public Optional<SiswaRes> saveOrUpdate(StudentEntity entity) {
         try{
             this.repo.saveAndFlush(entity);
             return Optional.of(this.convertEntityToRes(entity));
@@ -91,8 +91,8 @@ public class SiswaServiceImpl extends BaseService implements SiswaService {
         }
     }
 
-    private SiswaEntity getEntityById(String id) {
-        SiswaEntity result = this.repo.findById(id).orElse(null);
+    private StudentEntity getEntityById(String id) {
+        StudentEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("id", "Id "+ id +" tidak ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
@@ -101,14 +101,14 @@ public class SiswaServiceImpl extends BaseService implements SiswaService {
         return result;
     }
 
-    private SiswaRes convertEntityToRes(SiswaEntity entity){
+    private SiswaRes convertEntityToRes(StudentEntity entity){
         SiswaRes result = new SiswaRes();
         BeanUtils.copyProperties(entity, result);
         return result;
     }
 
-    private SiswaEntity convertReqToEntity(SiswaReq request){
-        SiswaEntity result = new SiswaEntity();
+    private StudentEntity convertReqToEntity(SiswaReq request){
+        StudentEntity result = new StudentEntity();
         BeanUtils.copyProperties(request, result);
         result.setStatus(DataStatus.AKTIF);
         result.setCreatedAt(LocalDateTime.now());
@@ -116,11 +116,11 @@ public class SiswaServiceImpl extends BaseService implements SiswaService {
         return result;
     }
 
-    private void convertReqToEntity(SiswaReq request, SiswaEntity result){
-        result.setNama(request.getNama());
+    private void convertReqToEntity(SiswaReq request, StudentEntity result){
+        result.setName(request.getNama());
         result.setNisn(request.getNisn());
-        result.setTanggalLahir(request.getTanggalLahir());
-        result.setKotaTempatLahir(request.getKotaTempatLahir());
+        result.setDob(request.getTanggalLahir());
+        result.setPob(request.getKotaTempatLahir());
 
         String userId = this.getUserInfo().getUserId();
         if(!userId.isEmpty()){

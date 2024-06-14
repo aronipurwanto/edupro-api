@@ -83,33 +83,33 @@ public class DbInit implements CommandLineRunner {
             return;
         }
 
-        List<SiswaEntity> siswaList = Arrays.asList(
-                new SiswaEntity("Diktya", "110011001","PRIA"),
-                new SiswaEntity("Sabil", "110011002","PRIA"),
-                new SiswaEntity("Mustopa", "110011003","PRIA"),
-                new SiswaEntity("Umam", "110011004","PRIA"),
-                new SiswaEntity("Arif", "110011005","PRIA"),
-                new SiswaEntity("Siti Khoiriyah", "110011006","WANITA"),
-                new SiswaEntity("Siti Marfuah", "110011007","WANITA"),
-                new SiswaEntity("Siti Maimunah", "110011008","WANITA"),
-                new SiswaEntity("Siti Zubaidah", "110011008","WANITA"),
-                new SiswaEntity("Siti Aminah", "110011009","WANITA"),
-                new SiswaEntity("Siti Jamillah", "110011010","WANITA"),
-                new SiswaEntity("Siti Sumarsih", "110011011","WANITA"),
-                new SiswaEntity("Ahmad Mustolih", "110011012","PRIA"),
-                new SiswaEntity("Ahmad Syukur", "110011013","PRIA"),
-                new SiswaEntity("Ahmad Masykur", "110011014","PRIA"),
-                new SiswaEntity("Ahmad Subur", "110011015","PRIA"),
-                new SiswaEntity("Ahmad Ghofur", "110011016","PRIA"),
-                new SiswaEntity("Ahmad Yusron", "110011017","PRIA"),
-                new SiswaEntity("Sugeng Fitriyadi", "110011018","PRIA"),
-                new SiswaEntity("Sugeng Rawuh", "110011019","PRIA"),
-                new SiswaEntity("Sugeng Riyadi", "110011020","PRIA"),
-                new SiswaEntity("Sugeng Waras", "110011021","PRIA"),
-                new SiswaEntity("Sugeng Tindak", "110011022","PRIA"),
-                new SiswaEntity("Sugeng Dahar", "110011023","PRIA"),
-                new SiswaEntity("Sugeng Sare", "110011024","PRIA"),
-                new SiswaEntity("Sugeng Makaryo", "110011025","PRIA")
+        List<StudentEntity> siswaList = Arrays.asList(
+                new StudentEntity("Diktya", "110011001","PRIA"),
+                new StudentEntity("Sabil", "110011002","PRIA"),
+                new StudentEntity("Mustopa", "110011003","PRIA"),
+                new StudentEntity("Umam", "110011004","PRIA"),
+                new StudentEntity("Arif", "110011005","PRIA"),
+                new StudentEntity("Siti Khoiriyah", "110011006","WANITA"),
+                new StudentEntity("Siti Marfuah", "110011007","WANITA"),
+                new StudentEntity("Siti Maimunah", "110011008","WANITA"),
+                new StudentEntity("Siti Zubaidah", "110011008","WANITA"),
+                new StudentEntity("Siti Aminah", "110011009","WANITA"),
+                new StudentEntity("Siti Jamillah", "110011010","WANITA"),
+                new StudentEntity("Siti Sumarsih", "110011011","WANITA"),
+                new StudentEntity("Ahmad Mustolih", "110011012","PRIA"),
+                new StudentEntity("Ahmad Syukur", "110011013","PRIA"),
+                new StudentEntity("Ahmad Masykur", "110011014","PRIA"),
+                new StudentEntity("Ahmad Subur", "110011015","PRIA"),
+                new StudentEntity("Ahmad Ghofur", "110011016","PRIA"),
+                new StudentEntity("Ahmad Yusron", "110011017","PRIA"),
+                new StudentEntity("Sugeng Fitriyadi", "110011018","PRIA"),
+                new StudentEntity("Sugeng Rawuh", "110011019","PRIA"),
+                new StudentEntity("Sugeng Riyadi", "110011020","PRIA"),
+                new StudentEntity("Sugeng Waras", "110011021","PRIA"),
+                new StudentEntity("Sugeng Tindak", "110011022","PRIA"),
+                new StudentEntity("Sugeng Dahar", "110011023","PRIA"),
+                new StudentEntity("Sugeng Sare", "110011024","PRIA"),
+                new StudentEntity("Sugeng Makaryo", "110011025","PRIA")
         );
 
         try{
@@ -122,13 +122,13 @@ public class DbInit implements CommandLineRunner {
 
     private void initLembaga(){
         if(!lembagaRepo.existsByNama("SDIT")){
-            LembagaEntity lembagaEntity = new LembagaEntity();
-            lembagaEntity.setNama("SDIT");
-            lembagaEntity.setKode("SDIT");
-            lembagaEntity.setNamaSingkat("SDIT");
+            InstitutionEntity institutionEntity = new InstitutionEntity();
+            institutionEntity.setName("SDIT");
+            institutionEntity.setCode("SDIT");
+            institutionEntity.setShortName("SDIT");
 
             try {
-                lembagaRepo.save(lembagaEntity);
+                lembagaRepo.save(institutionEntity);
                 log.info("Save SDIT is successful");
             }catch (Exception e){
                 log.error(e.getMessage());
@@ -136,13 +136,13 @@ public class DbInit implements CommandLineRunner {
         }
 
         if(!lembagaRepo.existsByNama("SMPIT")){
-            LembagaEntity lembagaEntity = new LembagaEntity();
-            lembagaEntity.setNama("SMPIT");
-            lembagaEntity.setKode("SMPIT");
-            lembagaEntity.setNamaSingkat("SMPIT");
+            InstitutionEntity institutionEntity = new InstitutionEntity();
+            institutionEntity.setName("SMPIT");
+            institutionEntity.setCode("SMPIT");
+            institutionEntity.setShortName("SMPIT");
 
             try {
-                lembagaRepo.save(lembagaEntity);
+                lembagaRepo.save(institutionEntity);
                 log.info("Save SMPIT is successful");
             }catch (Exception e){
                 log.error(e.getMessage());
@@ -414,7 +414,7 @@ public class DbInit implements CommandLineRunner {
     }
 
     private void initLevelSD(){
-        LembagaEntity sdit = lembagaRepo.findByNama("SDIT").orElse(null);
+        InstitutionEntity sdit = lembagaRepo.findByNama("SDIT").orElse(null);
         if(sdit == null){
             return;
         }
@@ -442,7 +442,7 @@ public class DbInit implements CommandLineRunner {
     }
 
     private void initLevelSMP(){
-        LembagaEntity smpit = lembagaRepo.findByNama("SMPIT").orElse(null);
+        InstitutionEntity smpit = lembagaRepo.findByNama("SMPIT").orElse(null);
         if(smpit == null){
             return;
         }
@@ -471,17 +471,17 @@ public class DbInit implements CommandLineRunner {
             return;
         }
 
-        List<KurikulumEntity> kurikulum = List.of(
-                new KurikulumEntity("KURIKULUM_1947","Kurikulum Rencana Pelajaran (1947)",1),
-                new KurikulumEntity("KURIKULUM_1953","Kurikulum Rencana Pelajaran Terurai (1952)",2),
-                new KurikulumEntity("KURIKULUM_1964","Kurikulum 1964",3),
-                new KurikulumEntity("KURIKULUM_1968","Kurikulum 1968",4),
-                new KurikulumEntity("KURIKULUM_1975","Kurikulum 1975",5),
-                new KurikulumEntity("KURIKULUM_1984","Kurikulum 1984",6),
-                new KurikulumEntity("KURIKULUM_1994","Kurikulum 1994 dan Suplemen Kurikulum 1999",7),
-                new KurikulumEntity("KURIKULUM_2004","Kurikulum 2004",8),
-                new KurikulumEntity("KURIKULUM_2006","Kurikulum 2006",9),
-                new KurikulumEntity("KURIKULUM_2013","Kurikulum 2013",10)
+        List<CurriculumEntity> kurikulum = List.of(
+                new CurriculumEntity("KURIKULUM_1947","Kurikulum Rencana Pelajaran (1947)",1),
+                new CurriculumEntity("KURIKULUM_1953","Kurikulum Rencana Pelajaran Terurai (1952)",2),
+                new CurriculumEntity("KURIKULUM_1964","Kurikulum 1964",3),
+                new CurriculumEntity("KURIKULUM_1968","Kurikulum 1968",4),
+                new CurriculumEntity("KURIKULUM_1975","Kurikulum 1975",5),
+                new CurriculumEntity("KURIKULUM_1984","Kurikulum 1984",6),
+                new CurriculumEntity("KURIKULUM_1994","Kurikulum 1994 dan Suplemen Kurikulum 1999",7),
+                new CurriculumEntity("KURIKULUM_2004","Kurikulum 2004",8),
+                new CurriculumEntity("KURIKULUM_2006","Kurikulum 2006",9),
+                new CurriculumEntity("KURIKULUM_2013","Kurikulum 2013",10)
         );
 
         try {
@@ -498,16 +498,16 @@ public class DbInit implements CommandLineRunner {
             return;
         }
 
-        KurikulumEntity kurikulum = kurRepo.findByKode("KURIKULUM_2013").orElse(null);
+        CurriculumEntity kurikulum = kurRepo.findByKode("KURIKULUM_2013").orElse(null);
         if(kurikulum == null){
             return;
         }
 
         int curYear = LocalDate.now().getYear();
-        List<TahunAjaranEntity> tahunAjaran = new ArrayList<>();
+        List<AcademicYearEntity> tahunAjaran = new ArrayList<>();
         for (int i = curYear-8; i <= curYear+2; i++) {
             String nama = i +" - "+ (i+1);
-            tahunAjaran.add(new TahunAjaranEntity(nama,kurikulum.getId(), kurikulum.getKode()));
+            tahunAjaran.add(new AcademicYearEntity(nama,kurikulum.getId(), kurikulum.getCode()));
         }
 
         try {

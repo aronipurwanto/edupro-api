@@ -23,64 +23,56 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "T_COURSE")
-@AttributeOverrides({
-		@AttributeOverride(name = "id", column = @Column(name="COURSEID")),
-		@AttributeOverride(name = "createdAt", column = @Column(name="COURSECRD")),
-		@AttributeOverride(name = "createdBy", column = @Column(name="COURSECRUID")),
-		@AttributeOverride(name = "updatedAt", column = @Column(name="COURSEUPD")),
-		@AttributeOverride(name = "updatedBy", column = @Column(name="COURSEUPUID")),
-		@AttributeOverride(name = "status", column = @Column(name="COURSESTAT"))
-})
+@Table(name = "t_course")
 public class CourseEntity extends BaseIdEntity {
-	@Column(name = "COURSENM", nullable = false)
+	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "COURSEDESC", columnDefinition = "TEXT")
+	@Column(name = "description", columnDefinition = "TEXT")
 	private String description;
 	
-	@Column(name = "COURSENMSHORT", nullable = false)
+	@Column(name = "short_name", nullable = false)
 	private String shortName;
 	
-	@Column(name = "COURSESHWN")
+	@Column(name = "is_shown")
 	private Boolean shown;
-	
-	@Column(name = "COURSESTARTD")
+
+	@Column(name = "start_date")
 	private LocalDate startDate;
-	
-	@Column(name = "COURSEENDD")
+
+	@Column(name = "end_date")
 	private LocalDate endDate;
 	
-	@Column(name = "COURSESMRY")
+	@Column(name = "summary")
 	private String summary;
 	
-	@Column(name = "COURSEIMGID")
+	@Column(name = "image_id")
 	private Long imageId;
 	
-	@Column(name = "COURSEFMT")
+	@Column(name = "format")
 	private Integer format;
 	
-	@Column(name = "COURSEHIDDNSECT")
+	@Column(name = "hidden_section")
 	private Integer hiddenSection;
 	
-	@Column(name = "COURSELYOT")
+	@Column(name = "layout")
 	private Integer layout;
 	
-	@Column(name = "COURSECMPLTTRCK")
+	@Column(name = "is_complete_tracking")
 	private Boolean completionTracking;
 	
 	/**
 	 * kodeMapel dan kodeLevel diisi jika course/pembelajaran ini melekat di mapel
 	 * pada level tertentu
 	 */
-	@Column(name = "MAPELID", length = 36)
+	@Column(name = "mapel_id", length = 36)
 	private String mapelId;
 
-	@Column(name = "MAPELKD", length = 10)
+	@Column(name = "mapel_code", length = 10)
 	private String kodeMapel;
 	
-	@Column(name = "LVLKD", length = 10)
-	private String kodeLevel;
+	@Column(name = "level_id", length = 10)
+	private String levelId;
 
 	@OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<CourseResourceEntity> courseResourceList = new ArrayList<>();

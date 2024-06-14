@@ -79,7 +79,7 @@ public class CourseServiceImpl extends BaseService implements CourseService {
         CourseSiswaRes res = new CourseSiswaRes();
         BeanUtils.copyProperties(entity, res);
         if(entity.getSiswa() != null){
-            res.setSiswaName(entity.getSiswa().getNama());
+            res.setSiswaName(entity.getSiswa().getName());
         }
         return res;
     }
@@ -87,7 +87,7 @@ public class CourseServiceImpl extends BaseService implements CourseService {
     @Override
     public Optional<CourseSiswaRes> saveSiswa(String id, CourseSiswaReq request) {
         CourseEntity course  = this.getEntityById(request.getCourseId());
-        SiswaEntity siswa = this.siswaRepo.findById(request.getSiswaId()).orElse(null);
+        StudentEntity siswa = this.siswaRepo.findById(request.getSiswaId()).orElse(null);
         if(siswa == null){
             return Optional.empty();
         }
@@ -229,14 +229,14 @@ public class CourseServiceImpl extends BaseService implements CourseService {
         CourseEntity result = new CourseEntity();
         BeanUtils.copyProperties(request, result);
 
-        MapelEntity mapel = null;
+        SubjectEntity mapel = null;
         if(request.getMapelId() != null && !request.getMapelId().isEmpty()) {
             mapel = mapelRepo.findById(request.getMapelId()).orElse(null);
         }
         
         if(mapel != null) {
             result.setMapelId(mapel.getId());
-            result.setKodeMapel(mapel.getKode());
+            result.setKodeMapel(mapel.getCode());
         }
 
         String userId = this.getUserInfo().getUserId();

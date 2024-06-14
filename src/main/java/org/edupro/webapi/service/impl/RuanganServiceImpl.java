@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.model.entity.GedungEntity;
-import org.edupro.webapi.model.entity.RuanganEntity;
+import org.edupro.webapi.model.entity.BuildingEntity;
+import org.edupro.webapi.model.entity.RoomEntity;
 import org.edupro.webapi.model.request.RuanganReq;
 import org.edupro.webapi.model.response.RuanganRes;
 import org.edupro.webapi.repository.GedungRepo;
@@ -36,7 +36,7 @@ public class RuanganServiceImpl extends BaseService implements RuanganService {
 
     @Override
     public List<RuanganRes> get() {
-        List<RuanganEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
+        List<RoomEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
         if(result.isEmpty()){
             return Collections.emptyList();
         }
@@ -45,7 +45,7 @@ public class RuanganServiceImpl extends BaseService implements RuanganService {
 
     @Override
     public Optional<RuanganRes> getById(String id) {
-        RuanganEntity result = this.getEntityById(id);
+        RoomEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
     }
@@ -57,7 +57,7 @@ public class RuanganServiceImpl extends BaseService implements RuanganService {
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        RuanganEntity result = this.convertReqToEntity(request);
+        RoomEntity result = this.convertReqToEntity(request);
         result.setId(CommonUtil.getUUID());
 
         return saveOrUpdate(result);
@@ -65,7 +65,7 @@ public class RuanganServiceImpl extends BaseService implements RuanganService {
 
     @Override
     public Optional<RuanganRes> update(RuanganReq request, String id) {
-        RuanganEntity result = this.getEntityById(id);
+        RoomEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
 
@@ -74,7 +74,7 @@ public class RuanganServiceImpl extends BaseService implements RuanganService {
 
     @Override
     public Optional<RuanganRes> delete(String id) {
-        RuanganEntity result = this.getEntityById(id);
+        RoomEntity result = this.getEntityById(id);
 
         result.setDeletedAt(LocalDateTime.now());
         result.setStatus(DataStatus.DIHAPUS);
@@ -82,7 +82,7 @@ public class RuanganServiceImpl extends BaseService implements RuanganService {
         return saveOrUpdate(result);
     }
 
-    private Optional<RuanganRes> saveOrUpdate(RuanganEntity result) {
+    private Optional<RuanganRes> saveOrUpdate(RoomEntity result) {
         try{
             this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
@@ -98,8 +98,8 @@ public class RuanganServiceImpl extends BaseService implements RuanganService {
         }
     }
 
-    private GedungEntity getGedungById(String id) {
-        GedungEntity result = this.gedungRepo.findById(id).orElse(null);
+    private BuildingEntity getGedungById(String id) {
+        BuildingEntity result = this.gedungRepo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("kode", "Kode "+ id +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
@@ -108,8 +108,8 @@ public class RuanganServiceImpl extends BaseService implements RuanganService {
         return result;
     }
 
-    private RuanganEntity getEntityById(String id) {
-        RuanganEntity result = this.repo.findById(id).orElse(null);
+    private RoomEntity getEntityById(String id) {
+        RoomEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("kode", "Kode "+ id +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
@@ -118,25 +118,25 @@ public class RuanganServiceImpl extends BaseService implements RuanganService {
         return result;
     }
 
-    private RuanganRes convertEntityToRes(RuanganEntity entity){
+    private RuanganRes convertEntityToRes(RoomEntity entity){
         RuanganRes result = new RuanganRes();
         BeanUtils.copyProperties(entity, result);
-        if(entity.getGedungEntity() != null){
-            if(entity.getGedungEntity().getKode() != null) result.setKodeGedung(entity.getGedungEntity().getKode());
+        if(entity.getBuildingEntity() != null){
+            if(entity.getBuildingEntity().getCode() != null) result.setKodeGedung(entity.getBuildingEntity().getCode());
 
-            if (entity.getGedungEntity().getNama() != null) result.setNamaGedung(entity.getGedungEntity().getNama());
+            if (entity.getBuildingEntity().getName() != null) result.setNamaGedung(entity.getBuildingEntity().getName());
         }
         return result;
     }
 
-    private RuanganEntity convertReqToEntity(RuanganReq request){
-        GedungEntity gedung =  this.getGedungById(request.getGedungId());
+    private RoomEntity convertReqToEntity(RuanganReq request){
+        BuildingEntity gedung =  this.getGedungById(request.getGedungId());
         if(gedung.getId().isEmpty()){
             Map<String, String> errors = Map.of("gedungId", "gedungId "+ request.getGedungId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        RuanganEntity result = new RuanganEntity();
+        RoomEntity result = new RoomEntity();
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
         result.setUpdatedAt(LocalDateTime.now());
@@ -145,12 +145,12 @@ public class RuanganServiceImpl extends BaseService implements RuanganService {
         return result;
     }
 
-    private void convertReqToEntity(RuanganReq request, RuanganEntity result){
+    private void convertReqToEntity(RuanganReq request, RoomEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
 
-        GedungEntity gedungEntity =  this.getGedungById(request.getGedungId());
-        result.setGedungId(gedungEntity.getId());
+        BuildingEntity buildingEntity =  this.getGedungById(request.getGedungId());
+        result.setGedungId(buildingEntity.getId());
 
         String userId = this.getUserInfo().getUserId();
         if(!userId.isEmpty()){

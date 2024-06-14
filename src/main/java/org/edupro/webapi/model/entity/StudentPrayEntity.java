@@ -16,16 +16,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "T_KELAS_IBADAH")
-@AttributeOverrides({
-		@AttributeOverride(name = "id", column = @Column(name="KLSIBDID")),
-		@AttributeOverride(name = "createdAt", column = @Column(name="KLSIBDCRD")),
-		@AttributeOverride(name = "createdBy", column = @Column(name="KLSIBDCRUID")),
-		@AttributeOverride(name = "updatedAt", column = @Column(name="KLSIBDUPD")),
-		@AttributeOverride(name = "updatedBy", column = @Column(name="KLSIBDUPUID")),
-		@AttributeOverride(name = "status", column = @Column(name="KLSIBDSTAT"))
-})
-public class KelasIbadahEntity extends BaseIdEntity {
+@Table(name = "t_class_pray")
+public class StudentPrayEntity extends BaseIdEntity {
 	@Column(name = "KLSSISWAID", nullable = false, length = 36)
 	private String kelasSiswaId;
 

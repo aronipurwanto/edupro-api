@@ -106,8 +106,8 @@ public class LevelServiceImpl extends BaseService implements LevelService {
         LevelRes result = new LevelRes();
         BeanUtils.copyProperties(entity, result);
 
-        if (entity.getLembaga() != null){
-            result.setNamaLembaga(entity.getLembaga().getNama());
+        if (entity.getInstitution() != null){
+            result.setNamaLembaga(entity.getInstitution().getName());
         }
 
         return result;

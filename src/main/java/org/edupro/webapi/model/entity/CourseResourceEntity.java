@@ -21,44 +21,32 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "T_COURSE_RESOURCE")
-public class CourseResourceEntity extends BaseEntity {
-	@Id
-	@Column(name = "CRSRCID", nullable = false, length = 36)
-	private String id;
-	
-	@Column(name = "COURSEID", nullable = false, length = 36)
-	private String courseId;
-
-	@ManyToOne
-	@JoinColumn(name = "COURSEID", insertable = false, updatable = false)
-	private CourseEntity course;
-	
-	@Column(name = "CRSSECID", nullable = false, length = 36)
+@Table(name = "t_course_resource")
+public class CourseResourceEntity extends BaseIdEntity {
+	@Column(name = "course_section_id", nullable = false, length = 36)
 	private String courseSectionId;
 
 	@ManyToOne
-	@JoinColumn(name = "CRSSECID", insertable = false, updatable = false)
+	@JoinColumn(name = "course_section_id", insertable = false, updatable = false)
 	private CourseSectionEntity courseSection;
 
 	/**
 	 * Mengacu pada google classroom, jenis resource ini contohnya: assignment, quiz, question, material
 	 */
-	@Column(name = "RSRCTPE", nullable = false)
+	@Column(name = "type", nullable = false)
 	private Integer type;
 
-	@Column(name = "RSRCNM", nullable = false)
+	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "ATTCHID")
+	@Column(name = "attachment_id")
 	private String attachmentId;
 
 	@ManyToOne
-	@JoinColumn(name = "ATTCHID", insertable = false, updatable = false)
+	@JoinColumn(name = "attachment_id", insertable = false, updatable = false)
 	private AttachmentEntity attachment;
 
-	public CourseResourceEntity(String courseId, String name, String courseSectionId) {
-		this.courseId = courseId;
+	public CourseResourceEntity(String name, String courseSectionId) {
 		this.name = name;
 		this.courseSectionId = courseSectionId;
 	}

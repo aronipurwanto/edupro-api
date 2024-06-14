@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.model.entity.GedungEntity;
+import org.edupro.webapi.model.entity.BuildingEntity;
 import org.edupro.webapi.model.request.CommonReq;
 import org.edupro.webapi.model.response.GedungRes;
 import org.edupro.webapi.repository.GedungRepo;
@@ -34,7 +34,7 @@ public class GedungServiceImpl extends BaseService implements GedungService {
     @Override
     public List<GedungRes> get() {
         var userId = this.getUserInfo();
-        List<GedungEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
+        List<BuildingEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
         if(result.isEmpty()){
             return Collections.emptyList();
         }
@@ -43,7 +43,7 @@ public class GedungServiceImpl extends BaseService implements GedungService {
 
     @Override
     public Optional<GedungRes> getById(String id) {
-        GedungEntity result = this.getEntityById(id);
+        BuildingEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
     }
@@ -56,14 +56,14 @@ public class GedungServiceImpl extends BaseService implements GedungService {
             throw new EduProApiException("Save gagal", HttpStatus.BAD_REQUEST, errors);
         }
 
-        GedungEntity result = this.convertReqToEntity(request);
+        BuildingEntity result = this.convertReqToEntity(request);
         result.setId(CommonUtil.getUUID());
         return saveOrUpdate(result);
     }
 
     @Override
     public Optional<GedungRes> update(CommonReq request, String id) {
-        GedungEntity result = this.getEntityById(id);
+        BuildingEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
         return saveOrUpdate(result);
@@ -71,14 +71,14 @@ public class GedungServiceImpl extends BaseService implements GedungService {
 
     @Override
     public Optional<GedungRes> delete(String id) {
-        GedungEntity result = this.getEntityById(id);
+        BuildingEntity result = this.getEntityById(id);
 
         result.setDeletedAt(LocalDateTime.now());
         result.setStatus(DataStatus.DIHAPUS);
         return saveOrUpdate(result);
     }
 
-    private Optional<GedungRes> saveOrUpdate(GedungEntity result) {
+    private Optional<GedungRes> saveOrUpdate(BuildingEntity result) {
         try{
             this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
@@ -94,8 +94,8 @@ public class GedungServiceImpl extends BaseService implements GedungService {
         }
     }
 
-    private GedungEntity getEntityById(String id) {
-        GedungEntity result = this.repo.findById(id).orElse(null);
+    private BuildingEntity getEntityById(String id) {
+        BuildingEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("kode", "Kode "+ id +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
@@ -104,14 +104,14 @@ public class GedungServiceImpl extends BaseService implements GedungService {
         return result;
     }
 
-    private GedungRes convertEntityToRes(GedungEntity entity){
+    private GedungRes convertEntityToRes(BuildingEntity entity){
         GedungRes result = new GedungRes();
         BeanUtils.copyProperties(entity, result);
         return result;
     }
 
-    private GedungEntity convertReqToEntity(CommonReq request){
-        GedungEntity result = new GedungEntity();
+    private BuildingEntity convertReqToEntity(CommonReq request){
+        BuildingEntity result = new BuildingEntity();
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
         result.setUpdatedAt(LocalDateTime.now());
@@ -124,7 +124,7 @@ public class GedungServiceImpl extends BaseService implements GedungService {
         return result;
     }
 
-    private void convertReqToEntity(CommonReq request, GedungEntity result){
+    private void convertReqToEntity(CommonReq request, BuildingEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
     }

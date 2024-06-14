@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.model.entity.KurikulumEntity;
-import org.edupro.webapi.model.entity.SesiAkademikEntity;
-import org.edupro.webapi.model.entity.TahunAjaranEntity;
+import org.edupro.webapi.model.entity.CurriculumEntity;
+import org.edupro.webapi.model.entity.AcademicSessionEntity;
+import org.edupro.webapi.model.entity.AcademicYearEntity;
 import org.edupro.webapi.model.request.SesiAkademikReq;
 import org.edupro.webapi.model.response.SesiAkademikRes;
 import org.edupro.webapi.repository.KurikulumRepo;
@@ -38,7 +38,7 @@ public class SesiAkademikServiceImpl extends BaseService implements SesiAkademik
 
     @Override
     public List<SesiAkademikRes> get() {
-        List<SesiAkademikEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
+        List<AcademicSessionEntity> result = this.repo.findAllByStatus(DataStatus.AKTIF);
         if(result.isEmpty()){
             return Collections.emptyList();
         }
@@ -47,7 +47,7 @@ public class SesiAkademikServiceImpl extends BaseService implements SesiAkademik
 
     @Override
     public Optional<SesiAkademikRes> getById(String id) {
-        SesiAkademikEntity result = this.getEntityById(id);
+        AcademicSessionEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
     }
@@ -59,7 +59,7 @@ public class SesiAkademikServiceImpl extends BaseService implements SesiAkademik
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        SesiAkademikEntity result = this.convertReqToEntity(request);
+        AcademicSessionEntity result = this.convertReqToEntity(request);
         result.setId(CommonUtil.getUUID());
 
         return saveOrUpdate(result);
@@ -67,7 +67,7 @@ public class SesiAkademikServiceImpl extends BaseService implements SesiAkademik
 
     @Override
     public Optional<SesiAkademikRes> update(SesiAkademikReq request, String id) {
-        SesiAkademikEntity result = this.getEntityById(id);
+        AcademicSessionEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
         result.setId(id);
@@ -75,7 +75,7 @@ public class SesiAkademikServiceImpl extends BaseService implements SesiAkademik
         return saveOrUpdate(result);
     }
 
-    public Optional<SesiAkademikRes> saveOrUpdate(SesiAkademikEntity result) {
+    public Optional<SesiAkademikRes> saveOrUpdate(AcademicSessionEntity result) {
         try{
             this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
@@ -93,13 +93,13 @@ public class SesiAkademikServiceImpl extends BaseService implements SesiAkademik
 
     @Override
     public Optional<SesiAkademikRes> delete(String id) {
-        SesiAkademikEntity result = this.getEntityById(id);
+        AcademicSessionEntity result = this.getEntityById(id);
         result.setStatus(DataStatus.DIHAPUS);
         return saveOrUpdate(result);
     }
 
-    private SesiAkademikEntity getEntityById(String id) {
-        SesiAkademikEntity result = this.repo.findById(id).orElse(null);
+    private AcademicSessionEntity getEntityById(String id) {
+        AcademicSessionEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("id", "Id "+ id +" tidak ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
@@ -108,45 +108,43 @@ public class SesiAkademikServiceImpl extends BaseService implements SesiAkademik
         return result;
     }
 
-    private SesiAkademikRes convertEntityToRes(SesiAkademikEntity entity){
+    private SesiAkademikRes convertEntityToRes(AcademicSessionEntity entity){
         SesiAkademikRes result = new SesiAkademikRes();
         BeanUtils.copyProperties(entity, result);
         result.setStatus(entity.getStatus());
 
-        if(entity.getKurikulum() != null){
-            result.setKodeKurikulum(entity.getKurikulum().getKode());
-            result.setKurikulumName(entity.getKurikulum().getNama());
+        if(entity.getCurriculum() != null){
+            result.setKodeKurikulum(entity.getCurriculum().getCode());
+            result.setKurikulumName(entity.getCurriculum().getName());
         }
 
         if(entity.getTahunAjaran() != null){
-            result.setTahunAjaranName(entity.getTahunAjaran().getNama());
+            result.setTahunAjaranName(entity.getTahunAjaran().getName());
         }
         return result;
     }
 
-    private SesiAkademikEntity convertReqToEntity(SesiAkademikReq request){
-        KurikulumEntity kurikulumEntity = kurikulumRepo.findById(request.getKurikulumId()).orElse(null);
-        if(kurikulumEntity == null) {
+    private AcademicSessionEntity convertReqToEntity(SesiAkademikReq request){
+        CurriculumEntity curriculumEntity = kurikulumRepo.findById(request.getKurikulumId()).orElse(null);
+        if(curriculumEntity == null) {
             Map<String, String> errors = Map.of("kurikulumId","kurikulum tidak ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        TahunAjaranEntity tahunAjaran = tahunAjaranRepo.findById(request.getTahunAjaranId()).orElse(null);
+        AcademicYearEntity tahunAjaran = tahunAjaranRepo.findById(request.getTahunAjaranId()).orElse(null);
         if(tahunAjaran == null) {
             Map<String, String> errors = Map.of("tahunAjaranId","tahun ajaran tidak ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        SesiAkademikEntity result = new SesiAkademikEntity();
+        AcademicSessionEntity result = new AcademicSessionEntity();
         BeanUtils.copyProperties(request, result);
         result.setStatus(DataStatus.AKTIF);
 
         return result;
     }
 
-    private void convertReqToEntity(SesiAkademikReq request, SesiAkademikEntity result){
-        result.setKodeKurikulum(request.getKodeKurikulum());
-
+    private void convertReqToEntity(SesiAkademikReq request, AcademicSessionEntity result){
         String userId = this.getUserInfo().getUserId();
         if(!userId.isEmpty()){
             result.setCreatedBy(userId);

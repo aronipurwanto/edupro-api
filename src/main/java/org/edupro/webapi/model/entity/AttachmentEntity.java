@@ -3,16 +3,12 @@
  */
 package org.edupro.webapi.model.entity;
 
-import java.time.LocalDateTime;
-
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.*;
 import lombok.Builder.Default;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import org.edupro.webapi.constant.DataStatus;
 
 /**
  * @author Awiyanto Ajisasongko
@@ -25,44 +21,33 @@ import org.edupro.webapi.constant.DataStatus;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "T_ATTCH")
-public class AttachmentEntity extends BlankBaseEntity {
+@Table(name = "t_attachment")
+public class AttachmentEntity extends BaseIdEntity {
 	private static final long serialVersionUID = 4672155540988374323L;
 	
 	@Id
-	@Column(name = "ATTID", nullable = false, length = 36)
+	@Column(name = "id", nullable = false, length = 36)
 	private String id;
 	
-	@Column(name = "ATTCONTYPE", length = 100)
+	@Column(name = "types", length = 100)
 	private String contentType;
 	
-	@Column(name = "ATTFNAME", length = 100)
+	@Column(name = "file_name", length = 100)
 	private String filename;
 	
 	@Default
-	@Column(name = "ATTPUBLIC")
+	@Column(name = "is_public")
 	private boolean publiclyAccessible = true;
 	
-	@Column(name = "ATTPATH")
+	@Column(name = "path")
 	private String filePath;
 	
-	@Column(name = "ATTSIZE")
+	@Column(name = "size")
 	private Long size;
 	
-	@Column(name = "ATTCRD")
-	private LocalDateTime createdAt;
-	
-	@Column(name = "ATTCRUID", length = 100)
-	private String createdBy;
-	
-	@Column(name = "ATTDESC")
+	@Column(name = "description")
 	private String description;
 	
-	@Column(name = "ATTOWNER", length = 100)
+	@Column(name = "owner", length = 100)
 	private String owner;
-
-	@Default
-	@Column(name = "ATTSTAT", length = 20, nullable = false)
-	@Enumerated(EnumType.STRING)
-	private DataStatus status = DataStatus.AKTIF;
 }

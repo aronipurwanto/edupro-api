@@ -15,35 +15,27 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "T_KELAS_SISWA")
-@AttributeOverrides({
-		@AttributeOverride(name = "id", column = @Column(name="KLSSISWAID")),
-		@AttributeOverride(name = "createdAt", column = @Column(name="KLSSISWACRD")),
-		@AttributeOverride(name = "createdBy", column = @Column(name="KLSSISWACRUID")),
-		@AttributeOverride(name = "updatedAt", column = @Column(name="KLSSISWAUPD")),
-		@AttributeOverride(name = "updatedBy", column = @Column(name="KLSSISWAUPUID")),
-		@AttributeOverride(name = "status", column = @Column(name="KLSSISWASTAT"))
-})
 public class KelasSiswaEntity extends BaseIdEntity {
 	@Column(name = "SAID", nullable = false, length = 36)
 	private String sesiAkademikId;
 
 	@ManyToOne
 	@JoinColumn(name = "SAID", insertable = false, updatable = false)
-	private SesiAkademikEntity sesiAkademik;
+	private AcademicSessionEntity sesiAkademik;
 
 	@Column(name = "KLSID", nullable = false, length = 36)
 	private String kelasId;
 
 	@ManyToOne
 	@JoinColumn(name = "KLSID", insertable = false, updatable = false)
-	private KelasEntity kelas;
+	private ClassEntity kelas;
 
 	@Column(name = "SISWAID", nullable = false, length = 36)
 	private String siswaId;
 
 	@ManyToOne
 	@JoinColumn(name = "SISWAID", insertable = false, updatable = false)
-	private SiswaEntity siswa;
+	private StudentEntity siswa;
 
 	@Column(name = "NILAI_TUGAS")
 	private double nilaiTugas;

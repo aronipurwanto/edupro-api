@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "T_ROLE")
+@Table(name = "t_role")
 public class RoleEntity {
     @Id
-    @Column(name = "RID", length = 36)
+    @Column(name = "id", length = 36)
     private String id;
 
-    @Column(name = "ROLE_NAME", length = 64)
+    @Column(name = "name", length = 64)
     private String name;
 
     public RoleEntity(String name) {

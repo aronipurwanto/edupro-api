@@ -20,38 +20,28 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "T_LEVEL")
-@AttributeOverrides({
-		@AttributeOverride(name = "id", column = @Column(name="LVLID")),
-		@AttributeOverride(name = "createdAt", column = @Column(name="LVLCRD")),
-		@AttributeOverride(name = "createdBy", column = @Column(name="LVLCRUID")),
-		@AttributeOverride(name = "updatedAt", column = @Column(name="LVLUPD")),
-		@AttributeOverride(name = "updatedBy", column = @Column(name="LVLUID")),
-		@AttributeOverride(name = "status", column = @Column(name="LVLSTAT"))
-})
+@Table(name = "t_level")
 public class LevelEntity extends BaseIdEntity {
-	private static final long serialVersionUID = -1692222214526057221L;
-
-	@Column(name = "LBGID", nullable = false)
-	private String idLembaga;
+	@Column(name = "institution_id", nullable = false)
+	private String institutionId;
 
 	@ManyToOne
-	@JoinColumn(name = "LBGID", insertable = false, updatable = false)
-	private LembagaEntity lembaga;
+	@JoinColumn(name = "institution_id", insertable = false, updatable = false)
+	private InstitutionEntity institution;
 
-	@Column(name = "LVLKD", length = 10, nullable = false)
-	private String kode;
+	@Column(name = "code", length = 10, nullable = false)
+	private String code;
 
-	@Column(name = "LVLNM", length = 100, nullable = false)
-	private String nama;
+	@Column(name = "name", length = 100, nullable = false)
+	private String name;
 
-	@Column(name = "LVLURUT")
-	private Integer noUrut;
+	@Column(name = "position")
+	private Integer position;
 
-	public LevelEntity( String idLembaga,String kode, String nama, Integer noUrut) {
-		this.noUrut = noUrut;
-		this.nama = nama;
-		this.kode = kode;
-		this.idLembaga = idLembaga;
+	public LevelEntity(String institutionId, String code, String nama, Integer position) {
+		this.position = position;
+		this.name = nama;
+		this.code = code;
+		this.institutionId = institutionId;
 	}
 }

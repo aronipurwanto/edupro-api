@@ -23,43 +23,35 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "T_COURSE_SECTION")
-@AttributeOverrides({
-		@AttributeOverride(name = "id", column = @Column(name="CRSSECID")),
-		@AttributeOverride(name = "createdAt", column = @Column(name="CRSSECCRD")),
-		@AttributeOverride(name = "createdBy", column = @Column(name="CRSSECCRUID")),
-		@AttributeOverride(name = "updatedAt", column = @Column(name="CRSSECUPD")),
-		@AttributeOverride(name = "updatedBy", column = @Column(name="CRSSECUPUID")),
-		@AttributeOverride(name = "status", column = @Column(name="CRSSECSTAT"))
-})
+@Table(name = "t_course_section")
 public class CourseSectionEntity extends BaseIdEntity {
-	@Column(name = "COURSEID", insertable = false, updatable = false)
+	@Column(name = "course_id", insertable = false, updatable = false)
 	private String courseId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "COURSEID", nullable = false)
+	@JoinColumn(name = "course_id", nullable = false)
 	private CourseEntity course;
 
-	@Column(name = "SECTYPE", length = 20, nullable = false)
+	@Column(name = "section_type", length = 20, nullable = false)
 	private String sectionType;
 	
-	@Column(name = "SECNAME", length = 100, nullable = false)
+	@Column(name = "name", length = 100, nullable = false)
 	private String name;
 
-	@Column(name = "SECDESC")
+	@Column(name = "description")
 	private String description;
 
-	@Column(name = "PARENTID", length = 36, insertable = false, updatable = false)
+	@Column(name = "parent_id", length = 36, insertable = false, updatable = false)
 	private String parentId;
 
 	@ManyToOne
-	@JoinColumn(name = "PARENTID")
+	@JoinColumn(name = "parent_id")
 	private CourseSectionEntity parent;
 
 	@OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<CourseSectionEntity> children = new ArrayList<>();
 
-	@Column(name = "NOURUT")
+	@Column(name = "no_urut")
 	private Integer noUrut;
 
 	public CourseSectionEntity(String id, CourseEntity course, String sectionType, String name, Integer noUrut) {
