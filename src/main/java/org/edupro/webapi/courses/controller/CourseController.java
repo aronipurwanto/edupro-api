@@ -4,13 +4,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.edupro.webapi.BaseController;
+import org.edupro.webapi.base.controller.BaseController;
 import org.edupro.webapi.courses.model.CoursePersonReq;
 import org.edupro.webapi.courses.service.CourseService;
 import org.edupro.webapi.courses.model.CourseReq;
 import org.edupro.webapi.courses.model.CourseRes;
 import org.edupro.webapi.courses.model.CourseStudentReq;
-import org.edupro.webapi.Response;
+import org.edupro.webapi.base.model.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

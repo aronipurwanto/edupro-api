@@ -35,6 +35,21 @@ public class SecurityConfiguration {
     private static final String ROLES_CLAIM = "roles";
     private final KeycloakLogoutHandler keycloakLogoutHandler;
 
+    private static final String[] AUTH_WHITELIST = {
+            // -- Swagger UI v2
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+            // other public endpoints of your API may be appended to this array
+    };
+
     @Bean
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
         return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
@@ -49,7 +64,7 @@ public class SecurityConfiguration {
                 // Allows preflight requests from browser
                 //.requestMatchers(new AntPathRequestMatcher("/customers*", HttpMethod.OPTIONS.name())).permitAll()
                 //.requestMatchers(new AntPathRequestMatcher("/customers*","/users*")).hasRole("user")
-                //.requestMatchers(new AntPathRequestMatcher("/*")).permitAll()
+                .requestMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated());
         http.oauth2Login(Customizer.withDefaults())
                 .logout(logout -> logout.addLogoutHandler(keycloakLogoutHandler)

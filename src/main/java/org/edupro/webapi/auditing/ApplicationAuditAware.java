@@ -1,6 +1,6 @@
 package org.edupro.webapi.auditing;
 
-import org.edupro.webapi.user.UserEntity;
+import org.edupro.webapi.user.model.UserEntity;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;

@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.edupro.webapi.BaseIdEntity;
+import org.edupro.webapi.base.model.BaseIdEntity;
 
 import java.util.ArrayList;
 import java.util.List;

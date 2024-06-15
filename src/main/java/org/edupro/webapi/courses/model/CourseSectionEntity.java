@@ -5,7 +5,7 @@ package org.edupro.webapi.courses.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.edupro.webapi.BaseIdEntity;
+import org.edupro.webapi.base.model.BaseIdEntity;
 
 import java.util.ArrayList;
 import java.util.List;

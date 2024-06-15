@@ -13,7 +13,7 @@ import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.curriculum.model.CurriculumEntity;
 import org.edupro.webapi.curriculum.repository.CurriculumRepo;
-import org.edupro.webapi.BaseService;
+import org.edupro.webapi.base.service.BaseService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;

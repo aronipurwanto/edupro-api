@@ -2,8 +2,8 @@ package org.edupro.webapi.courses.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.edupro.webapi.BaseIdEntity;
-import org.edupro.webapi.student.StudentEntity;
+import org.edupro.webapi.base.model.BaseIdEntity;
+import org.edupro.webapi.student.model.StudentEntity;
 
 @Data
 @EqualsAndHashCode(callSuper = true)

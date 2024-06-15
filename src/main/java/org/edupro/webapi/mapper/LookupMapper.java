@@ -1,7 +1,7 @@
 package org.edupro.webapi.mapper;
 
 import org.apache.ibatis.annotations.*;
-import org.edupro.webapi.lookup.LookupRes;
+import org.edupro.webapi.lookup.model.LookupRes;
 
 import java.util.List;
 

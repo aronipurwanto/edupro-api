@@ -5,7 +5,7 @@ package org.edupro.webapi.building.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.edupro.webapi.BaseIdEntity;
+import org.edupro.webapi.base.model.BaseIdEntity;
 
 /**
  * @author Awiyanto Ajisasongko

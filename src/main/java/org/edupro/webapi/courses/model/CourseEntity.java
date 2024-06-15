@@ -5,9 +5,9 @@ package org.edupro.webapi.courses.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.edupro.webapi.BaseIdEntity;
-import org.edupro.webapi.institution.LevelEntity;
-import org.edupro.webapi.subject.SubjectEntity;
+import org.edupro.webapi.base.model.BaseIdEntity;
+import org.edupro.webapi.level.model.LevelEntity;
+import org.edupro.webapi.subject.model.SubjectEntity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

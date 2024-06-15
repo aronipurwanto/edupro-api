@@ -4,9 +4,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.edupro.webapi.building.model.BuildingRes;
 import org.edupro.webapi.building.service.BuildingService;
-import org.edupro.webapi.BaseController;
+import org.edupro.webapi.base.controller.BaseController;
 import org.edupro.webapi.courses.model.CommonReq;
-import org.edupro.webapi.Response;
+import org.edupro.webapi.base.model.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

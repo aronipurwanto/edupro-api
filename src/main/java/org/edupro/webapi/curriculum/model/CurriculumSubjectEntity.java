@@ -5,9 +5,9 @@ package org.edupro.webapi.curriculum.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.edupro.webapi.institution.InstitutionEntity;
-import org.edupro.webapi.BaseIdEntity;
-import org.edupro.webapi.subject.SubjectEntity;
+import org.edupro.webapi.institution.model.InstitutionEntity;
+import org.edupro.webapi.base.model.BaseIdEntity;
+import org.edupro.webapi.subject.model.SubjectEntity;
 
 /**
  * Detail mata pelajaran per kurikulum

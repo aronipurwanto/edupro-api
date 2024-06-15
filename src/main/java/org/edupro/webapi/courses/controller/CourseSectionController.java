@@ -2,11 +2,11 @@ package org.edupro.webapi.courses.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.edupro.webapi.BaseController;
+import org.edupro.webapi.base.controller.BaseController;
 import org.edupro.webapi.courses.model.CourseSectionReq;
 import org.edupro.webapi.courses.model.CourseSectionRes;
 import org.edupro.webapi.courses.service.CourseSectionService;
-import org.edupro.webapi.Response;
+import org.edupro.webapi.base.model.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

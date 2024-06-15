@@ -9,7 +9,7 @@ import org.edupro.webapi.classes.model.ClassSubjectRes;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.subject.SubjectRepo;
+import org.edupro.webapi.subject.repository.SubjectRepo;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;

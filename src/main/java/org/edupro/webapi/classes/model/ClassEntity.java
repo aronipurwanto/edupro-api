@@ -8,11 +8,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.edupro.webapi.academic.model.AcademicSessionEntity;
 import org.edupro.webapi.academic.model.AcademicYearEntity;
-import org.edupro.webapi.institution.InstitutionEntity;
-import org.edupro.webapi.BaseIdEntity;
+import org.edupro.webapi.institution.model.InstitutionEntity;
+import org.edupro.webapi.base.model.BaseIdEntity;
 import org.edupro.webapi.building.model.BuildingRoomEntity;
-import org.edupro.webapi.institution.LevelEntity;
-import org.edupro.webapi.person.PersonEntity;
+import org.edupro.webapi.level.model.LevelEntity;
+import org.edupro.webapi.person.model.PersonEntity;
 
 /**
  * @author Awiyanto Ajisasongko

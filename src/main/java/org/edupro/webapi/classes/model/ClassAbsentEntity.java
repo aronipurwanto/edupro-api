@@ -2,7 +2,7 @@ package org.edupro.webapi.classes.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.edupro.webapi.BaseIdEntity;
+import org.edupro.webapi.base.model.BaseIdEntity;
 
 import java.time.LocalDate;
 

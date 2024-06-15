@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.edupro.webapi.classes.model.ClassReq;
 import org.edupro.webapi.classes.model.ClassRes;
 import org.edupro.webapi.classes.service.ClassService;
-import org.edupro.webapi.BaseController;
-import org.edupro.webapi.Response;
+import org.edupro.webapi.base.controller.BaseController;
+import org.edupro.webapi.base.model.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -5,7 +5,7 @@ package org.edupro.webapi.academic.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.edupro.webapi.BaseIdEntity;
+import org.edupro.webapi.base.model.BaseIdEntity;
 import org.edupro.webapi.curriculum.model.CurriculumEntity;
 
 import java.time.LocalDate;

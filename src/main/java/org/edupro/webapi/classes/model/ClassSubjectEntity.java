@@ -8,8 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.edupro.webapi.BaseIdEntity;
-import org.edupro.webapi.subject.SubjectEntity;
+import org.edupro.webapi.base.model.BaseIdEntity;
+import org.edupro.webapi.subject.model.SubjectEntity;
 
 import java.io.Serializable;
 

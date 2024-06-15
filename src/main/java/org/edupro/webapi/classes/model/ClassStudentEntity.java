@@ -3,8 +3,8 @@ package org.edupro.webapi.classes.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.edupro.webapi.academic.model.AcademicSessionEntity;
-import org.edupro.webapi.BaseIdEntity;
-import org.edupro.webapi.student.StudentEntity;
+import org.edupro.webapi.base.model.BaseIdEntity;
+import org.edupro.webapi.student.model.StudentEntity;
 
 /**
  * @author Awiyanto Ajisasongko
