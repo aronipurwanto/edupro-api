@@ -1,5 +1,6 @@
 package org.edupro.webapi.lookup.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.edupro.webapi.constant.DataStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@SecurityRequirement(name="keycloak")
 @RequestMapping("/api/v1/lookup")
 @RequiredArgsConstructor
 public class LookupController extends BaseController<LookupRes> {

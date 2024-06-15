@@ -6,10 +6,11 @@ import org.edupro.webapi.user.model.UserEntity;
 import org.edupro.webapi.user.repository.UserRepo;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 
-//@Service
+@Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;

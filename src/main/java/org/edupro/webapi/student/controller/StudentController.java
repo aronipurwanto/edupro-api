@@ -1,5 +1,6 @@
 package org.edupro.webapi.student.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.edupro.webapi.base.controller.BaseController;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@SecurityRequirement(name="keycloak")
 @RequestMapping("/api/v1/siswa")
 @RequiredArgsConstructor
 public class StudentController extends BaseController<StudentRes> {

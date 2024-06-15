@@ -1,5 +1,6 @@
 package org.edupro.webapi.building.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.edupro.webapi.building.model.BuildingRoomRes;
@@ -11,9 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@SecurityRequirement(name="keycloak")
 @RequestMapping("/api/v1/ruangan")
 @RequiredArgsConstructor
-public class BuildingRoomController extends BaseController<BuildingRoomRes> {
+public class RoomController extends BaseController<BuildingRoomRes> {
     private final BuildingRoomService service;
 
     @GetMapping

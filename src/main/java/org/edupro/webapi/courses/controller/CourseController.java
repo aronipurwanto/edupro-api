@@ -1,5 +1,6 @@
 package org.edupro.webapi.courses.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.Collections;
 
 @Slf4j
 @RestController
+@SecurityRequirement(name="keycloak")
 @RequestMapping("/api/v1/course")
 @RequiredArgsConstructor
 public class CourseController extends BaseController<CourseRes> {
