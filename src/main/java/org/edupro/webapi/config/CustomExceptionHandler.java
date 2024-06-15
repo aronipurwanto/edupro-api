@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.exception.EmptyResponseBodyException;
-import org.edupro.webapi.model.response.ResponseError;
+import org.edupro.webapi.ResponseError;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

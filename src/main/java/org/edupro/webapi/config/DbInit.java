@@ -2,10 +2,26 @@ package org.edupro.webapi.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.edupro.webapi.academic.model.AcademicYearEntity;
+import org.edupro.webapi.academic.repository.AcademicYearRepo;
 import org.edupro.webapi.constant.Constant;
 import org.edupro.webapi.constant.DataStatus;
-import org.edupro.webapi.model.entity.*;
-import org.edupro.webapi.repository.*;
+import org.edupro.webapi.courses.model.CourseEntity;
+import org.edupro.webapi.courses.repository.CourseRepo;
+import org.edupro.webapi.courses.model.CourseSectionEntity;
+import org.edupro.webapi.courses.repository.CourseSectionRepo;
+import org.edupro.webapi.curriculum.model.CurriculumEntity;
+import org.edupro.webapi.curriculum.repository.CurriculumRepo;
+import org.edupro.webapi.institution.InstitutionEntity;
+import org.edupro.webapi.institution.InstitutionRepo;
+import org.edupro.webapi.institution.LevelEntity;
+import org.edupro.webapi.level.LevelRepo;
+import org.edupro.webapi.lookup.LookupEntity;
+import org.edupro.webapi.lookup.LookupRepo;
+import org.edupro.webapi.person.PersonEntity;
+import org.edupro.webapi.person.PersonRepo;
+import org.edupro.webapi.student.StudentEntity;
+import org.edupro.webapi.student.StudentRepo;
 import org.edupro.webapi.util.CommonUtil;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -20,14 +36,14 @@ import java.util.List;
 @Slf4j
 public class DbInit implements CommandLineRunner {
     private final LookupRepo lookupRepo;
-    private final LembagaRepo lembagaRepo;
+    private final InstitutionRepo institutionRepo;
     private final LevelRepo levelRepo;
-    private final TahunAjaranRepo taRepo;
-    private final KurikulumRepo kurRepo;
+    private final AcademicYearRepo taRepo;
+    private final CurriculumRepo kurRepo;
     private final CourseRepo courseRepo;
     private final CourseSectionRepo sectionRepo;
     private final PersonRepo personRepo;
-    private final SiswaRepo siswaRepo;
+    private final StudentRepo studentRepo;
 
     @Override
     public void run(String... args) throws Exception {
@@ -49,7 +65,7 @@ public class DbInit implements CommandLineRunner {
         initLevelSMP();
 
         initKurikulum();
-        initTahunAjaran();
+        initAcademicYear();
         initCourse();
 
         initPerson();
@@ -57,7 +73,7 @@ public class DbInit implements CommandLineRunner {
     }
 
     private void initPerson(){
-        if (personRepo.countByStatus(DataStatus.AKTIF) > 0) {
+        if (personRepo.countByStatus(DataStatus.ACTIVE) > 0) {
             return;
         }
 
@@ -79,7 +95,7 @@ public class DbInit implements CommandLineRunner {
     }
 
     private void initSiswa(){
-        if(siswaRepo.countByStatus(DataStatus.AKTIF) > 0) {
+        if(studentRepo.countByStatus(DataStatus.ACTIVE) > 0) {
             return;
         }
 
@@ -113,7 +129,7 @@ public class DbInit implements CommandLineRunner {
         );
 
         try{
-            siswaRepo.saveAll(siswaList);
+            studentRepo.saveAll(siswaList);
             log.info("Save siswa successfully");
         }catch (Exception e){
             log.error("Save siswa failed");
@@ -121,28 +137,28 @@ public class DbInit implements CommandLineRunner {
     }
 
     private void initLembaga(){
-        if(!lembagaRepo.existsByNama("SDIT")){
+        if(!institutionRepo.existsByName("SDIT")){
             InstitutionEntity institutionEntity = new InstitutionEntity();
             institutionEntity.setName("SDIT");
             institutionEntity.setCode("SDIT");
             institutionEntity.setShortName("SDIT");
 
             try {
-                lembagaRepo.save(institutionEntity);
+                institutionRepo.save(institutionEntity);
                 log.info("Save SDIT is successful");
             }catch (Exception e){
                 log.error(e.getMessage());
             }
         }
 
-        if(!lembagaRepo.existsByNama("SMPIT")){
+        if(!institutionRepo.existsByName("SMPIT")){
             InstitutionEntity institutionEntity = new InstitutionEntity();
             institutionEntity.setName("SMPIT");
             institutionEntity.setCode("SMPIT");
             institutionEntity.setShortName("SMPIT");
 
             try {
-                lembagaRepo.save(institutionEntity);
+                institutionRepo.save(institutionEntity);
                 log.info("Save SMPIT is successful");
             }catch (Exception e){
                 log.error(e.getMessage());
@@ -414,12 +430,12 @@ public class DbInit implements CommandLineRunner {
     }
 
     private void initLevelSD(){
-        InstitutionEntity sdit = lembagaRepo.findByNama("SDIT").orElse(null);
+        InstitutionEntity sdit = institutionRepo.findByName("SDIT").orElse(null);
         if(sdit == null){
             return;
         }
 
-        int count = levelRepo.countAllByIdLembaga(sdit.getId());
+        int count = levelRepo.countAllByInstitutionId(sdit.getId());
         if(count > 0){
             return;
         }
@@ -442,11 +458,11 @@ public class DbInit implements CommandLineRunner {
     }
 
     private void initLevelSMP(){
-        InstitutionEntity smpit = lembagaRepo.findByNama("SMPIT").orElse(null);
+        InstitutionEntity smpit = institutionRepo.findByName("SMPIT").orElse(null);
         if(smpit == null){
             return;
         }
-        int count = levelRepo.countAllByIdLembaga(smpit.getId());
+        int count = levelRepo.countAllByInstitutionId(smpit.getId());
         if(count > 0 ){
             return;
         }
@@ -466,7 +482,7 @@ public class DbInit implements CommandLineRunner {
     }
 
     private void initKurikulum(){
-        int count = kurRepo.countAllByStatus(DataStatus.AKTIF);
+        int count = kurRepo.countAllByStatus(DataStatus.ACTIVE);
         if(count > 0){
             return;
         }
@@ -492,13 +508,13 @@ public class DbInit implements CommandLineRunner {
         }
     }
 
-    private void initTahunAjaran(){
-        int count = taRepo.countByStatus(DataStatus.AKTIF);
+    private void initAcademicYear(){
+        int count = taRepo.countByStatus(DataStatus.ACTIVE);
         if(count > 0){
             return;
         }
 
-        CurriculumEntity kurikulum = kurRepo.findByKode("KURIKULUM_2013").orElse(null);
+        CurriculumEntity kurikulum = kurRepo.findByCode("KURIKULUM_2013").orElse(null);
         if(kurikulum == null){
             return;
         }
@@ -507,7 +523,7 @@ public class DbInit implements CommandLineRunner {
         List<AcademicYearEntity> tahunAjaran = new ArrayList<>();
         for (int i = curYear-8; i <= curYear+2; i++) {
             String nama = i +" - "+ (i+1);
-            tahunAjaran.add(new AcademicYearEntity(nama,kurikulum.getId(), kurikulum.getCode()));
+            tahunAjaran.add(new AcademicYearEntity(nama,kurikulum.getId()));
         }
 
         try {
@@ -519,7 +535,7 @@ public class DbInit implements CommandLineRunner {
     }
 
     private void initCourse(){
-        if(courseRepo.countAllByStatus(DataStatus.AKTIF) > 0){
+        if(courseRepo.countAllByStatus(DataStatus.ACTIVE) > 0){
             return;
         }
 

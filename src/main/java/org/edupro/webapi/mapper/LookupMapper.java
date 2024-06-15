@@ -1,31 +1,30 @@
 package org.edupro.webapi.mapper;
 
 import org.apache.ibatis.annotations.*;
-import org.edupro.webapi.model.response.LookupRes;
+import org.edupro.webapi.lookup.LookupRes;
 
 import java.util.List;
 
 @Mapper
 public interface LookupMapper {
-    @Select("SELECT * FROM T_LOOKUP WHERE LKID = #{id}")
+    @Select("SELECT * FROM t_lookup WHERE LKID = #{id}")
     @Results({
-            @Result(property = "id", column = "LKID"),
-            @Result(property = "group", column = "LKGRP"),
-            @Result(property = "kode", column = "LKKD"),
-            @Result(property = "nama", column = "LKNM"),
-            @Result(property = "urutan", column = "LKURT"),
-            @Result(property = "status", column = "LKSTAT",javaType = String.class),
+            @Result(property = "id", column = "id"),
+            @Result(property = "group", column = "groups"),
+            @Result(property = "code", column = "code"),
+            @Result(property = "name", column = "name"),
+            @Result(property = "position", column = "position"),
+            @Result(property = "status", column = "status",javaType = String.class),
     })
     LookupRes getById(@Param("id") String id);
 
-    @Select("SELECT * FROM T_LOOKUP WHERE LKGRP = #{group}")
+    @Select("SELECT * FROM t_lookup WHERE LKGRP = #{group}")
     @Results({
-            @Result(property = "id", column = "LKID"),
-            @Result(property = "group", column = "LKGRP"),
-            @Result(property = "kode", column = "LKKD"),
-            @Result(property = "nama", column = "LKNM"),
-            @Result(property = "urutan", column = "LKURT"),
-            @Result(property = "status", column = "LKSTAT"),
+            @Result(property = "id", column = "id"),
+            @Result(property = "group", column = "groups"),
+            @Result(property = "code", column = "code"),
+            @Result(property = "name", column = "name"),
+            @Result(property = "position", column = "position"),
     })
     List<LookupRes> getByGroup(@Param("group") String group);
 }

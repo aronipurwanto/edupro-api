@@ -9,5 +9,5 @@ package org.edupro.webapi.constant;
  * Nov 30, 2023
  */
 public enum DataStatus {
-	AKTIF, NON_AKTIF, DIHAPUS
+	ACTIVE, IN_ACTIVE, DELETED
 }
