@@ -3,13 +3,11 @@
  */
 package org.edupro.webapi.curriculum.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.*;
-import org.edupro.webapi.academic.model.AcademicSessionEntity;
 import org.edupro.webapi.base.model.BaseIdEntity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Awiyanto Ajisasongko
@@ -32,13 +30,4 @@ public class CurriculumEntity extends BaseIdEntity {
 
 	@Column(name = "position")
 	private Integer position;
-
-	@OneToMany(mappedBy = "curriculum")
-	private List<AcademicSessionEntity> sesiAkademikList = new ArrayList<>();
-
-	public CurriculumEntity(String code, String name, Integer position) {
-		this.code = code;
-		this.name = name;
-		this.position = position;
-	}
 }

@@ -6,7 +6,6 @@ package org.edupro.webapi.academic.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.edupro.webapi.base.model.BaseIdEntity;
-import org.edupro.webapi.curriculum.model.CurriculumEntity;
 
 import java.time.LocalDate;
 
@@ -31,13 +30,6 @@ public class AcademicSessionEntity extends BaseIdEntity {
 	@ManyToOne
 	@JoinColumn(name = "academic_year_id",insertable = false, updatable = false)
 	private AcademicYearEntity academicYear;
-
-	@Column(name = "curriculum_id", length = 36, nullable = false)
-	private String curriculumId;
-
-	@ManyToOne
-	@JoinColumn(name = "curriculum_id", insertable = false, updatable = false)
-	private CurriculumEntity curriculum;
 
 	@Column(name = "semester", nullable = false)
 	private Integer semester; // 1 = ganjil, 2 = genap

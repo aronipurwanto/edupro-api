@@ -523,7 +523,9 @@ public class DbInit implements CommandLineRunner {
         List<AcademicYearEntity> tahunAjaran = new ArrayList<>();
         for (int i = curYear-8; i <= curYear+2; i++) {
             String nama = i +" - "+ (i+1);
-            tahunAjaran.add(new AcademicYearEntity(nama,kurikulum.getId()));
+            LocalDate startDate = LocalDate.of(i,6,1);
+            LocalDate endDate = LocalDate.of(i+1,5,31);
+            tahunAjaran.add(new AcademicYearEntity(nama,kurikulum.getId(),startDate, endDate));
         }
 
         try {

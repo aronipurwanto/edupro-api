@@ -8,12 +8,10 @@ import org.edupro.webapi.academic.model.AcademicSessionRes;
 import org.edupro.webapi.academic.model.AcademicYearEntity;
 import org.edupro.webapi.academic.repository.AcademicSessionRepo;
 import org.edupro.webapi.academic.repository.AcademicYearRepo;
+import org.edupro.webapi.base.service.BaseService;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.curriculum.model.CurriculumEntity;
-import org.edupro.webapi.curriculum.repository.CurriculumRepo;
-import org.edupro.webapi.base.service.BaseService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
@@ -32,7 +30,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AcademicSessionServiceImpl extends BaseService implements AcademicSessionService {
     private final AcademicSessionRepo repo;
-    private final CurriculumRepo curriculumRepo;
     private final AcademicYearRepo academicYearRepo;
 
     @Override
@@ -53,8 +50,8 @@ public class AcademicSessionServiceImpl extends BaseService implements AcademicS
 
     @Override
     public Optional<AcademicSessionRes> save(AcademicSessionReq request) {
-        if(repo.existsByCurriculumIdAndAcademicYearIdAndSemester(request.getKurikulumId(), request.getTahunAjaranId(), request.getSemester())){
-            Map<String, String> errors = Map.of("tahunAjaranId", "kurikulumId "+ request.getKurikulumId()+" dan tahunAjaranId "+ request.getTahunAjaranId() +" sudah digunakan");
+        if(repo.existsByAcademicYearIdAndSemester(request.getAcademicYearId(), request.getSemester())){
+            Map<String, String> errors = Map.of("tahunAjaranId",  "academicYearId "+ request.getAcademicYearId() +" sudah digunakan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
@@ -112,25 +109,16 @@ public class AcademicSessionServiceImpl extends BaseService implements AcademicS
         BeanUtils.copyProperties(entity, result);
         result.setStatus(entity.getStatus());
 
-        if(entity.getCurriculum() != null){
-            result.setKodeKurikulum(entity.getCurriculum().getCode());
-            result.setKurikulumName(entity.getCurriculum().getName());
+        if(entity.getAcademicYear() != null){
+            result.setAcademicYearId(entity.getAcademicYear().getId());
+            result.setAcademicYearName(entity.getAcademicYear().getName());
         }
 
-        if(entity.getAcademicYear() != null){
-            result.setTahunAjaranName(entity.getAcademicYear().getName());
-        }
         return result;
     }
 
     private AcademicSessionEntity convertReqToEntity(AcademicSessionReq request){
-        CurriculumEntity curriculumEntity = curriculumRepo.findById(request.getKurikulumId()).orElse(null);
-        if(curriculumEntity == null) {
-            Map<String, String> errors = Map.of("kurikulumId","kurikulum tidak ditemukan");
-            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
-        }
-
-        AcademicYearEntity tahunAjaran = academicYearRepo.findById(request.getTahunAjaranId()).orElse(null);
+        AcademicYearEntity tahunAjaran = academicYearRepo.findById(request.getAcademicYearId()).orElse(null);
         if(tahunAjaran == null) {
             Map<String, String> errors = Map.of("tahunAjaranId","tahun ajaran tidak ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);

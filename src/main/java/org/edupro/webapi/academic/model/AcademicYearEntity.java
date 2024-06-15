@@ -8,6 +8,7 @@ import lombok.*;
 import org.edupro.webapi.base.model.BaseIdEntity;
 import org.edupro.webapi.curriculum.model.CurriculumEntity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +36,19 @@ public class AcademicYearEntity extends BaseIdEntity {
 	@JoinColumn(name = "curriculum_id", insertable = false, updatable = false)
 	private CurriculumEntity curriculum;
 
+	@Column(name = "start_date", nullable = false)
+	private LocalDate startDate;
+
+	@Column(name = "end_date", nullable = false)
+	private LocalDate endDate;
+
 	@OneToMany(mappedBy = "academicYear")
 	private List<AcademicSessionEntity> sessionList = new ArrayList<>();
 
-	public AcademicYearEntity(String name, String curriculumId) {
+	public AcademicYearEntity(String name, String curriculumId, LocalDate startDate, LocalDate endDate) {
 		this.name = name;
 		this.curriculumId = curriculumId;
+		this.startDate = startDate;
+		this.endDate = endDate;
 	}
 }

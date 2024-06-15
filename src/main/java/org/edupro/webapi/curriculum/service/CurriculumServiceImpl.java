@@ -44,9 +44,9 @@ public class CurriculumServiceImpl extends BaseService implements CurriculumServ
 
     @Override
     public Optional<CurriculumRes> save(CurriculumReq request) {
-        if(repo.existsByCode(request.getKode())){
+        if(repo.existsByCode(request.getCode())){
             log.info("Save Kurikulum gagal, terjadi error : kode sudah digunakan");
-            Map<String, String> errors = Map.of("kode", "Kode "+ request.getKode() +" sudah digunakan");
+            Map<String, String> errors = Map.of("kode", "Kode "+ request.getCode() +" sudah digunakan");
             throw new EduProApiException("Save gagal", HttpStatus.BAD_REQUEST, errors);
         }
 

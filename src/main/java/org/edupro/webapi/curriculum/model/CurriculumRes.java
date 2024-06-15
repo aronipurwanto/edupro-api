@@ -12,8 +12,8 @@ import org.edupro.webapi.constant.DataStatus;
 @AllArgsConstructor
 public class CurriculumRes {
     private String id;
-    private String kode;
-    private String nama;
-    private Integer noUrut;
+    private String code;
+    private String name;
+    private Integer position;
     private DataStatus status;
 }

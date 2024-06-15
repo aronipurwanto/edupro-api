@@ -57,8 +57,8 @@ public class AcademicYearServiceImpl extends BaseService implements AcademicYear
 
     @Override
     public Optional<AcademicYearRes> save(AcademicYearReq request) {
-        if(repo.existsByName(request.getNama())){
-            Map<String, String> errors = Map.of("nama", "Nama "+ request.getNama()+" sudah digunakan");
+        if(repo.existsByName(request.getName())){
+            Map<String, String> errors = Map.of("nama", "Nama "+ request.getName()+" sudah digunakan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
@@ -125,7 +125,7 @@ public class AcademicYearServiceImpl extends BaseService implements AcademicYear
     }
 
     private void convertReqToEntity(AcademicYearReq request, AcademicYearEntity result){
-        result.setName(request.getNama());
+        result.setName(request.getName());
 
         String userId = this.getUserInfo().getUserId();
         if(!userId.isEmpty()){

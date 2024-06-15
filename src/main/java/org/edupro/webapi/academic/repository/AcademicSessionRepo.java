@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface AcademicSessionRepo extends JpaRepository<AcademicSessionEntity, String> {
     List<AcademicSessionEntity> findAllByStatus(DataStatus status);
-    boolean existsByCurriculumIdAndAcademicYearIdAndSemester(String curriculumId, String academicYearId, Integer semester);
+    boolean existsByAcademicYearIdAndSemester(String academicYearId, Integer semester);
 }

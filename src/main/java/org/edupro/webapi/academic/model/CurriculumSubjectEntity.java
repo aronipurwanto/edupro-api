@@ -1,10 +1,11 @@
 /**
  * 
  */
-package org.edupro.webapi.curriculum.model;
+package org.edupro.webapi.academic.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.edupro.webapi.curriculum.model.CurriculumEntity;
 import org.edupro.webapi.institution.model.InstitutionEntity;
 import org.edupro.webapi.base.model.BaseIdEntity;
 import org.edupro.webapi.subject.model.SubjectEntity;
@@ -37,6 +38,13 @@ public class CurriculumSubjectEntity extends BaseIdEntity {
 	@ManyToOne
 	@JoinColumn(name = "subject_id", insertable = false, updatable = false)
 	private SubjectEntity subject;
+
+	@Column(name = "curriculum_id", nullable = false, length = 36)
+	private String curriculumId;
+
+	@ManyToOne
+	@JoinColumn(name = "curriculum_id", insertable = false, updatable = false)
+	private CurriculumEntity curriculum;
 
 	@Column(name = "code", nullable = false, length = 20)
 	private String code;
