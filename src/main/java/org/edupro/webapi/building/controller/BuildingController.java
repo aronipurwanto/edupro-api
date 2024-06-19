@@ -3,17 +3,17 @@ package org.edupro.webapi.building.controller;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.edupro.webapi.base.controller.BaseController;
+import org.edupro.webapi.base.model.Response;
+import org.edupro.webapi.building.model.BuildingReq;
 import org.edupro.webapi.building.model.BuildingRes;
 import org.edupro.webapi.building.service.BuildingService;
-import org.edupro.webapi.base.controller.BaseController;
-import org.edupro.webapi.courses.model.CommonReq;
-import org.edupro.webapi.base.model.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SecurityRequirement(name="keycloak")
-@RequestMapping("/api/v1/gedung")
+@RequestMapping("/api/v1/building")
 @RequiredArgsConstructor
 public class BuildingController extends BaseController<BuildingRes> {
     private final BuildingService service;
@@ -32,13 +32,13 @@ public class BuildingController extends BaseController<BuildingRes> {
     }
 
     @PostMapping
-    private ResponseEntity<Response> save(@RequestBody @Valid CommonReq request){
+    private ResponseEntity<Response> save(@RequestBody @Valid BuildingReq request){
         var result = service.save(request);
         return getResponse(result);
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<Response> update(@RequestBody @Valid CommonReq request,
+    private ResponseEntity<Response> update(@RequestBody @Valid BuildingReq request,
                                             @PathVariable("id") String id){
         var result = service.update(request, id);
         return getResponse(result);

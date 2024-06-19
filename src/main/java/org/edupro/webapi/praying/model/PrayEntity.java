@@ -9,11 +9,6 @@ import jakarta.persistence.Table;
 import lombok.*;
 import org.edupro.webapi.base.model.BaseIdEntity;
 
-/**
- * @author Awiyanto Ajisasongko
- *
- * Nov 30, 2023
- */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor

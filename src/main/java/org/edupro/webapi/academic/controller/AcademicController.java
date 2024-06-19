@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/ta")
+@RequestMapping("/api/v1/academic")
 @RequiredArgsConstructor
 @SecurityRequirement(name="keycloak")
 public class AcademicController extends BaseController<AcademicYearRes> {
@@ -21,12 +21,6 @@ public class AcademicController extends BaseController<AcademicYearRes> {
     @GetMapping
     private ResponseEntity<Response> get(){
         var result = service.get();
-        return this.getResponse(result);
-    }
-
-    @GetMapping("/kurikulum/{id}")
-    private ResponseEntity<Response> getByKurikulumId(@PathVariable String id){
-        var result = service.getByKurikulumId(id);
         return this.getResponse(result);
     }
 

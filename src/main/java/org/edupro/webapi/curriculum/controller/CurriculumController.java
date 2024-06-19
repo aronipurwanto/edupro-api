@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SecurityRequirement(name="keycloak")
-@RequestMapping("/api/v1/kurikulum")
+@RequestMapping("/api/v1/curriculum")
 @RequiredArgsConstructor
 public class CurriculumController extends BaseController<CurriculumRes> {
     private final CurriculumService service;

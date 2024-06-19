@@ -1,4 +1,4 @@
-package org.edupro.webapi.lookup.model;
+package org.edupro.webapi.building.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,11 +10,8 @@ import org.edupro.webapi.constant.DataStatus;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LookupRes {
-    private String id;
-    private String group;
+public class BuildingReq {
     private String code;
     private String name;
-    private Integer position;
     private DataStatus status;
 }

@@ -19,7 +19,7 @@ import org.edupro.webapi.base.model.BaseIdEntity;
 @Builder
 @Entity
 @Table(name = "t_building_room")
-public class BuildingRoomEntity extends BaseIdEntity {
+public class RoomEntity extends BaseIdEntity {
 	@Column(name = "code", length = 20, nullable = false)
 	private String code;
 	

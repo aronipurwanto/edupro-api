@@ -1,11 +1,8 @@
 package org.edupro.webapi.institution.model;
 
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,44 +11,75 @@ import java.time.LocalDate;
 @Builder
 public class InstitutionRes {
     private String id;
-    private String nama;
-    private String namaSingkat;
-    private String nomorInduk;
-    private String kode;
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "YYYY-MM-dd")
-    private LocalDate tanggalAkhirMasaBerlaku;
-    private String kodeJenjangKategori;
-    private String kepala;
-    private String nomorUnik;
-    private String admin;
-    private int maxUserUjian;
-    private int maxUserLMS;
-    private int selisihJamDenganServer;
-    private int hariEfektifSekolah;
-    private String masukAwal;
-    private String masukAkhir;
-    private String pulangAwal;
-    private String pulahgAkhir;
-    private String kodeProvinsi;
-    private String kodeKota;
-    private String kodeKecamatan;
-    private String kodeKelurahan;
-    private String alamat;
-    private String kodePos;
-    private String telpon;
-    private String fax;
+    @NotEmpty
+    @Size(max = 100)
+    private String name;
+
+    @Size(max = 50)
+    private String shortName;
+
+    @Size(max = 100)
+    private String regNumber;
+
+    @Size(max = 100)
+    private String code;
+    private String expiredDate;
+
+    @Size(max = 20)
+    private String levelCategory;
+
+    @Size(max = 100)
+    private String headmaster;
+
+    @Size(max = 100)
+    private String uniqueNumber;
+
+    @Size(max = 100)
+    private String adminName;
+
+    private int maxExamUser;
+
+    private int maxLmsUser;
+
+    private int diffServerTime;
+
+    private int effectiveDays;
+
+    @Size(max = 5)
+    private String startedDay;
+    @Size(max = 5)
+    private String endDay;
+    @Size(max = 5)
+    private String endEarly;
+    @Size(max = 5)
+    private String endOfDay;
+
+    @Size(max = 20)
+    private String provinceId;
+    @Size(max = 20)
+    private String cityId;
+    @Size(max = 20)
+    private String districtId;
+    @Size(max = 20)
+    private String subDistrictId;
+
+
+    @Size(max = 255)
+    private String address;
+    @Size(max = 6)
+    private String postalCode;
+    @Size(max = 50)
+    private String phoneNumber;
+    @Size(max = 20)
+    private String faxNumber;
+    @Size(max= 100)
     private String website;
+    @Size(max= 100)
     private String email;
 
-    private Long kopId;
-    private String kopUrl;
-    private Long ttdPimpinanId;
-    private String ttdPimpinanUrl;
-    private Long logoDinasId;
-    private String logoDinasUrl;
-    private Long logoLembagaId;
-    private String logoLembagaUrl;
-    private Long stempelId;
-    private String stempelUrl;
+    private String letterHead;
+    private String headOfSignature;
+    private String serviceLogo;
+    private String institutionLogo;
+    private String stamp;
 }

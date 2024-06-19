@@ -10,7 +10,7 @@ import org.edupro.webapi.constant.DataStatus;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuildingRoomRes {
+public class RoomRes {
     private String id;
     private String code;
     private String name;

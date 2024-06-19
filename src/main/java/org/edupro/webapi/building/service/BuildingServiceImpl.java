@@ -2,14 +2,14 @@ package org.edupro.webapi.building.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.edupro.webapi.base.service.BaseService;
 import org.edupro.webapi.building.model.BuildingEntity;
-import org.edupro.webapi.building.repository.BuildingRepo;
+import org.edupro.webapi.building.model.BuildingReq;
 import org.edupro.webapi.building.model.BuildingRes;
+import org.edupro.webapi.building.repository.BuildingRepo;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.courses.model.CommonReq;
-import org.edupro.webapi.base.service.BaseService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
@@ -48,7 +48,7 @@ public class BuildingServiceImpl extends BaseService implements BuildingService 
     }
 
     @Override
-    public Optional<BuildingRes> save(CommonReq request) {
+    public Optional<BuildingRes> save(BuildingReq request) {
         if(repo.existsByCode(request.getCode())){
             log.info("Save Gedung gagal, terjadi error : kode sudah digunakan");
             Map<String, String> errors = Map.of("kode", "Kode "+ request.getCode() +" sudah digunakan");
@@ -61,7 +61,7 @@ public class BuildingServiceImpl extends BaseService implements BuildingService 
     }
 
     @Override
-    public Optional<BuildingRes> update(CommonReq request, String id) {
+    public Optional<BuildingRes> update(BuildingReq request, String id) {
         BuildingEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
@@ -109,7 +109,7 @@ public class BuildingServiceImpl extends BaseService implements BuildingService 
         return result;
     }
 
-    private BuildingEntity convertReqToEntity(CommonReq request){
+    private BuildingEntity convertReqToEntity(BuildingReq request){
         BuildingEntity result = new BuildingEntity();
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
@@ -123,7 +123,7 @@ public class BuildingServiceImpl extends BaseService implements BuildingService 
         return result;
     }
 
-    private void convertReqToEntity(CommonReq request, BuildingEntity result){
+    private void convertReqToEntity(BuildingReq request, BuildingEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
     }
