@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.edupro.webapi.constant.DataStatus;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,7 +15,8 @@ public class AcademicYearRes {
     private String name;
     private String curriculumId;
     private String curriculumCode;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private String curriculumName;
+    private String startDate;
+    private String endDate;
     private DataStatus status;
 }
