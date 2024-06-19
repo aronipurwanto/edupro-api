@@ -48,8 +48,8 @@ public class LevelServiceImpl extends BaseService implements LevelService {
 
     @Override
     public Optional<LevelRes> save(LevelReq request) {
-        if(repo.existsByInstitutionIdAndCode(request.getIdLembaga(),request.getKode())){
-            Map<String, String> errors = Map.of("kode", "Id Lembaga "+ request.getIdLembaga()+" dan Kode "+ request.getKode() +" sudah digunakan");
+        if(repo.existsByInstitutionIdAndCode(request.getInstitutionId(),request.getCode())){
+            Map<String, String> errors = Map.of("kode", "Id Lembaga "+ request.getInstitutionId()+" dan Kode "+ request.getCode() +" sudah digunakan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
@@ -106,7 +106,7 @@ public class LevelServiceImpl extends BaseService implements LevelService {
         BeanUtils.copyProperties(entity, result);
 
         if (entity.getInstitution() != null){
-            result.setNamaLembaga(entity.getInstitution().getName());
+            result.setInstitution(entity.getInstitution().getName());
         }
 
         return result;

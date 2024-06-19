@@ -12,10 +12,10 @@ import org.edupro.webapi.constant.DataStatus;
 @AllArgsConstructor
 public class LevelRes {
     private String id;
-    private String idLembaga;
-    private String namaLembaga;
-    private String kode;
-    private String nama;
-    private Integer noUrut;
+    private String institutionId;
+    private String institution;
+    private String code;
+    private String name;
+    private Integer position;
     private DataStatus status;
 }
