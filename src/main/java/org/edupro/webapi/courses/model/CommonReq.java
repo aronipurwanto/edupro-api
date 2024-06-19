@@ -16,9 +16,9 @@ public class CommonReq {
 
     @NotEmpty
     @Size(min = 2, max = 10, message = "Kode minimal 2 dan maximal 10")
-    private String kode;
+    private String code;
 
     @NotEmpty
     @Size(min = 4, max = 50, message = "Nama minimal 4 dan maximal 50")
-    private String nama;
+    private String name;
 }
