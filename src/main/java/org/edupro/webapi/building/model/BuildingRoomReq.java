@@ -16,16 +16,16 @@ public class BuildingRoomReq {
     private String id;
     @NotEmpty
     @Size(min = 4, max = 20, message = "Kode minimal 4 dan maximal 20")
-    private String kode;
+    private String code;
 
     @NotEmpty
     @Size(min = 4, max = 50, message = "Kode minimal 4 dan maximal 50")
-    private String nama;
+    private String name;
 
     @NotNull(message = "kapasitas tidak boleh")
-    private Integer kapasitas;
+    private Integer capacity;
 
     @NotEmpty
     @Size(min = 32, max = 36, message = "gedungId minimal 32 dan maximal 36")
-    private String gedungId;
+    private String buildingId;
 }
