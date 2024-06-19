@@ -14,13 +14,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class StudentRes {
     private String id;
+    private String name;
     private String nisn;
-    private String nama;
-    private String kotaTempatLahir;
-    private LocalDate tanggalLahir;
+    private String pob;
+    private LocalDate dob;
     private String gender;
-    private String agama;
-    private String golDarah;
+    private String religion;
+    private String bloodType;
     private String noTelp;
     private String email;
     private DataStatus status;

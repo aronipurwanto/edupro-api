@@ -116,10 +116,11 @@ public class StudentServiceImpl extends BaseService implements StudentService {
     }
 
     private void convertReqToEntity(StudentReq request, StudentEntity result){
-        result.setName(request.getNama());
+        result.setName(request.getName());
         result.setNisn(request.getNisn());
-        result.setDob(request.getTanggalLahir());
-        result.setPob(request.getKotaTempatLahir());
+        result.setDob(request.getDob());
+        result.setPob(request.getPob()
+        );
 
         String userId = this.getUserInfo().getUserId();
         if(!userId.isEmpty()){
