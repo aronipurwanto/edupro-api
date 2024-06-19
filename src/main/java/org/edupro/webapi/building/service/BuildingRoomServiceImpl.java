@@ -51,8 +51,8 @@ public class BuildingRoomServiceImpl extends BaseService implements BuildingRoom
 
     @Override
     public Optional<BuildingRoomRes> save(BuildingRoomReq request) {
-        if(repo.existsByCode(request.getKode())){
-            Map<String, String> errors = Map.of("kode", "Kode "+ request.getKode() +" sudah digunakan");
+        if(repo.existsByCode(request.getCode())){
+            Map<String, String> errors = Map.of("kode", "Kode "+ request.getCode() +" sudah digunakan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
@@ -121,17 +121,17 @@ public class BuildingRoomServiceImpl extends BaseService implements BuildingRoom
         BuildingRoomRes result = new BuildingRoomRes();
         BeanUtils.copyProperties(entity, result);
         if(entity.getBuilding() != null){
-            if(entity.getBuilding().getCode() != null) result.setKodeGedung(entity.getBuilding().getCode());
+            if(entity.getBuilding().getCode() != null) result.setBuildingCode(entity.getBuilding().getCode());
 
-            if (entity.getBuilding().getName() != null) result.setNamaGedung(entity.getBuilding().getName());
+            if (entity.getBuilding().getName() != null) result.setBuildingName(entity.getBuilding().getName());
         }
         return result;
     }
 
     private BuildingRoomEntity convertReqToEntity(BuildingRoomReq request){
-        BuildingEntity gedung =  this.getGedungById(request.getGedungId());
+        BuildingEntity gedung =  this.getGedungById(request.getBuildingId());
         if(gedung.getId().isEmpty()){
-            Map<String, String> errors = Map.of("gedungId", "gedungId "+ request.getGedungId() +" tidak dapat ditemukan");
+            Map<String, String> errors = Map.of("gedungId", "gedungId "+ request.getBuildingId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
@@ -146,7 +146,7 @@ public class BuildingRoomServiceImpl extends BaseService implements BuildingRoom
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
 
-        BuildingEntity buildingEntity =  this.getGedungById(request.getGedungId());
+        BuildingEntity buildingEntity =  this.getGedungById(request.getBuildingId());
 
         String userId = this.getUserInfo().getUserId();
         if(!userId.isEmpty()){

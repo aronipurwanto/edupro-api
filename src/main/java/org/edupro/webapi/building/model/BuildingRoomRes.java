@@ -12,11 +12,11 @@ import org.edupro.webapi.constant.DataStatus;
 @AllArgsConstructor
 public class BuildingRoomRes {
     private String id;
-    private String kode;
-    private String nama;
-    private Integer kapasitas;
-    private String gedungId;
-    private String kodeGedung;
-    private String namaGedung;
+    private String code;
+    private String name;
+    private Integer capacity;
+    private String buildingId;
+    private String buildingCode;
+    private String buildingName;
     private DataStatus status;
 }
