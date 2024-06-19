@@ -17,7 +17,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StudentReq {
-    private String id;
+
+    @NotEmpty
+    @Size(min = 4, max = 100, message = "Kode minimal 4 dan maximal 100")
+    private String name;
 
     @NotEmpty
     @Size(min = 8, max = 20, message = "Kode minimal 8 dan maximal 20")
@@ -25,19 +28,15 @@ public class StudentReq {
 
     @NotEmpty
     @Size(min = 4, max = 100, message = "Kode minimal 4 dan maximal 100")
-    private String nama;
-
-    @NotEmpty
-    @Size(min = 4, max = 100, message = "Kode minimal 4 dan maximal 100")
-    private String kotaTempatLahir;
+    private String pob;
 
     @NotNull
     @Temporal(TemporalType.DATE)
-    private LocalDate tanggalLahir;
+    private LocalDate dob;
 
     private String gender;
-    private String agama;
-    private String golDarah;
+    private String religion;
+    private String bloodType;
     private String noTelp;
     private String email;
 }
