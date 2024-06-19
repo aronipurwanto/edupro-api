@@ -49,9 +49,9 @@ public class BuildingServiceImpl extends BaseService implements BuildingService 
 
     @Override
     public Optional<BuildingRes> save(CommonReq request) {
-        if(repo.existsByCode(request.getKode())){
+        if(repo.existsByCode(request.getCode())){
             log.info("Save Gedung gagal, terjadi error : kode sudah digunakan");
-            Map<String, String> errors = Map.of("kode", "Kode "+ request.getKode() +" sudah digunakan");
+            Map<String, String> errors = Map.of("kode", "Kode "+ request.getCode() +" sudah digunakan");
             throw new EduProApiException("Save gagal", HttpStatus.BAD_REQUEST, errors);
         }
 
