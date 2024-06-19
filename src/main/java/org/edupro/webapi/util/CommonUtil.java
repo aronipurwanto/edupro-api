@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Objects;
 import java.util.Random;
@@ -68,5 +70,10 @@ public class CommonUtil {
             log.error("Failed to encode image to Base64 format: {}", e.getMessage());
             throw new EduProApiException("Failed to encode image to Base64 format", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public static String toString(LocalDate date, String format) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        return date.format(formatter);
     }
 }

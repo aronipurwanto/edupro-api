@@ -7,7 +7,10 @@ import org.edupro.webapi.academic.model.AcademicYearReq;
 import org.edupro.webapi.academic.model.AcademicYearRes;
 import org.edupro.webapi.academic.repository.AcademicYearRepo;
 import org.edupro.webapi.constant.DataStatus;
+import org.edupro.webapi.constant.Formatter;
 import org.edupro.webapi.constant.MessageApp;
+import org.edupro.webapi.curriculum.model.CurriculumEntity;
+import org.edupro.webapi.curriculum.repository.CurriculumRepo;
 import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.base.service.BaseService;
 import org.edupro.webapi.util.CommonUtil;
@@ -28,6 +31,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class AcademicYearServiceImpl extends BaseService implements AcademicYearService {
+    private final CurriculumRepo curriculumRepo;
     private final AcademicYearRepo repo;
 
     @Override
@@ -112,10 +116,24 @@ public class AcademicYearServiceImpl extends BaseService implements AcademicYear
     private AcademicYearRes convertEntityToRes(AcademicYearEntity entity){
         AcademicYearRes result = new AcademicYearRes();
         BeanUtils.copyProperties(entity, result);
+
+        if(entity.getCurriculum() != null){
+            result.setCurriculumCode(entity.getCurriculum().getCode());
+            result.setCurriculumName(entity.getCurriculum().getName());
+        }
+
+        result.setStartDate(CommonUtil.toString(entity.getStartDate(), Formatter.DATE_FORMAT));
+        result.setEndDate(CommonUtil.toString(entity.getEndDate(), Formatter.DATE_FORMAT));
         return result;
     }
 
     private AcademicYearEntity convertReqToEntity(AcademicYearReq request){
+        CurriculumEntity curriculum = curriculumRepo.findById(request.getCurriculumId()).orElse(null);
+        if(curriculum == null){
+            Map<String, String> errors = Map.of("id", "curriculumId "+ request.getCurriculumId() +" tidak ditemukan");
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+        }
+
         AcademicYearEntity result = new AcademicYearEntity();
         BeanUtils.copyProperties(request, result);
         result.setStatus(DataStatus.ACTIVE);
