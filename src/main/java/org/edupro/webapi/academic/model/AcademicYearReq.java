@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AcademicYearReq {
-    private String id;
 
     @NotEmpty(message = "Nama tidak boleh kosong")
     @Size(min = 2, max = 20, message = "Nama tidak boleh kosong")
