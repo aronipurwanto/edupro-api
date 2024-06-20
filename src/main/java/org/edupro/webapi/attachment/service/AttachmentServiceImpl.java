@@ -8,7 +8,7 @@ import org.edupro.webapi.attachment.repository.AttachmentRepo;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.base.model.AttachmentRes;
+import org.edupro.webapi.attachment.model.AttachmentRes;
 import org.edupro.webapi.base.service.BaseService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
@@ -32,6 +32,7 @@ public class AttachmentServiceImpl extends BaseService implements AttachmentServ
 
     @Override
     public List<AttachmentRes> get() {
+        var userId = this.getUserInfo();
         List<AttachmentEntity> result = this.repo.findAllByStatus(DataStatus.ACTIVE);
         if(result.isEmpty()){
             return Collections.emptyList();
@@ -65,6 +66,9 @@ public class AttachmentServiceImpl extends BaseService implements AttachmentServ
     @Override
     public Optional<AttachmentRes> delete(String id) {
         AttachmentEntity result = this.getEntityById(id);
+
+        result.setStatus(DataStatus.DELETED);
+        result.setDeletedAt(LocalDateTime.now());
         return saveOrUpdate(result);
     }
 

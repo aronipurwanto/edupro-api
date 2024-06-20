@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LevelReq {
-    private String id;
+
     @NotEmpty
     @Size(min = 32, max = 36, message = "Nama minimal 4 dan maximal 50")
     private String institutionId;

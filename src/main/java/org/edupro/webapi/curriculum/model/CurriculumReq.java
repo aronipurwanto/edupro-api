@@ -12,7 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CurriculumReq {
-    private String id;
 
     @NotEmpty
     @Size(min = 2, max = 20, message = "Kode minimal 2 dan maximal 20")
