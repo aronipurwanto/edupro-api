@@ -1,8 +1,9 @@
-package org.edupro.webapi.base.model;
+package org.edupro.webapi.attachment.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.edupro.webapi.constant.DataStatus;
 
 import java.time.LocalDateTime;
 
@@ -20,4 +21,5 @@ public class AttachmentRes {
     private String createdBy;
     private String description;
     private String owner;
+    private DataStatus status;
 }

@@ -1,6 +1,6 @@
 package org.edupro.webapi.attachment.service;
 
-import org.edupro.webapi.base.model.AttachmentRes;
+import org.edupro.webapi.attachment.model.AttachmentRes;
 import org.edupro.webapi.attachment.model.AttachmentReq;
 
 import java.util.List;
