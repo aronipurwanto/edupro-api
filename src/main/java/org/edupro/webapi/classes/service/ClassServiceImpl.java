@@ -130,9 +130,29 @@ public class ClassServiceImpl extends BaseService implements ClassService {
             result.setRoomCode(entity.getRoom().getCode());
         }
 
+        if (entity.getInstitution() != null){
+            result.setInstitutionId(entity.getInstitution().getId());
+            result.setInstitutionName(entity.getInstitution().getName());
+        }
+
+        if (entity.getAcademicYearId() != null){
+            result.setAcademicYearId(entity.getAcademicYear().getId());
+            result.setAcademicYearName(entity.getAcademicYear().getName());
+        }
+
         if (entity.getLevel() != null){
             result.setLevelId(entity.getLevel().getId());
             result.setLevelName(entity.getLevel().getName());
+        }
+
+        if (entity.getAcademicSession() != null){
+            result.setAcademicSessionId(entity.getAcademicSession().getId());
+            result.setSemester(entity.getAcademicSession().getSemester());
+        }
+
+        if (entity.getHomeroomTeacherId() != null){
+            result.setHomeroomTeacherId(entity.getHomeroomTeacher().getId());
+            result.setHomeroomTeacherName(entity.getHomeroomTeacher().getFullName());
         }
         return result;
     }
