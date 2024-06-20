@@ -19,6 +19,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -66,8 +67,6 @@ public class AcademicSessionServiceImpl extends BaseService implements AcademicS
         AcademicSessionEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
-        result.setId(id);
-
         return saveOrUpdate(result);
     }
 
@@ -127,15 +126,19 @@ public class AcademicSessionServiceImpl extends BaseService implements AcademicS
         AcademicSessionEntity result = new AcademicSessionEntity();
         BeanUtils.copyProperties(request, result);
         result.setStatus(DataStatus.ACTIVE);
+        result.setCreatedAt(LocalDateTime.now());
+        result.setUpdatedAt(LocalDateTime.now());
 
-        return result;
-    }
-
-    private void convertReqToEntity(AcademicSessionReq request, AcademicSessionEntity result){
         String userId = this.getUserInfo().getUserId();
         if(!userId.isEmpty()){
             result.setCreatedBy(userId);
             result.setUpdatedBy(userId);
         }
+        return result;
+    }
+
+    private void convertReqToEntity(AcademicSessionReq request, AcademicSessionEntity result){
+       BeanUtils.copyProperties(request, result);
+       result.setUpdatedAt(LocalDateTime.now());
     }
 }

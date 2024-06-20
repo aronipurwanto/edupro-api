@@ -14,7 +14,7 @@ public class AcademicSessionRes {
     private String id;
     private String academicYearId;
     private String academicYearName;
-    private String semester;
+    private Integer semester;
     private LocalDate startDate;
     private LocalDate endDate;
     private DataStatus status;

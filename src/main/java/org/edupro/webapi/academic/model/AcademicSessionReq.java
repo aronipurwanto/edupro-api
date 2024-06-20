@@ -22,10 +22,6 @@ public class AcademicSessionReq {
     @NotNull(message = "Semester wajid diisi")
     private Integer semester;
 
-    @NotEmpty(message = "Kode Kurikulum wajid diisi")
-    @Size(min = 2, max = 20, message = "Kode kurikulum minimal 2 dan maksimal 20")
-    private String kodeKurikulum;
-
     @NotNull(message = "startDate tidak bolek kosong")
     private LocalDate startDate;
 
