@@ -13,7 +13,7 @@ import org.edupro.webapi.constant.DataStatus;
 public class LevelRes {
     private String id;
     private String institutionId;
-    private String institution;
+    private String institutionName;
     private String code;
     private String name;
     private Integer position;

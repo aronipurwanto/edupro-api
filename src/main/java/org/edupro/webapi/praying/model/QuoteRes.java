@@ -1,20 +1,19 @@
-package org.edupro.webapi.lookup.model;
+package org.edupro.webapi.praying.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.edupro.webapi.constant.DataStatus;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-public class LookupRes {
+@NoArgsConstructor
+public class QuoteRes {
     private String id;
-    private String group;
-    private String code;
     private String name;
+    private String value;
+    private String types;
+    private String source;
     private Integer position;
     private DataStatus status;
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SecurityRequirement(name="keycloak")
-@RequestMapping("/api/v1/lembaga")
+@RequestMapping("/api/v1/institution")
 @RequiredArgsConstructor
 public class InstitutionController extends BaseController<InstitutionRes> {
     private final InstitutionService service;

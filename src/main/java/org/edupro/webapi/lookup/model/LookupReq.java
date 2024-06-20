@@ -21,12 +21,12 @@ public class LookupReq {
 
     @NotEmpty
     @Size(min = 2, max = 32, message = "Kode minimal 2 dan maximal 32")
-    private String kode;
+    private String code;
 
     @NotEmpty
     @Size(min = 4, max = 128, message = "Nama minimal 4 dan maximal 128")
-    private String nama;
+    private String name;
 
     @NotNull(message = "urutan tidak boleh kosong")
-    private Integer urutan;
+    private Integer position;
 }

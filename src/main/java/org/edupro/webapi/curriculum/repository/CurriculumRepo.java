@@ -13,5 +13,6 @@ public interface CurriculumRepo extends JpaRepository<CurriculumEntity, String> 
     List<CurriculumEntity> findAllByStatus(DataStatus status);
     Optional<CurriculumEntity> findByCode(String code);
     boolean existsByCode(String code);
+    boolean existsByName(String name);
     int countAllByStatus(DataStatus status);
 }
