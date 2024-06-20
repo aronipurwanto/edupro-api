@@ -26,9 +26,10 @@ public class ClassRes {
     private String levelName;
 
     private String academicSessionId;
-    private String academicSessionName;
     private Integer semester;
+
     private String homeroomTeacherId;
     private String homeroomTeacherName;
+
     private DataStatus status;
 }
