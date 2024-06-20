@@ -3,7 +3,7 @@ package org.edupro.webapi.attachment.controller;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.edupro.webapi.base.model.AttachmentRes;
+import org.edupro.webapi.attachment.model.AttachmentRes;
 import org.edupro.webapi.base.model.Response;
 import org.edupro.webapi.base.controller.BaseController;
 import org.edupro.webapi.attachment.model.AttachmentReq;
