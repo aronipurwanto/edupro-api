@@ -10,7 +10,7 @@ import org.edupro.webapi.academic.model.AcademicSessionEntity;
 import org.edupro.webapi.academic.model.AcademicYearEntity;
 import org.edupro.webapi.institution.model.InstitutionEntity;
 import org.edupro.webapi.base.model.BaseIdEntity;
-import org.edupro.webapi.building.model.BuildingRoomEntity;
+import org.edupro.webapi.building.model.RoomEntity;
 import org.edupro.webapi.level.model.LevelEntity;
 import org.edupro.webapi.person.model.PersonEntity;
 
@@ -38,7 +38,7 @@ public class ClassEntity extends BaseIdEntity {
 
 	@ManyToOne
 	@JoinColumn(name = "room_id", insertable = false, updatable = false)
-	private BuildingRoomEntity room;
+	private RoomEntity room;
 
 	@Column(name = "institution_id", nullable = false, length = 36)
 	private String institutionId;

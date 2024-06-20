@@ -15,14 +15,14 @@ public class LevelReq {
     private String id;
     @NotEmpty
     @Size(min = 32, max = 36, message = "Nama minimal 4 dan maximal 50")
-    private String idLembaga;
+    private String institutionId;
 
     @NotEmpty
     @Size(min = 4, max = 20, message = "Nama minimal 4 dan maximal 50")
-    private String kode;
+    private String code;
 
     @NotEmpty
     @Size(min = 4, max = 100, message = "Nama minimal 4 dan maximal 50")
-    private String nama;
-    private Integer noUrut;
+    private String name;
+    private Integer position;
 }

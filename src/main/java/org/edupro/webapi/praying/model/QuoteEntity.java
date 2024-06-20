@@ -31,6 +31,9 @@ public class QuoteEntity extends BaseIdEntity {
 	@Column(name = "types", length = 36, nullable = false)
 	private String types;
 
+	@Column(name = "source", length = 150, nullable = false)
+	private String source;
+
 	@Column(name = "position")
 	private Integer position;
 }

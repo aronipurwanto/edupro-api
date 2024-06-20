@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.building.model.BuildingEntity;
 import org.edupro.webapi.building.repository.BuildingRepo;
-import org.edupro.webapi.building.repository.BuildingRoomRepo;
-import org.edupro.webapi.building.model.BuildingRoomEntity;
-import org.edupro.webapi.building.model.BuildingRoomRes;
+import org.edupro.webapi.building.repository.RoomRepo;
+import org.edupro.webapi.building.model.RoomEntity;
+import org.edupro.webapi.building.model.RoomRes;
 import org.edupro.webapi.constant.DataStatus;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.building.model.BuildingRoomReq;
+import org.edupro.webapi.building.model.RoomReq;
 import org.edupro.webapi.base.service.BaseService;
 import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
@@ -29,13 +29,13 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class BuildingRoomServiceImpl extends BaseService implements BuildingRoomService {
-    private final BuildingRoomRepo repo;
+public class RoomServiceImpl extends BaseService implements RoomService {
+    private final RoomRepo repo;
     private final BuildingRepo buildingRepo;
 
     @Override
-    public List<BuildingRoomRes> get() {
-        List<BuildingRoomEntity> result = this.repo.findAllByStatus(DataStatus.ACTIVE);
+    public List<RoomRes> get() {
+        List<RoomEntity> result = this.repo.findAllByStatus(DataStatus.ACTIVE);
         if(result.isEmpty()){
             return Collections.emptyList();
         }
@@ -43,28 +43,28 @@ public class BuildingRoomServiceImpl extends BaseService implements BuildingRoom
     }
 
     @Override
-    public Optional<BuildingRoomRes> getById(String id) {
-        BuildingRoomEntity result = this.getEntityById(id);
+    public Optional<RoomRes> getById(String id) {
+        RoomEntity result = this.getEntityById(id);
 
         return Optional.of(this.convertEntityToRes(result));
     }
 
     @Override
-    public Optional<BuildingRoomRes> save(BuildingRoomReq request) {
+    public Optional<RoomRes> save(RoomReq request) {
         if(repo.existsByCode(request.getCode())){
             Map<String, String> errors = Map.of("kode", "Kode "+ request.getCode() +" sudah digunakan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        BuildingRoomEntity result = this.convertReqToEntity(request);
+        RoomEntity result = this.convertReqToEntity(request);
         result.setId(CommonUtil.getUUID());
 
         return saveOrUpdate(result);
     }
 
     @Override
-    public Optional<BuildingRoomRes> update(BuildingRoomReq request, String id) {
-        BuildingRoomEntity result = this.getEntityById(id);
+    public Optional<RoomRes> update(RoomReq request, String id) {
+        RoomEntity result = this.getEntityById(id);
 
         convertReqToEntity(request, result);
 
@@ -72,8 +72,8 @@ public class BuildingRoomServiceImpl extends BaseService implements BuildingRoom
     }
 
     @Override
-    public Optional<BuildingRoomRes> delete(String id) {
-        BuildingRoomEntity result = this.getEntityById(id);
+    public Optional<RoomRes> delete(String id) {
+        RoomEntity result = this.getEntityById(id);
 
         result.setDeletedAt(LocalDateTime.now());
         result.setStatus(DataStatus.DELETED);
@@ -81,7 +81,7 @@ public class BuildingRoomServiceImpl extends BaseService implements BuildingRoom
         return saveOrUpdate(result);
     }
 
-    private Optional<BuildingRoomRes> saveOrUpdate(BuildingRoomEntity result) {
+    private Optional<RoomRes> saveOrUpdate(RoomEntity result) {
         try{
             this.repo.saveAndFlush(result);
             return Optional.of(this.convertEntityToRes(result));
@@ -107,8 +107,8 @@ public class BuildingRoomServiceImpl extends BaseService implements BuildingRoom
         return result;
     }
 
-    private BuildingRoomEntity getEntityById(String id) {
-        BuildingRoomEntity result = this.repo.findById(id).orElse(null);
+    private RoomEntity getEntityById(String id) {
+        RoomEntity result = this.repo.findById(id).orElse(null);
         if(result == null) {
             Map<String, String> errors = Map.of("kode", "Kode "+ id +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
@@ -117,8 +117,8 @@ public class BuildingRoomServiceImpl extends BaseService implements BuildingRoom
         return result;
     }
 
-    private BuildingRoomRes convertEntityToRes(BuildingRoomEntity entity){
-        BuildingRoomRes result = new BuildingRoomRes();
+    private RoomRes convertEntityToRes(RoomEntity entity){
+        RoomRes result = new RoomRes();
         BeanUtils.copyProperties(entity, result);
         if(entity.getBuilding() != null){
             if(entity.getBuilding().getCode() != null) result.setBuildingCode(entity.getBuilding().getCode());
@@ -128,21 +128,21 @@ public class BuildingRoomServiceImpl extends BaseService implements BuildingRoom
         return result;
     }
 
-    private BuildingRoomEntity convertReqToEntity(BuildingRoomReq request){
+    private RoomEntity convertReqToEntity(RoomReq request){
         BuildingEntity gedung =  this.getGedungById(request.getBuildingId());
         if(gedung.getId().isEmpty()){
             Map<String, String> errors = Map.of("gedungId", "gedungId "+ request.getBuildingId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        BuildingRoomEntity result = new BuildingRoomEntity();
+        RoomEntity result = new RoomEntity();
         BeanUtils.copyProperties(request, result);
         result.setCreatedAt(LocalDateTime.now());
         result.setUpdatedAt(LocalDateTime.now());
         return result;
     }
 
-    private void convertReqToEntity(BuildingRoomReq request, BuildingRoomEntity result){
+    private void convertReqToEntity(RoomReq request, RoomEntity result){
         BeanUtils.copyProperties(request, result);
         result.setUpdatedAt(LocalDateTime.now());
 

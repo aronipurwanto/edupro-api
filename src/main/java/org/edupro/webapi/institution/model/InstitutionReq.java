@@ -14,80 +14,78 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class InstitutionReq {
-    private String id;
-
     @NotEmpty
     @Size(max = 100)
-    private String nama;
+    private String name;
 
     @Size(max = 50)
-    private String namaSingkat;
+    private String shortName;
 
     @Size(max = 100)
-    private String nomorInduk;
+    private String regNumber;
 
     @Size(max = 100)
-    private String kode;
+    private String code;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "YYYY-MM-dd")
-    private LocalDate tanggalAkhirMasaBerlaku;
+    private LocalDate expiredDate;
 
     @Size(max = 20)
-    private String kodeJenjangKategori;
+    private String levelCategory;
 
     @Size(max = 100)
-    private String kepala;
+    private String headmaster;
 
     @Size(max = 100)
-    private String nomorUnik;
+    private String uniqueNumber;
 
     @Size(max = 100)
-    private String admin;
+    private String adminName;
 
-    private int maxUserUjian;
+    private int maxExamUser;
 
-    private int maxUserLMS;
+    private int maxLmsUser;
 
-    private int selisihJamDenganServer;
+    private int diffServerTime;
 
-    private int hariEfektifSekolah;
+    private int effectiveDays;
 
     @Size(max = 5)
-    private String masukAwal;
+    private String startedDay;
     @Size(max = 5)
-    private String masukAkhir;
+    private String endDay;
     @Size(max = 5)
-    private String pulangAwal;
+    private String endEarly;
     @Size(max = 5)
-    private String pulahgAkhir;
+    private String endOfDay;
 
     @Size(max = 20)
-    private String kodeProvinsi;
+    private String provinceId;
     @Size(max = 20)
-    private String kodeKota;
+    private String cityId;
     @Size(max = 20)
-    private String kodeKecamatan;
+    private String districtId;
     @Size(max = 20)
-    private String kodeKelurahan;
+    private String subDistrictId;
 
 
     @Size(max = 255)
-    private String alamat;
+    private String address;
     @Size(max = 6)
-    private String kodePos;
+    private String postalCode;
     @Size(max = 50)
-    private String telpon;
+    private String phoneNumber;
     @Size(max = 20)
-    private String fax;
+    private String faxNumber;
     @Size(max= 100)
     private String website;
     @Size(max= 100)
     private String email;
 
-    private Long kop;
-    private Long ttdPimpinan;
-    private Long logoDinas;
-    private Long logoLembaga;
-    private Long stempel;
+    private String letterHead;
+    private String headOfSignature;
+    private String serviceLogo;
+    private String institutionLogo;
+    private String stamp;
 }

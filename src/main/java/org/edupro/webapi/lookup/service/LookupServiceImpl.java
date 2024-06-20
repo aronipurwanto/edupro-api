@@ -57,8 +57,8 @@ public class LookupServiceImpl extends BaseService implements LookupService {
 
     @Override
     public Optional<LookupRes> save(LookupReq request) {
-        if(repo.existsByGroupAndCode(request.getGroup(), request.getKode())){
-            Map<String, String> errors = Map.of("kode", "Group "+ request.getGroup() +" dan Kode "+ request.getKode() +" sudah digunakan");
+        if(repo.existsByGroupAndCode(request.getGroup(), request.getCode())){
+            Map<String, String> errors = Map.of("kode", "Group "+ request.getGroup() +" dan Kode "+ request.getCode() +" sudah digunakan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 

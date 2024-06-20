@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuildingRoomReq {
+public class RoomReq {
     private String id;
     @NotEmpty
     @Size(min = 4, max = 20, message = "Kode minimal 4 dan maximal 20")

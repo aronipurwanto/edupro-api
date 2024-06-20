@@ -6,8 +6,8 @@ import org.edupro.webapi.academic.model.AcademicSessionEntity;
 import org.edupro.webapi.academic.repository.AcademicSessionRepo;
 import org.edupro.webapi.academic.model.AcademicYearEntity;
 import org.edupro.webapi.academic.repository.AcademicYearRepo;
-import org.edupro.webapi.building.model.BuildingRoomEntity;
-import org.edupro.webapi.building.repository.BuildingRoomRepo;
+import org.edupro.webapi.building.model.RoomEntity;
+import org.edupro.webapi.building.repository.RoomRepo;
 import org.edupro.webapi.classes.model.ClassEntity;
 import org.edupro.webapi.classes.model.ClassReq;
 import org.edupro.webapi.classes.model.ClassRes;
@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ClassServiceImpl extends BaseService implements ClassService {
     private final ClassRepo repo;
-    private final BuildingRoomRepo buildingRoomRepo;
+    private final RoomRepo roomRepo;
     private final InstitutionRepo institutionRepo;
     private final AcademicSessionRepo academicSessionRepo;
     private final PersonRepo personRepo;
@@ -66,9 +66,9 @@ public class ClassServiceImpl extends BaseService implements ClassService {
 
     @Override
     public Optional<ClassRes> save(ClassReq request) {
-        if(repo.existsByCode(request.getKode())){
+        if(repo.existsByCode(request.getCode())){
             log.info("Save Kelas gagal, terjadi error : id sudah digunakan");
-            Map<String, String> errors = Map.of("kode", "Kode "+ request.getKode() +" sudah digunakan");
+            Map<String, String> errors = Map.of("kode", "Kode "+ request.getCode() +" sudah digunakan");
             throw new EduProApiException("Save gagal", HttpStatus.BAD_REQUEST, errors);
         }
 
@@ -126,45 +126,45 @@ public class ClassServiceImpl extends BaseService implements ClassService {
         result.setStatus(entity.getStatus());
 
         if (entity.getRoom() != null){
-            result.setRuangId(entity.getRoom().getId());
-            result.setKodeRuangan(entity.getRoom().getCode());
+            result.setRoomId(entity.getRoom().getId());
+            result.setRoomCode(entity.getRoom().getCode());
         }
 
         if (entity.getLevel() != null){
             result.setLevelId(entity.getLevel().getId());
-            result.setNamaLevel(entity.getLevel().getName());
+            result.setLevelName(entity.getLevel().getName());
         }
         return result;
     }
 
     private ClassEntity convertReqToEntity(ClassReq request){
-        BuildingRoomEntity ruangan = buildingRoomRepo.findById(request.getRuangId()).orElse(null);
+        RoomEntity ruangan = roomRepo.findById(request.getRoomId()).orElse(null);
         if(ruangan == null){
-            Map<String, String> errors = Map.of("ruangId", "ruangId "+ request.getRuangId() +" tidak dapat ditemukan");
+            Map<String, String> errors = Map.of("ruangId", "ruangId "+ request.getRoomId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        InstitutionEntity lembaga = institutionRepo.findById(request.getLembagaId()).orElse(null);
+        InstitutionEntity lembaga = institutionRepo.findById(request.getInstitutionId()).orElse(null);
         if(lembaga == null){
-            Map<String, String> errors = Map.of("lembagaId", "lembagaId "+ request.getLembagaId() +" tidak dapat ditemukan");
+            Map<String, String> errors = Map.of("lembagaId", "lembagaId "+ request.getInstitutionId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        AcademicSessionEntity sesiAkademik = academicSessionRepo.findById(request.getSesiAkademikId()).orElse(null);
+        AcademicSessionEntity sesiAkademik = academicSessionRepo.findById(request.getAcademicSessionId()).orElse(null);
         if(sesiAkademik == null){
-            Map<String, String> errors = Map.of("sesiAkademikId", "sesiAkademikId "+ request.getSesiAkademikId() +" tidak dapat ditemukan");
+            Map<String, String> errors = Map.of("sesiAkademikId", "sesiAkademikId "+ request.getAcademicSessionId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        PersonEntity person = personRepo.findById(request.getWaliKelasId()).orElse(null);
+        PersonEntity person = personRepo.findById(request.getHomeroomTeacherId()).orElse(null);
         if(person == null){
-            Map<String, String> errors = Map.of("waliKelasId", "waliKelasId "+ request.getWaliKelasId() +" tidak dapat ditemukan");
+            Map<String, String> errors = Map.of("waliKelasId", "waliKelasId "+ request.getHomeroomTeacherId() +" tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 
-        AcademicYearEntity tahunAjaran = academicYearRepo.findById(request.getTahunAjaranId()).orElse(null);
+        AcademicYearEntity tahunAjaran = academicYearRepo.findById(request.getAcademicYearId()).orElse(null);
         if(tahunAjaran == null){
-            Map<String, String> errors = Map.of("tahunAjaranId", "tahunAjaranId" + request.getTahunAjaranId()+ " tidak dapat ditemukan");
+            Map<String, String> errors = Map.of("tahunAjaranId", "tahunAjaranId" + request.getAcademicYearId()+ " tidak dapat ditemukan");
             throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
         }
 

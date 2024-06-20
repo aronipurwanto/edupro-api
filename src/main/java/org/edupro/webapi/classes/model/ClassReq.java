@@ -11,22 +11,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ClassReq {
     private String id;
-    private String kode;
-    private String nama;
+    private String code;
+    private String name;
 
     @NotEmpty
     @Size(min = 32, max = 36, message = "ruangId minimal 32 dan maximal 36")
-    private String ruangId;
-
-    private String kodeRuangan;
+    private String roomId;
 
     @NotEmpty
     @Size(min = 32, max = 36, message = "lembagaId minimal 32 dan maximal 36")
-    private String lembagaId;
+    private String institutionId;
 
     @NotEmpty
     @Size(min = 32, max = 36, message = "tahunAjaranId minimal 32 dan maximal 36")
-    private String tahunAjaranId;
+    private String academicYearId;
 
     @NotEmpty
     @Size(min = 32, max = 36, message = "levelId minimal 32 dan maximal 36")
@@ -34,9 +32,9 @@ public class ClassReq {
 
     @NotEmpty
     @Size(min = 32, max = 36, message = "SesiAkademikId minimal 32 dan maximal 36")
-    private String sesiAkademikId;
+    private String academicSessionId;
 
     @NotEmpty
     @Size(min = 32, max = 36, message = "waliKelasId minimal 32 dan maximal 36")
-    private String waliKelasId;
+    private String homeroomTeacherId;
 }

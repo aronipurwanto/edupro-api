@@ -34,5 +34,5 @@ public class BuildingEntity extends BaseIdEntity {
 	private String name;
 
 	@OneToMany(mappedBy = "building")
-	private List<BuildingRoomEntity> ruanganList = new ArrayList<>();
+	private List<RoomEntity> ruanganList = new ArrayList<>();
 }
