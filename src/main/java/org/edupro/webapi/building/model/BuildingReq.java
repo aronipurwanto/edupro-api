@@ -13,5 +13,4 @@ import org.edupro.webapi.constant.DataStatus;
 public class BuildingReq {
     private String code;
     private String name;
-    private DataStatus status;
 }
