@@ -70,6 +70,38 @@ public class DbInit implements CommandLineRunner {
 
         initPerson();
         initSiswa();
+
+        initGroup();
+    }
+
+    private void initGroup(){
+        int count = lookupRepo.countAllByGroup(Constant.GROUP_MAIN);
+        if(count > 0){
+            return;
+        }
+
+        List<LookupEntity> lookupEntities = List.of(
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_MAIN, Constant.GROUP_AGAMA,"Agama",1),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_MAIN, Constant.GROUP_WN,"Warga Negara",2),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_MAIN, Constant.GROUP_LEVEL_KELAS,"Level Kelas",3),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_MAIN, Constant.GROUP_IBADAH_OPSI,"Pilihan Ibadah",4),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_MAIN, Constant.GROUP_IBADAH_CHECK,"Checking Ibadah",5),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_MAIN, Constant.GROUP_ABSENSI,"Absensi",6),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_MAIN, Constant.GROUP_GENDER,"Gender",7),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_MAIN, Constant.GROUP_GOL_DARAH,"Golongan Darah",8),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_MAIN, Constant.GROUP_SEMESTER,"Semester",9),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_MAIN, Constant.GROUP_JENJANG_PENDIDIKAN,"Jenjang Pendidikan",10),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_MAIN, Constant.GROUP_PEKERJAAN,"Pekerjaan",11),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_MAIN, Constant.GROUP_RESOURCE_TYPE,"Resource Type",12),
+                new LookupEntity(CommonUtil.getUUID(), Constant.GROUP_MAIN, Constant.GROUP_ATTACHMENT_TYPE,"Pekerjaan",13)
+        );
+
+        try {
+            lookupRepo.saveAll(lookupEntities);
+            log.info("Save Jenjang Pendidikan is successful");
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
     }
 
     private void initPerson(){

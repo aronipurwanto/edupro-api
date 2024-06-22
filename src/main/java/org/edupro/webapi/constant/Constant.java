@@ -6,6 +6,7 @@ public class Constant {
     public static final String FAILED_STATUS = "Failed";
     public static final String BAD_REQUEST_STATUS = "Bad Request";
 
+    public static final String GROUP_MAIN = "MAIN_GROUP";
     public static final String GROUP_AGAMA = "AGAMA";
     public static final String GROUP_WN = "WARGA_NEGARA";
     public static final String GROUP_LEVEL_KELAS = "LEVEL_KELAS";
@@ -16,6 +17,9 @@ public class Constant {
     public static final String GROUP_GOL_DARAH = "GOL_DARAH";
     public static final String GROUP_SEMESTER = "SEMESTER";
     public static final String GROUP_JENJANG_PENDIDIKAN = "JENJANG_PENDIDIKAN";
+    public static final String GROUP_PEKERJAAN = "PEKERJAAN";
+    public static final String GROUP_RESOURCE_TYPE = "RESOURCE_TYPE";
+    public static final String GROUP_ATTACHMENT_TYPE = "ATTACHMENT_TYPE";
 
     public static class ResourceType {
         public static final String TYPE = "RESOURCE_TYPE";
