@@ -3,6 +3,7 @@ package org.edupro.webapi.person.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
+import org.edupro.webapi.constant.Formatter;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.base.service.BaseService;
@@ -10,6 +11,7 @@ import org.edupro.webapi.person.model.PersonEntity;
 import org.edupro.webapi.person.model.PersonReq;
 import org.edupro.webapi.person.model.PersonRes;
 import org.edupro.webapi.person.repository.PersonRepo;
+import org.edupro.webapi.util.CommonUtil;
 import org.hibernate.exception.DataException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -103,6 +105,10 @@ public class PersonServiceImpl extends BaseService implements PersonService {
     private PersonRes convertEntityToRes(PersonEntity entity){
         PersonRes result = new PersonRes();
         BeanUtils.copyProperties(entity, result);
+
+        if(entity.getDob() != null){
+            result.setDob(CommonUtil.toString(entity.getDob(), Formatter.DATE_FORMAT));
+        }
         return result;
     }
 
