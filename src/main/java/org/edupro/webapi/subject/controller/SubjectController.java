@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @SecurityRequirement(name="keycloak")
-@RequestMapping("/api/v1/mapel")
+@RequestMapping("/api/v1/subject")
 @RequiredArgsConstructor
 public class SubjectController extends BaseController<SubjectRes> {
     private final SubjectService service;
