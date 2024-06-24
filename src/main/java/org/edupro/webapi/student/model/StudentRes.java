@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.edupro.webapi.constant.DataStatus;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,7 +15,7 @@ public class StudentRes {
     private String name;
     private String nisn;
     private String pob;
-    private LocalDate dob;
+    private String dob;
     private String gender;
     private String religion;
     private String bloodType;

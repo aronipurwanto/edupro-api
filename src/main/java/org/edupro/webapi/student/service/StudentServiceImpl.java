@@ -2,10 +2,11 @@ package org.edupro.webapi.student.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.edupro.webapi.base.service.BaseService;
 import org.edupro.webapi.constant.DataStatus;
+import org.edupro.webapi.constant.Formatter;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
-import org.edupro.webapi.base.service.BaseService;
 import org.edupro.webapi.student.model.StudentEntity;
 import org.edupro.webapi.student.model.StudentReq;
 import org.edupro.webapi.student.model.StudentRes;
@@ -103,6 +104,10 @@ public class StudentServiceImpl extends BaseService implements StudentService {
     private StudentRes convertEntityToRes(StudentEntity entity){
         StudentRes result = new StudentRes();
         BeanUtils.copyProperties(entity, result);
+
+        if(entity.getDob() != null){
+            result.setDob(CommonUtil.toString(entity.getDob(), Formatter.DATE_FORMAT));
+        }
         return result;
     }
 
