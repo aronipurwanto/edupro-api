@@ -143,7 +143,8 @@ public class AcademicYearServiceImpl extends BaseService implements AcademicYear
     }
 
     private void convertReqToEntity(AcademicYearReq request, AcademicYearEntity result){
-        result.setName(request.getName());
+        BeanUtils.copyProperties(request, result);
+        result.setUpdatedAt(LocalDateTime.now());
 
         String userId = this.getUserInfo().getUserId();
         if(!userId.isEmpty()){
