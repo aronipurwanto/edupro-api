@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseReq {
-    private String id;
     @NotEmpty(message = "Nama tidak boleh kosong")
     private String name;
     private String description;
@@ -30,5 +29,6 @@ public class CourseReq {
     private Integer hiddenSection;
     private Integer layout;
     private Boolean completionTracking;
-    private String mapelId;
+    private String subjectId;
+    private String levelId;
 }
