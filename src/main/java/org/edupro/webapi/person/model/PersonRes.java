@@ -17,7 +17,7 @@ public class PersonRes {
     private String personNo;
     private String fullName;
     private String address;
-    private LocalDate dob;
+    private String dob;
     private String pob;
     private String gender;
     private String religion;
