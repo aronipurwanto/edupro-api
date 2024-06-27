@@ -241,6 +241,25 @@ public class CourseServiceImpl extends BaseService implements CourseService {
             List<CourseSectionRes> sectionResList = entity.getCourseSectionList().stream().map(this::convertEntityToSectionRes).toList();
             result.setSections(sectionResList);
         }
+
+        if (entity.getSubject() != null){
+            result.setSubjectId(entity.getSubject().getId());
+            result.setSubjectName(entity.getSubject().getName());
+        }
+
+        if (entity.getLevel() != null){
+            result.setLevelId(entity.getLevel().getId());
+            result.setLevelName(entity.getLevel().getName());
+        }
+
+        if (entity.getStartDate() != null){
+            result.setStartDate(CommonUtil.toString(entity.getStartDate(), Formatter.DATE_FORMAT));
+        }
+
+        if (entity.getEndDate() != null){
+            result.setEndDate(CommonUtil.toString(entity.getEndDate(), Formatter.DATE_FORMAT));
+        }
+
         return result;
     }
 
