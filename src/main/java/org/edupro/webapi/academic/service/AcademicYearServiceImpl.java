@@ -122,8 +122,14 @@ public class AcademicYearServiceImpl extends BaseService implements AcademicYear
             result.setCurriculumName(entity.getCurriculum().getName());
         }
 
-        result.setStartDate(CommonUtil.toString(entity.getStartDate(), Formatter.DATE_FORMAT));
-        result.setEndDate(CommonUtil.toString(entity.getEndDate(), Formatter.DATE_FORMAT));
+        if (entity.getStartDate() != null){
+            result.setStartDate(CommonUtil.toString(entity.getStartDate(), Formatter.DATE_FORMAT));
+        }
+
+        if (entity.getEndDate() != null){
+            result.setEndDate(CommonUtil.toString(entity.getEndDate(), Formatter.DATE_FORMAT));
+        }
+
         return result;
     }
 
