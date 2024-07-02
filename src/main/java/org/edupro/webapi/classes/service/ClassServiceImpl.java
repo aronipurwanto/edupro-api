@@ -135,7 +135,7 @@ public class ClassServiceImpl extends BaseService implements ClassService {
             result.setInstitutionName(entity.getInstitution().getName());
         }
 
-        if (entity.getAcademicYearId() != null){
+        if (entity.getAcademicYear() != null){
             result.setAcademicYearId(entity.getAcademicYear().getId());
             result.setAcademicYearName(entity.getAcademicYear().getName());
         }
@@ -150,7 +150,7 @@ public class ClassServiceImpl extends BaseService implements ClassService {
             result.setSemester(entity.getAcademicSession().getSemester());
         }
 
-        if (entity.getHomeroomTeacherId() != null){
+        if (entity.getHomeroomTeacher() != null){
             result.setHomeroomTeacherId(entity.getHomeroomTeacher().getId());
             result.setHomeroomTeacherName(entity.getHomeroomTeacher().getFullName());
         }

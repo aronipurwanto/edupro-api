@@ -10,6 +10,7 @@ import org.edupro.webapi.academic.repository.AcademicSessionRepo;
 import org.edupro.webapi.academic.repository.AcademicYearRepo;
 import org.edupro.webapi.base.service.BaseService;
 import org.edupro.webapi.constant.DataStatus;
+import org.edupro.webapi.constant.Formatter;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.util.CommonUtil;
@@ -106,11 +107,16 @@ public class AcademicSessionServiceImpl extends BaseService implements AcademicS
     private AcademicSessionRes convertEntityToRes(AcademicSessionEntity entity){
         AcademicSessionRes result = new AcademicSessionRes();
         BeanUtils.copyProperties(entity, result);
-        result.setStatus(entity.getStatus());
 
         if(entity.getAcademicYear() != null){
             result.setAcademicYearId(entity.getAcademicYear().getId());
             result.setAcademicYearName(entity.getAcademicYear().getName());
+        }
+        if (entity.getStartDate() != null){
+            result.setStartDate(CommonUtil.toString(entity.getStartDate(), Formatter.DATE_FORMAT));
+        }
+        if (entity.getEndDate() != null){
+            result.setEndDate(CommonUtil.toString(entity.getEndDate(), Formatter.DATE_FORMAT));
         }
 
         return result;
@@ -128,17 +134,17 @@ public class AcademicSessionServiceImpl extends BaseService implements AcademicS
         result.setStatus(DataStatus.ACTIVE);
         result.setCreatedAt(LocalDateTime.now());
         result.setUpdatedAt(LocalDateTime.now());
-
-        String userId = this.getUserInfo().getUserId();
-        if(!userId.isEmpty()){
-            result.setCreatedBy(userId);
-            result.setUpdatedBy(userId);
-        }
         return result;
     }
 
     private void convertReqToEntity(AcademicSessionReq request, AcademicSessionEntity result){
        BeanUtils.copyProperties(request, result);
        result.setUpdatedAt(LocalDateTime.now());
+
+        String userId = this.getUserInfo().getUserId();
+        if(!userId.isEmpty()){
+            result.setCreatedBy(userId);
+            result.setUpdatedBy(userId);
+        }
     }
 }
