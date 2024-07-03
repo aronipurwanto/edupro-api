@@ -75,7 +75,7 @@ public class CourseEntity extends BaseIdEntity {
 	@JoinColumn(name = "subject_id", insertable = false, updatable = false)
 	private SubjectEntity subject;
 	
-	@Column(name = "level_id", length = 10)
+	@Column(name = "level_id", length = 36)
 	private String levelId;
 
 	@ManyToOne

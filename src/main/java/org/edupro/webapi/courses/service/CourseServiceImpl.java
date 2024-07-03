@@ -3,12 +3,15 @@ package org.edupro.webapi.courses.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
+import org.edupro.webapi.constant.Formatter;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.courses.model.*;
 import org.edupro.webapi.courses.repository.CoursePersonRepo;
 import org.edupro.webapi.courses.repository.CourseRepo;
 import org.edupro.webapi.courses.repository.CourseStudentRepo;
 import org.edupro.webapi.exception.EduProApiException;
+import org.edupro.webapi.level.model.LevelEntity;
+import org.edupro.webapi.level.repository.LevelRepo;
 import org.edupro.webapi.person.model.PersonEntity;
 import org.edupro.webapi.person.repository.PersonRepo;
 import org.edupro.webapi.base.service.BaseService;
@@ -40,6 +43,7 @@ public class CourseServiceImpl extends BaseService implements CourseService {
     private final CourseStudentRepo courseStudentRepo;
     private final StudentRepo studentRepo;
     private final PersonRepo personRepo;
+    private final LevelRepo levelRepo;
 
     @Override
     public List<CourseRes> get() {
@@ -208,6 +212,24 @@ public class CourseServiceImpl extends BaseService implements CourseService {
     private CourseRes convertEntityToRes(CourseEntity entity){
         CourseRes result = new CourseRes();
         BeanUtils.copyProperties(entity, result);
+
+        if (entity.getSubject() != null){
+            result.setSubjectId(entity.getSubject().getId());
+            result.setSubjectName(entity.getSubject().getName());
+        }
+
+        if (entity.getLevel() != null){
+            result.setLevelId(entity.getLevel().getId());
+            result.setLevelName(entity.getLevel().getName());
+        }
+
+        if (entity.getStartDate() != null){
+            result.setStartDate(CommonUtil.toString(entity.getStartDate(), Formatter.DATE_FORMAT));
+        }
+
+        if (entity.getEndDate() != null){
+            result.setEndDate(CommonUtil.toString(entity.getEndDate(), Formatter.DATE_FORMAT));
+        }
         return result;
     }
 
@@ -219,6 +241,25 @@ public class CourseServiceImpl extends BaseService implements CourseService {
             List<CourseSectionRes> sectionResList = entity.getCourseSectionList().stream().map(this::convertEntityToSectionRes).toList();
             result.setSections(sectionResList);
         }
+
+        if (entity.getSubject() != null){
+            result.setSubjectId(entity.getSubject().getId());
+            result.setSubjectName(entity.getSubject().getName());
+        }
+
+        if (entity.getLevel() != null){
+            result.setLevelId(entity.getLevel().getId());
+            result.setLevelName(entity.getLevel().getName());
+        }
+
+        if (entity.getStartDate() != null){
+            result.setStartDate(CommonUtil.toString(entity.getStartDate(), Formatter.DATE_FORMAT));
+        }
+
+        if (entity.getEndDate() != null){
+            result.setEndDate(CommonUtil.toString(entity.getEndDate(), Formatter.DATE_FORMAT));
+        }
+
         return result;
     }
 
@@ -229,23 +270,22 @@ public class CourseServiceImpl extends BaseService implements CourseService {
     }
 
     private CourseEntity convertReqToEntity(CourseReq request){
+        SubjectEntity subject = this.subjectRepo.findById(request.getSubjectId()).orElse(null);
+        if(subject == null){
+            Map<String, String> errors = Map.of("mapelId", "mapelId" + request.getSubjectId() + " tidak ditemukan");
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+        }
+
+        LevelEntity level = this.levelRepo.findById(request.getLevelId()).orElse(null);
+        if(level == null){
+            Map<String, String> errors = Map.of("levelId", "levelId" + request.getLevelId() + " tidak ditemukan");
+            throw new EduProApiException(MessageApp.FAILED, HttpStatus.BAD_REQUEST, errors);
+        }
+
         CourseEntity result = new CourseEntity();
         BeanUtils.copyProperties(request, result);
-
-        SubjectEntity mapel = null;
-        if(request.getMapelId() != null && !request.getMapelId().isEmpty()) {
-            mapel = subjectRepo.findById(request.getMapelId()).orElse(null);
-        }
-        
-        if(mapel != null) {
-            result.setSubjectId(mapel.getId());
-        }
-
-        String userId = this.getUserInfo().getUserId();
-        if(userId != null && !userId.isEmpty()){
-            result.setCreatedBy(userId);
-            result.setUpdatedBy(userId);
-        }
+        result.setCreatedAt(LocalDateTime.now());
+        result.setUpdatedAt(LocalDateTime.now());
         return result;
     }
 
