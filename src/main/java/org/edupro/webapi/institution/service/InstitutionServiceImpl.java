@@ -3,6 +3,7 @@ package org.edupro.webapi.institution.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.edupro.webapi.constant.DataStatus;
+import org.edupro.webapi.constant.Formatter;
 import org.edupro.webapi.constant.MessageApp;
 import org.edupro.webapi.exception.EduProApiException;
 import org.edupro.webapi.base.service.BaseService;
@@ -32,6 +33,7 @@ public class InstitutionServiceImpl extends BaseService implements InstitutionSe
 
     @Override
     public List<InstitutionRes> get() {
+        var userId = this.getUserInfo();
         List<InstitutionEntity> result = this.repo.findAll();
         if(result.isEmpty()){
             return Collections.emptyList();
@@ -100,6 +102,11 @@ public class InstitutionServiceImpl extends BaseService implements InstitutionSe
     private InstitutionRes convertEntityToRes(InstitutionEntity entity){
         InstitutionRes result = new InstitutionRes();
         BeanUtils.copyProperties(entity, result);
+
+        if (entity.getExpiredDate() != null){
+            result.setExpiredDate(CommonUtil.toString(entity.getExpiredDate(), Formatter.DATE_FORMAT));
+        }
+
         return result;
     }
 

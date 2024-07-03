@@ -3,6 +3,7 @@ package org.edupro.webapi.institution.model;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.edupro.webapi.constant.DataStatus;
 
 @Getter
 @Setter
@@ -82,4 +83,5 @@ public class InstitutionRes {
     private String serviceLogo;
     private String institutionLogo;
     private String stamp;
+    private DataStatus status;
 }
