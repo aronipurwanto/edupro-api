@@ -18,26 +18,26 @@ import org.springframework.web.bind.annotation.*;
 public class SectionController extends BaseController<CourseSectionRes> {
     private final CourseSectionService service;
 
-    @GetMapping("/topic")
+    @GetMapping("/{courseId}")
+    private ResponseEntity<Response> getByCourseId(@PathVariable("courseId") String courseId){
+        var result = service.getByCourseId(courseId);
+        return this.getResponse(result);
+    }
+
+    @GetMapping("/{courseId}/topic")
     private ResponseEntity<Response> getTopic(@PathVariable("courseId") String id){
         var result = service.getByTopic(id);
         return getResponse(result);
     }
 
-    @GetMapping("")
-    private ResponseEntity<Response> get(@PathVariable("courseId") String courseId){
-        var result = service.getByCourseId(courseId);
-        return this.getResponse(result);
-    }
-
-    @GetMapping("/{id}")
-    private ResponseEntity<Response> get(@PathVariable("courseId") String id, @PathVariable("sectionId") String sectionId){
+    @GetMapping("/{id}/detail")
+    private ResponseEntity<Response> get(@PathVariable("id") String id){
         var result = service.getById(id);
         return getResponse(result);
     }
 
-    @PostMapping("")
-    private ResponseEntity<Response> save(@PathVariable("courseId") String id, @RequestBody @Valid CourseSectionReq request){
+    @PostMapping("/{id}")
+    private ResponseEntity<Response> save(@PathVariable("id") String id, @RequestBody @Valid CourseSectionReq request){
         var result = service.save(id, request);
         return getResponse(result);
     }
